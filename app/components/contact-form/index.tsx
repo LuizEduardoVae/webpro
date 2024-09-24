@@ -46,7 +46,7 @@ export const ContactForm = () => {
                 onSubmit={handleSubmit(onSubmit)}
                 >
                     <input 
-                        placeholder="Nome" 
+                        placeholder="Name" 
                         className="w-full h-14 bg-blue-500 rounded-lg placeholder:text-gray-100 text-gray-50 p-4 focus:outline-none focus:ring-2"
                         {...register('name')}
                     />
@@ -57,7 +57,7 @@ export const ContactForm = () => {
                         {...register('email')}
                     />
                     <textarea 
-                        placeholder="Mensagem" 
+                        placeholder="Message" 
                         className="resize-none w-full h-[138px] bg-blue-500 rounded-lg placeholder:text-gray-100 text-gray-50 p-4 focus:outline-none focus:ring-2"
                         maxLength={500}
                         {...register('message')}
