@@ -26,7 +26,7 @@ export const ProjectDetails = ({ project }: ProjectDetailsProps) =>{
             }}
             ></div>
             <SectionTitle
-                subtitle="projetos"
+                subtitle="Projects"
                 title={project.title}
                 className="text-center items-center sm:[&>h3]:text-4xl"
             />
@@ -59,7 +59,7 @@ export const ProjectDetails = ({ project }: ProjectDetailsProps) =>{
             </div>
             <Link href="/projects">
                 <HiArrowNarrowLeft size={20}/>
-                Voltar para Projetos
+                Back to Projects
             </Link> 
         </section>
     )

@@ -7,7 +7,7 @@ type KnowTechProps = {
 }
 
 export const KnowTech = ({tech}: KnowTechProps) => {
-    const relativeTime = getRelativeTimeString(new Date( tech.startDate), 'pt-BR', ).replace('há ', '')
+    const relativeTime = getRelativeTimeString(new Date( tech.startDate), 'en-US').replace('ago', '');
     return(
         <div className="p-6 rounded-lg bg-gray-600/20 text-gray-500 hover:text-blue-500 hover:bg-gray-600/30 flex flex-col gap-2 transition-all">
             <div className="flex items-center justify-between">
@@ -15,7 +15,7 @@ export const KnowTech = ({tech}: KnowTechProps) => {
                 <CMSIcon icon={tech.iconSvg} />
             </div>
 
-            <span>{relativeTime} de experiencia </span>
+            <span>{relativeTime} of experience</span>
         </div>
     )
 }

@@ -26,10 +26,10 @@ export const ContactForm = () => {
     const onSubmit = async (data: ContactFormData) => {
         try{
             await axios.post('/api/contact', data)
-            toast.success('Mensagem enviada com sucesso!')
+            toast.success('Message sent successfully!')
             reset()
         } catch {
-            toast.error('Ocorreu um erro ao enviar a mensagem')
+            toast.error('An error occurred while sending the message!')
         }
     }
 
@@ -37,8 +37,8 @@ export const ContactForm = () => {
         <section id="contact" className="py-16 px-6 md:py-32 flex items-center justify-center">
             <div className="w-full max-w-[420px] mx-auto">
                 <SectionTitle
-                    subtitle="contato"
-                    title="Quer entrar em contato?"
+                    subtitle="Contact"
+                    title="Want to get in touch?"
                     className="items-center text-center"
                 />
 
@@ -64,7 +64,7 @@ export const ContactForm = () => {
                     />
 
                     <Button className=" w-max mx-auto mt-6 disabled:{isSubmitting} ">
-                        Enviar Mensagem
+                        Send Message
                         <HiArrowNarrowRight size={18} />
                     </Button>
                 </form>

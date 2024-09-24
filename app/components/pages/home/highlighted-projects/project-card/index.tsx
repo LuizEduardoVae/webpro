@@ -55,7 +55,7 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
                 </div>
  
                 <Link href={`/projects/${project.slug}`}>
-                    Ver Projeto
+                    Go to Project
                     <HiArrowNarrowRight />
                 </Link>
             </div>

@@ -38,12 +38,12 @@ export const CourseExperienceItem = ({ college }: ExperienceCollegeItemProps) =>
     
       const formattedDuration =
         years > 0
-          ? `${years} ano${years > 1 ? 's' : ''}${
+          ? `${years} year${years > 1 ? 's' : ''}${
               monthsRemaining > 0
-                ? ` e ${monthsRemaining} mes${monthsRemaining > 1 ? 'es' : ''}`
+                ? ` e ${monthsRemaining} month${monthsRemaining > 1 ? 'es' : ''}`
                 : ''
             }`
-          : `${months} mes${months > 1 ? 'es' : ''}`
+          : `${months} month${months > 1 ? 'es' : ''}`
 
     return (
         <motion.div className=" grid grid-cols-[40px,1fr] gap-4 md:gap-10"  {...fadeUpAnimation}
@@ -74,10 +74,10 @@ export const CourseExperienceItem = ({ college }: ExperienceCollegeItemProps) =>
                     <h4 className="text-gray-900">
                        {role}
                     </h4>
-                    <span className="text-gray-500">
+                    <span className="text-gray-700">
                         {formattedStartDate} • {formattedEndDate} • ({formattedDuration})
                     </span>
-                    <div className="text-gray-500"> 
+                    <div className="text-gray-700"> 
                         <RichText content={description.raw} />
                     </div>
                 </div>

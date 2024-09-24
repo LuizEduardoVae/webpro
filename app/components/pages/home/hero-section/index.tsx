@@ -32,7 +32,7 @@ export const HeroSection = ({homeInfo }: HomeSectionProps) => {
                     exit={{ opacity: 0, x: -100 }}
                     transition={{ duration: 0.5 }}>
 
-                    <p className="font-mono text-blue-400">Hi, I'm</p>
+                    <p className="font-mono text-blue-500">Hi, I'm</p>
                     <h2 className="text-4xl font-medium mt-2">Luiz Eduardo Vedoato <span>👋🏼</span></h2>
 
                     <div className="text-gray-700 my-6 text-sm sm:text-base"><RichText content={homeInfo.introduction.raw}/></div>
@@ -49,7 +49,7 @@ export const HeroSection = ({homeInfo }: HomeSectionProps) => {
                     </div>
 
                     <div className="mt-6 lg:mt-10 flex sm:items-center sm:gap-5 flex-col sm:flex-row">
-                        <Button className=" w-max " onClick={handleContact}>ENTRE EM CONTATO
+                        <Button className=" w-max " onClick={handleContact}>GET IN TOUCH
                         <HiArrowNarrowRight
                         size={18}
                         />
@@ -60,7 +60,7 @@ export const HeroSection = ({homeInfo }: HomeSectionProps) => {
                                 <a href={contact.url}
                                 key={`contact-${i}`}
                                 target="_blank"
-                                className="hover:text-blue-300 transition-colors px-0.5"
+                                className="hover:text-blue-400 transition-colors px-0.5"
                                 >
                                     <CMSIcon key={contact.iconSvg} icon={contact.iconSvg}/>
                                 </a>

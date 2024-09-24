@@ -29,7 +29,7 @@ export const ExperienceItem = ({ experience }: ExperienceItemProps) => {
   const formattedStartDate = format(startDate, 'MMM yyyy', { locale: ptBR })
   const formattedEndDate = endDate
     ? format(new Date(endDate), 'MMM yyyy', { locale: ptBR })
-    : 'O momento'
+    : 'At Moment'
 
   const end = endDate ? new Date(endDate) : new Date()
 
@@ -39,12 +39,12 @@ export const ExperienceItem = ({ experience }: ExperienceItemProps) => {
 
   const formattedDuration =
     years > 0
-      ? `${years} ano${years > 1 ? 's' : ''}${
+      ? `${years} year${years > 1 ? 's' : ''}${
           monthsRemaining > 0
-            ? ` e ${monthsRemaining} mes${monthsRemaining > 1 ? 'es' : ''}`
+            ? ` e ${monthsRemaining} month${monthsRemaining > 1 ? 'es' : ''}`
             : ''
         }`
-      : `${months} mes${months > 1 ? 'es' : ''}`
+      : `${months} month${months > 1 ? 'es' : ''}`
 
   return (
     <motion.div
@@ -74,19 +74,19 @@ export const ExperienceItem = ({ experience }: ExperienceItemProps) => {
             className="text-gray-500 hover:text-blue-500 transition-colors"
             rel="noreferrer"
           >
-            @ {companyName}
+            @{companyName}
           </a>
           <h4 className="text-gray-900">{role}</h4>
-          <span className="text-gray-500">
+          <span className="text-gray-800">
             {formattedStartDate} • {formattedEndDate} • ({formattedDuration})
           </span>
-          <div className="text-gray-400">
+          <div className="text-gray-700">
             <RichText content={description.raw} />
           </div>
         </div>
 
-        <p className="text-gray-400 text-sm mb-3 mt-6 font-semibold">
-          Competência
+        <p className="text-gray-700 text-sm mb-3 mt-6 font-semibold">
+          Skills
         </p>
         <div className="flex gap-x-2 gap-y-3 flex-wrap lg:max-w-[350px] mb-8">
           {technologies.map((tech, i) => (

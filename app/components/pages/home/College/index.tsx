@@ -10,7 +10,7 @@ type CollegeExperienceProps = {
 export const CollegeExperience = ({collegeexperiences}: CollegeExperienceProps) => {
     return (
         <section className="container py-16  gap-10 md:gap-4  md:flex-row">
-            <SectionTitle subtitle="experiencias" title="Experiencia Profissional"/>
+            <SectionTitle subtitle="Education" title="Academic Experiences"/>
             <div className="mt-[60px] flex flex-col gap-4 ">
                 {collegeexperiences?.map(experience => (
                         <CourseExperienceItem 

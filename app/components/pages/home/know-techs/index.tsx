@@ -12,7 +12,7 @@ type knownTechsProps = {
 export const KnowTechs = ({ techs }: knownTechsProps) => {
     return (
         <section className="container py-16">
-            <SectionTitle subtitle="competencias" title="Conhecimentos"/>
+            <SectionTitle subtitle="Skills" title="Technical Knowledge"/>
             <div className="grid grid-cols-[repeat(auto-fit,minmax(264px,1fr))] gap-3 mt-[60px]">
                 {techs?.map((tech) => (
                          <KnowTech key={tech.name} tech={tech}/>
