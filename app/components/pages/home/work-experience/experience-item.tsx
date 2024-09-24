@@ -41,10 +41,10 @@ export const ExperienceItem = ({ experience }: ExperienceItemProps) => {
     years > 0
       ? `${years} year${years > 1 ? 's' : ''}${
           monthsRemaining > 0
-            ? ` e ${monthsRemaining} month${monthsRemaining > 1 ? 'es' : ''}`
+            ? ` e ${monthsRemaining} month${monthsRemaining > 1 ? 's' : ''}`
             : ''
         }`
-      : `${months} month${months > 1 ? 'es' : ''}`
+      : `${months} month${months > 1 ? 's' : ''}`
 
   return (
     <motion.div

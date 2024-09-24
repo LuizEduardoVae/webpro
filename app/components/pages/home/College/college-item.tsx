@@ -40,10 +40,10 @@ export const CourseExperienceItem = ({ college }: ExperienceCollegeItemProps) =>
         years > 0
           ? `${years} year${years > 1 ? 's' : ''}${
               monthsRemaining > 0
-                ? ` e ${monthsRemaining} month${monthsRemaining > 1 ? 'es' : ''}`
+                ? ` e ${monthsRemaining} month${monthsRemaining > 1 ? 's' : ''}`
                 : ''
             }`
-          : `${months} month${months > 1 ? 'es' : ''}`
+          : `${months} month${months > 1 ? 's' : ''}`
 
     return (
         <motion.div className=" grid grid-cols-[40px,1fr] gap-4 md:gap-10"  {...fadeUpAnimation}
