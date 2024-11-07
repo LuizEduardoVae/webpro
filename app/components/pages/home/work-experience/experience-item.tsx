@@ -1,17 +1,16 @@
 'use client'
-import { fadeUpAnimation, techBadgeAnimation } from "@/app/lib/animation" 
-import { TechBadge } from '@/app/components/tech-badge'
-import { differenceInMonths, differenceInYears, format } from 'date-fns'
-import { ptBR } from 'date-fns/locale'
-import Image from 'next/image'
-import { motion } from 'framer-motion'
-import { WorkExperience } from '@/app/types/work-experience'
-import { RichText } from '@/app/components/rich-text'
-
+import { fadeUpAnimation, techBadgeAnimation } from "@/app/lib/animation"; 
+import { TechBadge } from '@/app/components/tech-badge';
+import { differenceInMonths, differenceInYears, format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
+import Image from 'next/image';
+import { motion } from 'framer-motion';
+import { WorkExperience } from '@/app/types/work-experience';
+import { RichText } from '@/app/components/rich-text';
 
 type ExperienceItemProps = {
-  experience: WorkExperience
-}
+  experience: WorkExperience;
+};
 
 export const ExperienceItem = ({ experience }: ExperienceItemProps) => {
   const {
@@ -22,20 +21,20 @@ export const ExperienceItem = ({ experience }: ExperienceItemProps) => {
     description,
     role,
     technologies,
-  } = experience
+  } = experience;
 
-  const startDate = new Date(experience.startDate)
+  const startDate = new Date(experience.startDate);
 
-  const formattedStartDate = format(startDate, 'MMM yyyy', { locale: ptBR })
+  const formattedStartDate = format(startDate, 'MMM yyyy', { locale: ptBR });
   const formattedEndDate = endDate
     ? format(new Date(endDate), 'MMM yyyy', { locale: ptBR })
-    : 'At Moment'
+    : 'At Moment';
 
-  const end = endDate ? new Date(endDate) : new Date()
+  const end = endDate ? new Date(endDate) : new Date();
 
-  const months = differenceInMonths(end, startDate)
-  const years = differenceInYears(end, startDate)
-  const monthsRemaining = months % 12
+  const months = differenceInMonths(end, startDate);
+  const years = differenceInYears(end, startDate);
+  const monthsRemaining = months % 12;
 
   const formattedDuration =
     years > 0
@@ -44,7 +43,7 @@ export const ExperienceItem = ({ experience }: ExperienceItemProps) => {
             ? ` e ${monthsRemaining} month${monthsRemaining > 1 ? 's' : ''}`
             : ''
         }`
-      : `${months} month${months > 1 ? 's' : ''}`
+      : `${months} month${months > 1 ? 's' : ''}`;
 
   return (
     <motion.div
@@ -53,17 +52,17 @@ export const ExperienceItem = ({ experience }: ExperienceItemProps) => {
       transition={{ duration: 0.5 }}
     >
       <div className="flex items-center flex-col gap-4">
-        <div className="rounded-full border border-gray-950 p-0.5">
+        <div className="rounded-full border border-[#ffffff] p-0.5">
           <Image
             src={companyLogo.url}
-            width={40}
-            height={40}
+            width={70}
+            height={70}
             className="rounded-full"
             alt={`Logo da empresa ${companyName}`}
           />
         </div>
 
-        <div className="h-full w-[1px] bg-gray-800" />
+        <div className="h-full w-[1px] bg-[#3a3a3a]" />
       </div>
 
       <div>
@@ -71,21 +70,21 @@ export const ExperienceItem = ({ experience }: ExperienceItemProps) => {
           <a
             href={companyUrl}
             target="_blank"
-            className="text-gray-500 hover:text-blue-500 transition-colors"
+            className="bg-gradient-to-r from-[#ffffff] via-[#bba0f5] to-[#64558e] text-transparent bg-clip-text transition-colors hover:text-[#ffffff]"
             rel="noreferrer"
           >
             @{companyName}
           </a>
-          <h4 className="text-gray-900">{role}</h4>
-          <span className="text-gray-800">
+          <h4 className="text-[#ffffff]">{role}</h4>
+          <span className="text-[#e8def7]">
             {formattedStartDate} • {formattedEndDate} • ({formattedDuration})
           </span>
-          <div className="text-gray-700">
+          <div className="text-white">
             {description?.raw && <RichText content={description.raw} />}
           </div>
         </div>
 
-        <p className="text-gray-700 text-sm mb-3 mt-6 font-semibold">
+        <p className="text-[#b0b0b0] text-sm mb-3 mt-6 font-semibold">
           Skills
         </p>
         <div className="flex gap-x-2 gap-y-3 flex-wrap lg:max-w-[350px] mb-8">
@@ -100,5 +99,5 @@ export const ExperienceItem = ({ experience }: ExperienceItemProps) => {
         </div>
       </div>
     </motion.div>
-  )
-}
+  );
+};
