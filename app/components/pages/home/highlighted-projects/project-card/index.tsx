@@ -22,7 +22,7 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
       transition={{ duration: 0.5 }}
     >
       <motion.div
-        className="w-full h-[200px] sm:h-[300px] lg:w-[420px] lg:min-h-full"
+        className="w-full h-[200px] sm:h-[300px] lg:w-[300px] lg:h-[300px] overflow-hidden rounded-lg"
         initial={{ opacity: 0, y: 100, scale: 0.5 }}
         whileInView={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 100, scale: 0.5 }}
@@ -30,10 +30,10 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
       >
         <Image
           src={project.thumbnail.url}
-          width={420}
-          height={304}
+          width={300} // Ajuste para largura quadrada
+          height={300} // Ajuste para altura quadrada
           alt={`Thumbnail do projeto ${project.title}`}
-          className="w-full h-[200px] sm:h-[300px] lg:w-[420px] lg:min-h-full object-cover rounded-lg"
+          className="object-cover w-full h-full"
         />
       </motion.div>
 
