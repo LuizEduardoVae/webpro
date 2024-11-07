@@ -14,23 +14,29 @@ type ProjectCardProps = {
 
 export const ProjectCard = ({ project }: ProjectCardProps) => {
   return (
-    <motion.div className=" flex gap-6 lg:gap-12 flex-col lg:flex-row" 
-    initial={{ opacity: 0, y: 100 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0, y: 100 }}
-    transition={{ duration: 0.5 }}>
-    <motion.div className="w-full h-[200px] sm:h-[300px] lg:w-[420px] lg:min-h-full" 
+    <motion.div
+      className="flex gap-6 lg:gap-12 flex-col lg:flex-row"
+      initial={{ opacity: 0, y: 100 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 100 }}
+      transition={{ duration: 0.5 }}
+    >
+      <motion.div
+        className="w-full h-[200px] sm:h-[300px] lg:w-[420px] lg:h-[420px] overflow-hidden rounded-lg" // Ajuste para garantir que seja quadrado em lg
         initial={{ opacity: 0, y: 100, scale: 0.5 }}
         whileInView={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 100, scale: 0.5 }}
-        transition={{ duration: 0.3, delay: 0.3 }}>
-        <Image 
-        src={project.thumbnail.url}
-        width={420}
-        height={304}
-        alt={`Thumbnail do projeto ${project.title}`}
-        className="w-full h-[200px] sm:h-[300px] lg:w-[420px] lg:min-h-full object-cover rounded-lg"/> 
-    </motion.div>
+        transition={{ duration: 0.3, delay: 0.3 }}
+      >
+        <Image
+          src={project.thumbnail.url}
+          width={420}
+          height={420} // Ajustado para garantir proporção quadrada
+          alt={`Thumbnail do projeto ${project.title}`}
+          className="object-cover w-full h-full"
+        />
+      </motion.div>
+
       <div>
         <motion.h3
           className="flex items-center gap-3 font-medium text-lg bg-gradient-to-r from-[#ffffff] via-[#d1bcff] to-[#64558e] text-transparent bg-clip-text"
