@@ -68,3 +68,6 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
     </motion.div>
   );
 };
+
+
+// tete
