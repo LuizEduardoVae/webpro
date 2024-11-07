@@ -22,7 +22,7 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
       transition={{ duration: 0.5 }}
     >
       <motion.div
-        className="w-full h-[200px] sm:h-[300px] lg:w-[300px] lg:h-[300px] overflow-hidden rounded-lg" // Tamanho quadrado fixo em telas grandes
+        className="w-full h-[200px] sm:h-[300px] lg:w-[420px] lg:h-[420px] flex-shrink-0 overflow-hidden rounded-lg" // Ajuste com flex-shrink-0
         initial={{ opacity: 0, y: 100, scale: 0.5 }}
         whileInView={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 100, scale: 0.5 }}
@@ -30,8 +30,8 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
       >
         <Image
           src={project.thumbnail.url}
-          width={300} // Proporção quadrada ajustada
-          height={300} // Proporção quadrada ajustada
+          width={420} // Tamanho ajustado para 420px
+          height={420} // Tamanho ajustado para 420px
           alt={`Thumbnail do projeto ${project.title}`}
           className="object-cover w-full h-full"
         />
