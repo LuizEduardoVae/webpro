@@ -63,3 +63,4 @@ export const ProjectDetails = ({ project }: ProjectDetailsProps) => {
         </section>
     );
 };
+//1231
