@@ -43,7 +43,7 @@ export const ProjectDetails = ({ project }: ProjectDetailsProps) => {
                     <a href={project.githubUrl} target="_blank">
                         <Button className="min-w-[180px]">
                             <TbBrandGithub size={20} />
-                            Repositório
+                            Repository
                         </Button>
                     </a>
                 )}
@@ -51,7 +51,7 @@ export const ProjectDetails = ({ project }: ProjectDetailsProps) => {
                     <a href={project.liveProjectUrl} target="_blank">
                         <Button className="min-w-[180px]">
                             <FiGlobe size={20} />
-                            Projeto Online
+                            Project
                         </Button>
                     </a>
                 )}
