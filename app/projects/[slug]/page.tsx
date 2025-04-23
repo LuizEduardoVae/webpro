@@ -49,11 +49,15 @@ const getProjectDetails = async (slug: string): Promise<ProjectPageData> => {
 
 export default async function Project({ params: {slug} }: ProjectProps){
     const { project } = await getProjectDetails(slug)
+
+    if (!project) {
+        return <div>Projeto não encontrado.</div> // ou use notFound()
+    }
     
     return(
         <>
-            <ProjectDetails project={project}/>
-            <ProjectSections sections={project.sections}/>
+            <ProjectDetails project={project} />
+            <ProjectSections sections={project.sections || []} />
         </>
     )
  }
@@ -78,6 +82,13 @@ export async function generateMetadata({
 }: ProjectProps): Promise<Metadata> {
     const data = await getProjectDetails(slug)
     const project = data.project;
+
+    if (!project) {
+        return {
+            title: "Projeto não encontrado",
+            description: ""
+        }
+    }
 
     return{
         title: project.title,
