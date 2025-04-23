@@ -63,4 +63,4 @@ export const ProjectDetails = ({ project }: ProjectDetailsProps) => {
         </section>
     );
 };
-//1231dewqedasda
+//1231dewqedasdasa
