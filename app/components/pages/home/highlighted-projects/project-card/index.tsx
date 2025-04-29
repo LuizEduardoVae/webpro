@@ -43,12 +43,6 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
           {...fadeUpAnimation}
           transition={{ duration: 0.7 }}
         >
-          <Image
-            width={20}
-            height={20}
-            alt=""
-            src="/images/icons/project-title-icon.svg"
-          />
           {project.title}
         </motion.h3>
         <motion.p className="text-gray-100 my-6">
@@ -71,3 +65,4 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
 
 
 // testea
+//teste
