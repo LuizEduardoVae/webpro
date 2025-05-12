@@ -66,4 +66,4 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
 
 // testea
 //teste
-//testdasdk kknj 
+//testdasdk kknj dasdas
