@@ -1,31 +1,65 @@
-import {RichText as CMSRichText } from '@graphcms/rich-text-react-renderer'
+import { RichText as CMSRichText } from '@graphcms/rich-text-react-renderer'
 import { ComponentProps } from 'react'
 
 type RichTextProps = ComponentProps<typeof CMSRichText>
 
-export const RichText = ({...props}: RichTextProps) => {
-    return(
+export const RichText = ({ ...props }: RichTextProps) => {
+    return (
         <CMSRichText
             {...props}
             renderers={{
                 bold: ({ children }) => (
-                    <b className='text-white font-medium'>{children}</b>
+                    <b className='text-black font-medium'>{children}</b>
                 ),
-                ul:({ children }) => (
+                ul: ({ children }) => (
                     <ul className='list-disc list-inside pl-2 flex flex-col gap-1'>
-                        { children }
+                        {children}
                     </ul>
                 ),
-                a: ({ children, ...props}) => (
+                a: ({ children, ...props }) => (
                     <a
                         {...props}
-                        className='hover:text-[#d1bcff]  transition-colors underline'
+                        className='text-[#23abff] hover:underline transition-colors'
                     >
                         {children}
                     </a>
                 )
             }}
         />
-
     )
 }
+
+
+
+
+// import {RichText as CMSRichText } from '@graphcms/rich-text-react-renderer'
+// import { ComponentProps } from 'react'
+
+// type RichTextProps = ComponentProps<typeof CMSRichText>
+
+// export const RichText = ({...props}: RichTextProps) => {
+//     return(
+//         <CMSRichText
+//             {...props}
+//             renderers={{
+//                 bold: ({ children }) => (
+//                     <b className='text-white font-medium'>{children}</b>
+//                 ),
+//                 ul:({ children }) => (
+//                     <ul className='list-disc list-inside pl-2 flex flex-col gap-1'>
+//                         { children }
+//                     </ul>
+//                 ),
+//                 a: ({ children, ...props}) => (
+//                     <a
+//                         {...props}
+//                         className='hover:text-[#d1bcff]  transition-colors underline'
+//                     >
+//                         {children}
+//                     </a>
+//                 )
+//             }}
+//         />
+
+//     )
+// }

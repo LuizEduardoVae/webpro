@@ -17,11 +17,11 @@
 }
 
 *::-webkit-scrollbar-track {
-  background: #2e2e2e; /* Alterei para um cinza escuro que combina melhor com o fundo */
+  background: #ffffff; /* Alterei para um cinza escuro que combina melhor com o fundo */
   border-radius: 5px;
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: #64558e; /* Substituí por um roxo suave da paleta para manter a consistência */
+  background-color: #23abff; /* Substituí por um roxo suave da paleta para manter a consistência */
   border-radius: 14px;
 }
