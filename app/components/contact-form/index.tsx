@@ -45,22 +45,21 @@ export const ContactForm = () => {
                 <form className="mt-12 w-full flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
                     <input
                         placeholder="Name"
-                        className="w-full h-14 bg-white rounded-lg placeholder:text-gray-400 text-gray-100 p-4 focus:outline-none focus:ring-2 focus:ring-[#23abff]"
+                        className="w-full h-14 bg-white rounded-lg placeholder:text-gray-400 text-gray-900 p-4 focus:outline-none focus:ring-2 focus:ring-[#23abff] shadow-md"
                         {...register('name')}
                     />
                     <input
                         placeholder="Email"
                         type="email"
-                        className="w-full h-14 bg-white rounded-lg placeholder:text-gray-400 text-gray-100 p-4 focus:outline-none focus:ring-2 focus:ring-[#23abff]"
+                        className="w-full h-14 bg-white rounded-lg placeholder:text-gray-400 text-gray-900 p-4 focus:outline-none focus:ring-2 focus:ring-[#23abff] shadow-md"
                         {...register('email')}
                     />
                     <textarea
                         placeholder="Message"
-                        className="resize-none w-full h-[138px] bg-white rounded-lg placeholder:text-gray-400 text-gray-100 p-4 focus:outline-none focus:ring-2 focus:ring-[#23abff]"
+                        className="resize-none w-full h-[138px] bg-white rounded-lg placeholder:text-gray-400 text-gray-900 p-4 focus:outline-none focus:ring-2 focus:ring-[#23abff] shadow-md"
                         maxLength={500}
                         {...register('message')}
                     />
-
                     <Button className="w-max mx-auto mt-6 disabled:opacity-50">
                         Send Message
                         <HiArrowNarrowRight size={18} />
