@@ -25,8 +25,8 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
   return (
     <section className="w-full min-h-screen flex flex-col justify-center bg-page-bg relative overflow-hidden pt-32 pb-16">
       {/* Background Gradients */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-purple-gradient opacity-20 blur-[120px] rounded-full pointer-events-none translate-x-1/3 -translate-y-1/3" />
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-purple-gradient opacity-10 blur-[100px] rounded-full pointer-events-none -translate-x-1/3 translate-y-1/3" />
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-black-gradient opacity-20 blur-[120px] rounded-full pointer-events-none translate-x-1/3 -translate-y-1/3" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-black-gradient opacity-10 blur-[100px] rounded-full pointer-events-none -translate-x-1/3 translate-y-1/3" />
 
       <div className="container relative z-10">
         <motion.div
@@ -39,7 +39,7 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
           <div className="relative mb-16">
             <h1 className="font-serif text-7xl sm:text-8xl lg:text-9xl font-medium text-primary tracking-tight leading-[0.9]">
               Luiz <br />
-              <span className="italic">Eduardo</span> Vedoato.
+              <span className="italic">Vedoato</span>.
             </h1>
 
             {/* Floating Profile Picture */}

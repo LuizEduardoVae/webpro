@@ -1,4 +1,4 @@
-import { Inter, IBM_Plex_Mono, Playfair_Display } from 'next/font/google'
+import { IBM_Plex_Mono, Playfair_Display, DM_Sans } from 'next/font/google'
 import './globals.css'
 import { ReactNode } from 'react'
 import { Header } from './components/header'
@@ -21,9 +21,10 @@ export const metadata = {
   ]
 }
 
-const inter = Inter({
-  variable: '--font-inter',
+const dmSans = DM_Sans({
+  variable: '--font-dm-sans',
   subsets: ['latin'],
+  weight: ['400', '500', '700'],
 })
 
 const plexMono = IBM_Plex_Mono({
@@ -39,8 +40,9 @@ const playfair = Playfair_Display({
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="pt-BR" className={`${inter.variable} ${plexMono.variable} ${playfair.variable}`}>
+    <html lang="pt-BR" className={`${dmSans.variable} ${plexMono.variable} ${playfair.variable}`}>
       <body>
+        <div className="noise-overlay" />
         <Toaster />
         <BackToTop />
 
