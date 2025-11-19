@@ -36,10 +36,10 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
           className="max-w-5xl mx-auto"
         >
           {/* Header / Name Section */}
-          <div className="flex flex-col items-center justify-center text-center relative z-10">
-            <div className="relative">
+          <div className="flex flex-col items-center justify-center text-center relative z-10 mb-12">
+            <div className="relative inline-block">
               <motion.h1
-                className="text-[5rem] sm:text-[7rem] lg:text-[9rem] font-sans font-bold leading-[0.8] tracking-tighter text-primary mix-blend-overlay"
+                className="text-[6rem] sm:text-[8rem] lg:text-[10rem] font-sans font-bold leading-[0.8] tracking-tighter text-primary mix-blend-overlay relative z-10"
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
@@ -47,31 +47,29 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
                 Luiz
               </motion.h1>
 
-              <div className="flex items-center justify-center gap-4 sm:gap-8 -mt-2 sm:-mt-6 relative">
-                <motion.h1
-                  className="text-[5rem] sm:text-[7rem] lg:text-[9rem] font-serif italic leading-[0.8] tracking-tight text-primary"
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.4 }}
-                >
-                  Vedoato.
-                </motion.h1>
+              <motion.h1
+                className="text-[6rem] sm:text-[8rem] lg:text-[10rem] font-serif italic leading-[0.8] tracking-tight text-primary relative z-10 -mt-2 sm:-mt-6"
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+              >
+                Vedoato.
+              </motion.h1>
 
-                <motion.div
-                  className="absolute -top-12 right-0 sm:-right-12 lg:-right-24 w-24 h-24 sm:w-32 sm:h-32 lg:w-40 lg:h-40 rounded-full overflow-hidden border-4 border-white shadow-2xl"
-                  initial={{ opacity: 0, scale: 0 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5, delay: 0.6, type: "spring" }}
-                >
-                  <Image
-                    width={160}
-                    height={160}
-                    className="w-full h-full object-cover"
-                    src="https://github.com/LuizEduardoVae.png"
-                    alt="Luiz Eduardo Vedoato"
-                  />
-                </motion.div>
-              </div>
+              <motion.div
+                className="absolute top-0 -right-4 sm:-right-12 lg:-right-24 w-20 h-20 sm:w-28 sm:h-28 lg:w-36 lg:h-36 rounded-full overflow-hidden border-4 border-white shadow-2xl z-20"
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.6, type: "spring" }}
+              >
+                <Image
+                  width={160}
+                  height={160}
+                  className="w-full h-full object-cover"
+                  src={homeInfo.profilePicture.url}
+                  alt="Luiz Eduardo Vedoato"
+                />
+              </motion.div>
             </div>
 
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-black-gradient opacity-20 blur-[100px] -z-10 rounded-full pointer-events-none" />
