@@ -10,15 +10,17 @@ export const KnowTech = ({ tech }: KnowTechProps) => {
   const relativeTime = getRelativeTimeString(new Date(tech.startDate), 'en-US').replace('ago', '');
 
   return (
-    <div className="p-6 rounded-lg bg-page-gray text-text-secondary hover:text-primary hover:bg-gray-800 flex flex-col gap-2 transition-all border border-gray-800">
+    <div className="p-6 rounded-lg bg-gray-50 hover:bg-white border border-gray-100 hover:border-gray-200 hover:shadow-lg flex flex-col gap-4 transition-all duration-300 group">
       <div className="flex items-center justify-between">
-        <p className="font-medium text-text-primary">
+        <p className="font-serif font-medium text-lg text-primary group-hover:text-secondary transition-colors">
           {tech.name}
         </p>
-        <CMSIcon icon={tech.iconSvg} />
+        <div className="text-3xl text-gray-400 group-hover:text-secondary transition-colors">
+          <CMSIcon icon={tech.iconSvg} />
+        </div>
       </div>
 
-      <span>{relativeTime} of experience</span>
+      <span className="text-sm text-text-secondary font-mono">{relativeTime} of experience</span>
     </div>
   );
 };

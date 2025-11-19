@@ -15,14 +15,14 @@ type ProjectCardProps = {
 export const ProjectCard = ({ project }: ProjectCardProps) => {
   return (
     <motion.div
-      className="flex gap-6 lg:gap-12 flex-col lg:flex-row"
+      className="flex gap-6 lg:gap-12 flex-col lg:flex-row group"
       initial={{ opacity: 0, y: 100 }}
       whileInView={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 100 }}
       transition={{ duration: 0.5 }}
     >
       <motion.div
-        className="w-full h-[200px] sm:h-[300px] lg:w-[420px] lg:h-[420px] flex-shrink-0 overflow-hidden rounded-lg"
+        className="w-full h-[200px] sm:h-[300px] lg:w-[500px] lg:h-[350px] flex-shrink-0 overflow-hidden rounded-lg shadow-lg"
         initial={{ opacity: 0, y: 100, scale: 0.5 }}
         whileInView={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 100, scale: 0.5 }}
@@ -30,23 +30,23 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
       >
         <Image
           src={project.thumbnail.url}
-          width={420}
-          height={420}
+          width={500}
+          height={350}
           alt={`Thumbnail do projeto ${project.title}`}
-          className="object-cover w-full h-full"
+          className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
         />
       </motion.div>
 
-      <div>
+      <div className="flex flex-col justify-center">
         <motion.h3
-          className="flex items-center gap-3 font-medium text-lg text-text-primary"
+          className="flex items-center gap-3 font-serif font-medium text-3xl text-text-primary mb-4"
           {...fadeUpAnimation}
           transition={{ duration: 0.7 }}
         >
           {project.title}
         </motion.h3>
 
-        <motion.p className="text-text-secondary my-6">
+        <motion.p className="text-text-secondary text-lg mb-8 leading-relaxed">
           {project.shortDescription}
         </motion.p>
 
@@ -58,10 +58,10 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
 
         <Link
           href={`/projects/${project.slug}`}
-          className="text-primary hover:text-text-primary transition-colors"
+          className="text-primary font-medium hover:text-secondary transition-colors flex items-center gap-2 text-lg"
         >
           Go to Project
-          <HiArrowNarrowRight />
+          <HiArrowNarrowRight size={24} />
         </Link>
       </div>
     </motion.div>
