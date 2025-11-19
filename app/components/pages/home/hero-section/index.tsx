@@ -23,23 +23,22 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
   };
 
   return (
-    <section className="w-full min-h-screen flex flex-col justify-center bg-page-bg relative overflow-hidden pt-32 pb-16">
-      {/* Background Gradients */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-black-gradient opacity-20 blur-[120px] rounded-full pointer-events-none translate-x-1/3 -translate-y-1/3" />
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-black-gradient opacity-10 blur-[100px] rounded-full pointer-events-none -translate-x-1/3 translate-y-1/3" />
+    <section className="w-full min-h-screen flex flex-col justify-center bg-gradient-to-br from-neutral-50 to-neutral-200 relative overflow-hidden pt-32 pb-16">
+      {/* Depth Effect */}
+      <div className="absolute top-0 left-0 w-[800px] h-[800px] bg-gradient-to-br from-gray-200 to-transparent opacity-40 blur-3xl -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
 
-      <div className="container relative z-10">
+      <div className="container relative z-10 max-w-screen-xl mx-auto px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="max-w-5xl mx-auto"
+          className="flex flex-col gap-12"
         >
           {/* Header / Name Section */}
-          <div className="flex flex-col items-center justify-center text-center relative z-10 mb-12">
+          <div className="relative z-10">
             <div className="relative inline-block">
               <motion.h1
-                className="text-[8rem] sm:text-[10rem] lg:text-[13rem] font-sans font-black leading-[0.8] tracking-tighter text-primary relative z-10"
+                className="font-sans font-extrabold text-[12vw] leading-none text-primary tracking-tighter"
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
@@ -48,7 +47,7 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
               </motion.h1>
 
               <motion.h1
-                className="text-[8rem] sm:text-[10rem] lg:text-[13rem] font-serif italic leading-[0.8] tracking-tight text-primary relative z-10 -mt-4 sm:-mt-8 lg:-mt-12"
+                className="font-serif italic text-[11vw] leading-none text-primary -mt-[2vw] sm:-mt-[3vw]"
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
@@ -57,36 +56,34 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
               </motion.h1>
 
               <motion.div
-                className="absolute top-4 right-4 sm:top-8 sm:right-16 lg:top-12 lg:right-24 w-24 h-24 sm:w-32 sm:h-32 lg:w-40 lg:h-40 rounded-full overflow-hidden border-4 border-white shadow-2xl z-20"
+                className="absolute top-0 right-0 translate-x-1/3 -translate-y-1/3 w-24 h-24 sm:w-32 sm:h-32 lg:w-48 lg:h-48 rounded-full overflow-hidden ring-4 ring-white shadow-xl z-20"
                 initial={{ opacity: 0, scale: 0 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.6, type: "spring" }}
               >
                 <Image
-                  width={160}
-                  height={160}
+                  width={192}
+                  height={192}
                   className="w-full h-full object-cover"
                   src={homeInfo.profilePicture.url}
                   alt="Luiz Eduardo Vedoato"
                 />
               </motion.div>
             </div>
-
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-black-gradient opacity-20 blur-[100px] -z-10 rounded-full pointer-events-none" />
           </div>
 
           {/* Content Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mt-12">
 
             {/* Left Column: Socials & Techs */}
             <div className="lg:col-span-4 flex flex-col gap-8">
-              <div className="flex gap-4 text-2xl text-primary">
+              <div className="flex items-center gap-4">
                 {homeInfo.socials.map((contact, i) => (
                   <a
                     href={contact.url}
                     key={`contact-${i}`}
                     target="_blank"
-                    className="hover:text-secondary transition-colors p-2 bg-gray-50 rounded-full"
+                    className="w-10 h-10 flex items-center justify-center rounded-full border border-black/20 hover:bg-black hover:text-white transition-all duration-300 text-primary"
                   >
                     <CMSIcon key={contact.iconSvg} icon={contact.iconSvg} />
                   </a>
@@ -111,7 +108,7 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
                 <RichText content={homeInfo.introduction.raw} />
               </div>
 
-              <Button className="w-max bg-primary text-white hover:bg-gray-900 rounded-full px-8 py-4 text-lg" onClick={handleContact}>
+              <Button className="w-max bg-primary text-white hover:bg-black rounded-full px-8 py-4 text-lg shadow-lg hover:shadow-xl transition-all" onClick={handleContact}>
                 Entre em contato
                 <HiArrowNarrowRight size={20} />
               </Button>
