@@ -15,11 +15,10 @@ export const NavItem = ({ label, href }: NavItemProps) => {
         <Link
             href={href}
             className={cn(
-                "text-text-secondary flex items-center gap-2 font-medium font-mono transition-colors duration-300 hover:text-primary",
-                isActive && 'text-text-primary'
+                "text-text-secondary flex items-center gap-2 font-medium font-mono text-sm hover:text-primary transition-colors",
+                isActive && "text-text-primary"
             )}
         >
-            <span className={cn("text-primary", isActive && 'text-primary')}>#</span>
             {label}
         </Link>
     );

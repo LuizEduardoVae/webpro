@@ -4,9 +4,10 @@
 
 @layer base {
   body {
-    @apply bg-page-black text-text-primary;
+    @apply bg-page-bg text-text-primary overflow-x-hidden;
   }
 }
+
 .container {
   @apply mx-auto w-full max-w-[1200px] px-6;
 }
@@ -16,11 +17,11 @@
 }
 
 *::-webkit-scrollbar-track {
-  background: #09090b;
+  background: #f1f1f1;
   border-radius: 5px;
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: #8b5cf6;
+  background-color: #FF4D00;
   border-radius: 14px;
 }
