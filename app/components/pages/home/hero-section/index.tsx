@@ -92,6 +92,7 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
       </div>
     </section>
   );
+};
 
 // 'use client';
 
