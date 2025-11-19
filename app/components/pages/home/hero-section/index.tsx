@@ -23,77 +23,90 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
   };
 
   return (
-    <section className="w-full min-h-screen flex items-center justify-center bg-page-bg relative overflow-hidden pt-24 lg:pt-0">
+    <section className="w-full min-h-screen flex flex-col justify-center bg-page-bg relative overflow-hidden pt-32 pb-16">
       {/* Background Gradients */}
-      <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[800px] h-[800px] bg-orange-gradient opacity-80 blur-3xl pointer-events-none" />
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-purple-gradient opacity-20 blur-[120px] rounded-full pointer-events-none translate-x-1/3 -translate-y-1/3" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-purple-gradient opacity-10 blur-[100px] rounded-full pointer-events-none -translate-x-1/3 translate-y-1/3" />
 
-      <div className="container flex items-center justify-between flex-col lg:flex-row gap-10 lg:gap-0 relative z-10">
+      <div className="container relative z-10">
         <motion.div
-          className="w-full lg:max-w-[600px]"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8 }}
+          className="max-w-5xl mx-auto"
         >
-          <p className="font-mono text-primary mb-2">Hi, I'm</p>
-          <h1 className="text-5xl lg:text-6xl font-bold text-text-primary leading-[1.1] mb-6 tracking-tight">
-            Luiz Eduardo Vedoato <span>👋🏼</span>
-          </h1>
+          {/* Header / Name Section */}
+          <div className="relative mb-16">
+            <h1 className="font-serif text-7xl sm:text-8xl lg:text-9xl font-medium text-primary tracking-tight leading-[0.9]">
+              Luiz <br />
+              <span className="italic">Eduardo</span> Vedoato.
+            </h1>
 
-          <div className="text-text-secondary text-lg lg:text-xl mb-8 max-w-[480px]">
-            <RichText content={homeInfo.introduction.raw} />
-          </div>
-
-          <div className="flex flex-wrap gap-x-2 gap-y-3 lg:max-w-[340px] mb-8">
-            {homeInfo.technologies.map((tech, i) => (
-              <TechBadge
-                name={tech.name}
-                key={tech.name}
-                {...techBadgeAnimation}
-                transition={{ duration: 0.2, delay: i * 0.1 }}
+            {/* Floating Profile Picture */}
+            <motion.div
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.4, duration: 0.5 }}
+              className="absolute top-4 right-4 lg:top-8 lg:right-20 w-24 h-24 sm:w-32 sm:h-32 rounded-full overflow-hidden border-4 border-white shadow-lg"
+            >
+              <Image
+                width={128}
+                height={128}
+                src={homeInfo.profilePicture.url}
+                alt="Foto de Perfil"
+                className="w-full h-full object-cover"
               />
-            ))}
+            </motion.div>
           </div>
 
-          <div className="flex sm:items-center sm:gap-5 flex-col sm:flex-row">
-            <Button className="w-max" onClick={handleContact}>
-              Entre em contato
-              <HiArrowNarrowRight size={20} />
-            </Button>
+          {/* Content Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
 
-            <div className="text-2xl text-text-primary flex items-center h-20 gap-4">
-              {homeInfo.socials.map((contact, i) => (
-                <a
-                  href={contact.url}
-                  key={`contact-${i}`}
-                  target="_blank"
-                  className="hover:text-primary transition-colors"
-                >
-                  <CMSIcon key={contact.iconSvg} icon={contact.iconSvg} />
-                </a>
-              ))}
+            {/* Left Column: Socials & Techs */}
+            <div className="lg:col-span-4 flex flex-col gap-8">
+              <div className="flex gap-4 text-2xl text-primary">
+                {homeInfo.socials.map((contact, i) => (
+                  <a
+                    href={contact.url}
+                    key={`contact-${i}`}
+                    target="_blank"
+                    className="hover:text-secondary transition-colors p-2 bg-gray-50 rounded-full"
+                  >
+                    <CMSIcon key={contact.iconSvg} icon={contact.iconSvg} />
+                  </a>
+                ))}
+              </div>
+
+              <div className="flex flex-wrap gap-2">
+                {homeInfo.technologies.map((tech, i) => (
+                  <TechBadge
+                    name={tech.name}
+                    key={tech.name}
+                    {...techBadgeAnimation}
+                    transition={{ duration: 0.2, delay: i * 0.1 }}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
-        </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="relative w-full lg:w-[420px] h-[404px]"
-        >
-          <Image
-            width={420}
-            height={404}
-            src={homeInfo.profilePicture.url}
-            alt="Foto de Perfil"
-            className="w-full h-full object-cover rounded-[2rem] shadow-2xl"
-          />
+            {/* Right Column: Intro & CTA */}
+            <div className="lg:col-span-8 flex flex-col gap-8">
+              <div className="text-text-secondary text-lg sm:text-xl leading-relaxed max-w-2xl">
+                <RichText content={homeInfo.introduction.raw} />
+              </div>
+
+              <Button className="w-max bg-primary text-white hover:bg-gray-900 rounded-full px-8 py-4 text-lg" onClick={handleContact}>
+                Entre em contato
+                <HiArrowNarrowRight size={20} />
+              </Button>
+            </div>
+
+          </div>
         </motion.div>
       </div>
     </section>
   );
 };
-
 // 'use client';
 
 // import { techBadgeAnimation } from "@/app/lib/animation";
