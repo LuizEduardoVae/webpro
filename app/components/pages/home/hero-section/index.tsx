@@ -36,27 +36,45 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
           className="max-w-5xl mx-auto"
         >
           {/* Header / Name Section */}
-          <div className="relative mb-16">
-            <h1 className="font-serif text-7xl sm:text-8xl lg:text-9xl font-medium text-primary tracking-tight leading-[0.9]">
-              Luiz <br />
-              <span className="italic">Vedoato</span>.
-            </h1>
+          <div className="flex flex-col items-center justify-center text-center relative z-10">
+            <div className="relative">
+              <motion.h1
+                className="text-[5rem] sm:text-[7rem] lg:text-[9rem] font-sans font-bold leading-[0.8] tracking-tighter text-primary mix-blend-overlay"
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+              >
+                Luiz
+              </motion.h1>
 
-            {/* Floating Profile Picture */}
-            <motion.div
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.4, duration: 0.5 }}
-              className="absolute top-4 right-4 lg:top-8 lg:right-20 w-24 h-24 sm:w-32 sm:h-32 rounded-full overflow-hidden border-4 border-white shadow-lg"
-            >
-              <Image
-                width={128}
-                height={128}
-                src={homeInfo.profilePicture.url}
-                alt="Foto de Perfil"
-                className="w-full h-full object-cover"
-              />
-            </motion.div>
+              <div className="flex items-center justify-center gap-4 sm:gap-8 -mt-2 sm:-mt-6 relative">
+                <motion.h1
+                  className="text-[5rem] sm:text-[7rem] lg:text-[9rem] font-serif italic leading-[0.8] tracking-tight text-primary"
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.4 }}
+                >
+                  Vedoato.
+                </motion.h1>
+
+                <motion.div
+                  className="absolute -top-12 right-0 sm:-right-12 lg:-right-24 w-24 h-24 sm:w-32 sm:h-32 lg:w-40 lg:h-40 rounded-full overflow-hidden border-4 border-white shadow-2xl"
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, delay: 0.6, type: "spring" }}
+                >
+                  <Image
+                    width={160}
+                    height={160}
+                    className="w-full h-full object-cover"
+                    src="https://github.com/LuizEduardoVae.png"
+                    alt="Luiz Eduardo Vedoato"
+                  />
+                </motion.div>
+              </div>
+            </div>
+
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-black-gradient opacity-20 blur-[100px] -z-10 rounded-full pointer-events-none" />
           </div>
 
           {/* Content Grid */}

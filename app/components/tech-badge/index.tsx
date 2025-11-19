@@ -10,7 +10,7 @@ type TechBadgeProps = ComponentProps<typeof motion.span> & {
 export const TechBadge = ({ name, ...props }: TechBadgeProps) => {
   return (
     <motion.span
-      className="bg-orange-50 text-primary border border-orange-100 text-sm py-1 px-3 rounded-full font-medium"
+      className="bg-[#f5f5f5] text-primary border border-gray-200 text-sm py-2 px-4 rounded-full font-medium hover:bg-gray-200 transition-colors"
       {...props}
     >
       {name}
