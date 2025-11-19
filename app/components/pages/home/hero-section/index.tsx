@@ -39,7 +39,7 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
           <div className="flex flex-col items-center justify-center text-center relative z-10 mb-12">
             <div className="relative inline-block">
               <motion.h1
-                className="text-[6rem] sm:text-[8rem] lg:text-[10rem] font-sans font-bold leading-[0.8] tracking-tighter text-primary mix-blend-overlay relative z-10"
+                className="text-[8rem] sm:text-[10rem] lg:text-[13rem] font-sans font-black leading-[0.8] tracking-tighter text-primary relative z-10"
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
@@ -48,7 +48,7 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
               </motion.h1>
 
               <motion.h1
-                className="text-[6rem] sm:text-[8rem] lg:text-[10rem] font-serif italic leading-[0.8] tracking-tight text-primary relative z-10 -mt-2 sm:-mt-6"
+                className="text-[8rem] sm:text-[10rem] lg:text-[13rem] font-serif italic leading-[0.8] tracking-tight text-primary relative z-10 -mt-4 sm:-mt-8 lg:-mt-12"
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
@@ -57,7 +57,7 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
               </motion.h1>
 
               <motion.div
-                className="absolute top-0 -right-4 sm:-right-12 lg:-right-24 w-20 h-20 sm:w-28 sm:h-28 lg:w-36 lg:h-36 rounded-full overflow-hidden border-4 border-white shadow-2xl z-20"
+                className="absolute top-4 right-4 sm:top-8 sm:right-16 lg:top-12 lg:right-24 w-24 h-24 sm:w-32 sm:h-32 lg:w-40 lg:h-40 rounded-full overflow-hidden border-4 border-white shadow-2xl z-20"
                 initial={{ opacity: 0, scale: 0 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.6, type: "spring" }}
