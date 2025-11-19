@@ -23,7 +23,7 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
   };
 
   return (
-    <section className="w-full lg:h-[755px] flex flex-col justify-end pb-10 sm:pb-32 py-40 lg:pb-[110px] bg-white text-black">
+    <section className="w-full lg:h-[755px] flex flex-col justify-end pb-10 sm:pb-32 py-40 lg:pb-[110px] bg-page-black text-text-primary">
       <div className="container flex items-start justify-between flex-col-reverse lg:flex-row">
         <motion.div
           className="w-full lg:max-w-[530px]"
@@ -32,12 +32,12 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
           exit={{ opacity: 0, x: -100 }}
           transition={{ duration: 0.5 }}
         >
-          <p className="font-mono text-[#23abff]">Hi, I'm</p>
-          <h2 className="text-4xl font-medium mt-2 text-black">
+          <p className="font-mono text-primary">Hi, I'm</p>
+          <h2 className="text-4xl font-medium mt-2 text-text-primary">
             Luiz Eduardo Vedoato <span>👋🏼</span>
           </h2>
 
-          <div className="text-gray-700 my-6 text-sm sm:text-base">
+          <div className="text-text-secondary my-6 text-sm sm:text-base">
             <RichText content={homeInfo.introduction.raw} />
           </div>
 
@@ -58,13 +58,13 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
               <HiArrowNarrowRight size={18} />
             </Button>
 
-            <div className="text-2xl text-black flex items-center h-20">
+            <div className="text-2xl text-text-primary flex items-center h-20">
               {homeInfo.socials.map((contact, i) => (
                 <a
                   href={contact.url}
                   key={`contact-${i}`}
                   target="_blank"
-                  className="hover:text-[#23abff] transition-colors px-0.5"
+                  className="hover:text-primary transition-colors px-0.5"
                 >
                   <CMSIcon key={contact.iconSvg} icon={contact.iconSvg} />
                 </a>

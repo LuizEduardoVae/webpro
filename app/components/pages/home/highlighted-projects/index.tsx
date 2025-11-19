@@ -24,10 +24,10 @@ export const HighLightedProjects = ({ projects }: HighLightedProjectsProps) => {
         ))}
 
         <p className="flex items-center gap-1.5">
-          <span className="text-black">Are you interested?</span>
+          <span className="text-text-secondary">Are you interested?</span>
           <Link
             href="/projects"
-            className="inline-flex text-[#23abff] hover:text-black transition-colors"
+            className="inline-flex text-primary hover:text-text-primary transition-colors"
           >
             See All
             <HiArrowNarrowRight />

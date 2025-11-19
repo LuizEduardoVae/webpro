@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply bg-white text-black;
+    @apply bg-page-black text-text-primary;
   }
 }
 .container {
@@ -16,11 +16,11 @@
 }
 
 *::-webkit-scrollbar-track {
-  background: #ffffff; /* Alterei para um cinza escuro que combina melhor com o fundo */
+  background: #09090b;
   border-radius: 5px;
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: #23abff; /* Substituí por um roxo suave da paleta para manter a consistência */
+  background-color: #8b5cf6;
   border-radius: 14px;
 }
