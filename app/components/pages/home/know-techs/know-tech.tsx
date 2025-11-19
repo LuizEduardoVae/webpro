@@ -10,9 +10,9 @@ export const KnowTech = ({ tech }: KnowTechProps) => {
   const relativeTime = getRelativeTimeString(new Date(tech.startDate), 'en-US').replace('ago', '');
 
   return (
-    <div className="p-6 rounded-lg bg-white text-gray-700 hover:text-[#23abff] hover:bg-[#e6f4ff] flex flex-col gap-2 transition-all border border-gray-200">
+    <div className="p-6 rounded-lg bg-page-gray text-text-secondary hover:text-primary hover:bg-gray-800 flex flex-col gap-2 transition-all border border-gray-800">
       <div className="flex items-center justify-between">
-        <p className="font-medium text-[#23abff]">
+        <p className="font-medium text-text-primary">
           {tech.name}
         </p>
         <CMSIcon icon={tech.iconSvg} />

@@ -1,6 +1,6 @@
 'use client'
 
-import { fadeUpAnimation, techBadgeAnimation } from "@/app/lib/animation"; 
+import { fadeUpAnimation, techBadgeAnimation } from "@/app/lib/animation";
 import { TechBadge } from '@/app/components/tech-badge';
 import { differenceInMonths, differenceInYears, format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
@@ -39,11 +39,10 @@ export const ExperienceItem = ({ experience }: ExperienceItemProps) => {
 
   const formattedDuration =
     years > 0
-      ? `${years} year${years > 1 ? 's' : ''}${
-          monthsRemaining > 0
-            ? ` e ${monthsRemaining} month${monthsRemaining > 1 ? 's' : ''}`
-            : ''
-        }`
+      ? `${years} year${years > 1 ? 's' : ''}${monthsRemaining > 0
+        ? ` e ${monthsRemaining} month${monthsRemaining > 1 ? 's' : ''}`
+        : ''
+      }`
       : `${months} month${months > 1 ? 's' : ''}`;
 
   return (
@@ -53,7 +52,7 @@ export const ExperienceItem = ({ experience }: ExperienceItemProps) => {
       transition={{ duration: 0.5 }}
     >
       <div className="flex items-center flex-col gap-4">
-        <div className="rounded-full border border-[#23abff] p-0.5">
+        <div className="rounded-full border border-gray-700 p-0.5">
           <Image
             src={companyLogo.url}
             width={70}
@@ -63,7 +62,7 @@ export const ExperienceItem = ({ experience }: ExperienceItemProps) => {
           />
         </div>
 
-        <div className="h-full w-[1px] bg-[#23abff]" />
+        <div className="h-full w-[1px] bg-gray-700" />
       </div>
 
       <div>
@@ -71,21 +70,21 @@ export const ExperienceItem = ({ experience }: ExperienceItemProps) => {
           <a
             href={companyUrl}
             target="_blank"
-            className="text-[#23abff] hover:underline transition-colors"
+            className="text-text-primary hover:text-primary transition-colors"
             rel="noreferrer"
           >
             @{companyName}
           </a>
-          <h4 className="text-black">{role}</h4>
-          <span className="text-gray-700">
+          <h4 className="text-text-primary">{role}</h4>
+          <span className="text-text-secondary">
             {formattedStartDate} • {formattedEndDate} • ({formattedDuration})
           </span>
-          <div className="text-gray-800">
+          <div className="text-text-secondary">
             {description?.raw && <RichText content={description.raw} />}
           </div>
         </div>
 
-        <p className="text-[#23abff] text-sm mb-3 mt-6 font-semibold">
+        <p className="text-text-secondary text-sm mb-3 mt-6 font-semibold">
           Skills
         </p>
         <div className="flex gap-x-2 gap-y-3 flex-wrap lg:max-w-[350px] mb-8">

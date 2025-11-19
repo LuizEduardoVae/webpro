@@ -39,14 +39,14 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
 
       <div>
         <motion.h3
-          className="flex items-center gap-3 font-medium text-lg text-[#23abff]"
+          className="flex items-center gap-3 font-medium text-lg text-text-primary"
           {...fadeUpAnimation}
           transition={{ duration: 0.7 }}
         >
           {project.title}
         </motion.h3>
 
-        <motion.p className="text-gray-700 my-6">
+        <motion.p className="text-text-secondary my-6">
           {project.shortDescription}
         </motion.p>
 
@@ -58,7 +58,7 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
 
         <Link
           href={`/projects/${project.slug}`}
-          className="text-[#23abff] hover:text-black transition-colors"
+          className="text-primary hover:text-text-primary transition-colors"
         >
           Go to Project
           <HiArrowNarrowRight />

@@ -37,11 +37,10 @@ export const CourseExperienceItem = ({ college }: ExperienceCollegeItemProps) =>
 
     const formattedDuration =
         years > 0
-            ? `${years} year${years > 1 ? 's' : ''}${
-                  monthsRemaining > 0
-                      ? ` e ${monthsRemaining} month${monthsRemaining > 1 ? 's' : ''}`
-                      : ''
-              }`
+            ? `${years} year${years > 1 ? 's' : ''}${monthsRemaining > 0
+                ? ` e ${monthsRemaining} month${monthsRemaining > 1 ? 's' : ''}`
+                : ''
+            }`
             : `${months} month${months > 1 ? 's' : ''}`;
 
     return (
@@ -51,7 +50,7 @@ export const CourseExperienceItem = ({ college }: ExperienceCollegeItemProps) =>
             transition={{ duration: 0.5 }}
         >
             <div className="flex flex-col items-center gap-4">
-                <div className="rounded-full border border-[#23abff] p-0.5">
+                <div className="rounded-full border border-gray-700 p-0.5">
                     <Image
                         src={collegeLogo.url}
                         alt={`Logo da empresa ${collegeName}`}
@@ -61,7 +60,7 @@ export const CourseExperienceItem = ({ college }: ExperienceCollegeItemProps) =>
                     />
                 </div>
 
-                <div className="h-full w-[1px] bg-[#23abff]"></div>
+                <div className="h-full w-[1px] bg-gray-700"></div>
             </div>
 
             <div>
@@ -69,16 +68,16 @@ export const CourseExperienceItem = ({ college }: ExperienceCollegeItemProps) =>
                     <a
                         href={collegeUrl}
                         target="_blank"
-                        className="text-black hover:text-[#23abff] transition-colors"
+                        className="text-text-primary hover:text-primary transition-colors"
                         rel="noreferrer"
                     >
                         @{collegeName}
                     </a>
-                    <h4 className="text-black">{role}</h4>
-                    <span className="text-gray-700">
+                    <h4 className="text-text-primary">{role}</h4>
+                    <span className="text-text-secondary">
                         {formattedStartDate} • {formattedEndDate} • ({formattedDuration})
                     </span>
-                    <div className="text-gray-700">
+                    <div className="text-text-secondary">
                         <RichText content={description.raw} />
                     </div>
                 </div>
