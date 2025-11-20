@@ -42,7 +42,7 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
             <div className="relative flex flex-col items-center sm:items-start w-full">
               <div className="relative">
                 <motion.h1
-                  className="font-sans font-extrabold text-7xl sm:text-9xl md:text-[10rem] lg:text-[14rem] xl:text-[16rem] leading-[0.8] text-primary tracking-tighter relative z-10"
+                  className="font-sans font-extrabold text-[18vw] sm:text-9xl md:text-[10rem] lg:text-[14rem] xl:text-[16rem] leading-[0.8] text-primary tracking-tighter relative z-10"
                   initial={{ opacity: 0, y: 50 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8 }}
@@ -52,7 +52,7 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
 
                 {/* Avatar - Positioned on the 'Z' */}
                 <motion.div
-                  className="absolute -top-4 -right-4 sm:top-0 sm:-right-12 lg:top-4 lg:-right-16 z-20 w-16 h-16 sm:w-24 sm:h-24 lg:w-32 lg:h-32 rounded-full overflow-hidden ring-4 ring-white shadow-xl bg-gray-200"
+                  className="absolute -top-2 -right-2 sm:top-0 sm:-right-12 lg:top-4 lg:-right-16 z-20 w-16 h-16 sm:w-24 sm:h-24 lg:w-32 lg:h-32 rounded-full overflow-hidden ring-4 ring-white shadow-xl bg-gray-200"
                   initial={{ opacity: 0, scale: 0 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.5, delay: 0.6 }}
@@ -68,7 +68,7 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
               </div>
 
               <motion.h1
-                className="font-serif italic text-7xl sm:text-9xl md:text-[10rem] lg:text-[14rem] xl:text-[16rem] leading-[0.8] text-primary -mt-2 sm:-mt-4 md:-mt-8 lg:-mt-12 relative z-10 ml-0 sm:ml-[5vw]"
+                className="font-serif italic text-[18vw] sm:text-9xl md:text-[10rem] lg:text-[14rem] xl:text-[16rem] leading-[0.8] text-primary -mt-[2vw] sm:-mt-4 md:-mt-8 lg:-mt-12 relative z-10 ml-0 sm:ml-[5vw]"
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
@@ -79,7 +79,7 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
           </div>
 
           {/* Content Grid - Footer Alignment */}
-          <div className="flex flex-col lg:flex-row justify-between items-start mt-2 sm:mt-4 relative z-20 w-full gap-8 lg:gap-0">
+          <div className="flex flex-col lg:flex-row justify-between items-start mt-12 sm:mt-20 relative z-20 w-full gap-8 lg:gap-0">
 
             {/* Left: Socials */}
             <div className="flex gap-4">
@@ -96,8 +96,8 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
             </div>
 
             {/* Right: Intro & CTA */}
-            <div className="flex flex-col gap-6 sm:gap-8 items-start lg:items-end text-left max-w-xl w-full lg:w-auto">
-              <div className="text-text-secondary text-base sm:text-lg sm:text-xl leading-relaxed text-justify hyphens-auto">
+            <div className="flex flex-col gap-6 sm:gap-8 items-start lg:items-end text-left lg:text-right max-w-xl w-full lg:w-auto">
+              <div className="text-text-secondary text-base sm:text-lg sm:text-xl leading-relaxed">
                 <RichText content={homeInfo.introduction.raw} />
               </div>
 

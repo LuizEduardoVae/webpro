@@ -19,7 +19,7 @@ export const RichText = ({ ...props }: RichTextProps) => {
                 a: ({ children, ...props }) => (
                     <a
                         {...props}
-                        className='text-[#23abff] hover:underline transition-colors'
+                        className='text-black underline decoration-black hover:text-gray-700 transition-colors'
                     >
                         {children}
                     </a>
