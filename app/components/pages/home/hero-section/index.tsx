@@ -52,7 +52,7 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
 
                 {/* Avatar - Positioned on the 'Z' */}
                 <motion.div
-                  className="absolute -top-2 -right-2 sm:top-0 sm:-right-12 lg:top-4 lg:-right-16 z-20 w-16 h-16 sm:w-24 sm:h-24 lg:w-32 lg:h-32 rounded-full overflow-hidden ring-4 ring-white shadow-xl bg-gray-200"
+                  className="absolute -top-6 -right-6 sm:-top-4 sm:-right-16 lg:top-0 lg:-right-20 z-20 w-16 h-16 sm:w-24 sm:h-24 lg:w-32 lg:h-32 rounded-full overflow-hidden ring-4 ring-white shadow-xl bg-gray-200"
                   initial={{ opacity: 0, scale: 0 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.5, delay: 0.6 }}
@@ -79,7 +79,7 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
           </div>
 
           {/* Content Grid - Footer Alignment */}
-          <div className="flex flex-col lg:flex-row justify-between items-start mt-12 sm:mt-20 relative z-20 w-full gap-8 lg:gap-0">
+          <div className="flex flex-col lg:flex-row justify-between items-start mt-6 sm:mt-10 relative z-20 w-full gap-8 lg:gap-0">
 
             {/* Left: Socials */}
             <div className="flex gap-4">
