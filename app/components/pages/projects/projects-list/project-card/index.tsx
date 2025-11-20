@@ -48,7 +48,7 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
   const technologies = project.technologies.map((x) => x.name).join(",");
 
   return (
-    <div className="rounded-lg h-[436px] flex flex-col bg-white overflow-hidden border-2 border-transparent hover:border-[#23abff] opacity-90 hover:opacity-100 transition-all group shadow-md">
+    <div className="rounded-lg h-[436px] flex flex-col bg-white overflow-hidden border-2 border-transparent hover:border-gray-800 opacity-90 hover:opacity-100 transition-all group shadow-md">
       <div className="w-full h-48 overflow-hidden">
         <Image
           width={380}
@@ -61,7 +61,7 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
       </div>
 
       <div className="flex-1 flex flex-col p-8">
-        <strong className="font-medium text-black group-hover:text-[#23abff] transition-all">
+        <strong className="font-medium text-black group-hover:text-gray-600 transition-all">
           {project.title}
         </strong>
         <p className="mt-2 text-gray-700 line-clamp-4">

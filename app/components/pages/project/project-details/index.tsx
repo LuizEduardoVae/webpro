@@ -61,7 +61,7 @@ export const ProjectDetails = ({ project }: ProjectDetailsProps) => {
 
             <Link
                 href="/projects"
-                className="text-[#23abff] hover:text-black transition-colors"
+                className="text-gray-500 hover:text-black transition-colors"
             >
                 <HiArrowNarrowLeft size={20} />
                 Back to Projects

@@ -49,7 +49,7 @@ export const ProjectSections = ({ sections }: ProjectSectionsProps) => {
             {sections.map((section, index) => (
                 <div key={section.title || index} className="flex flex-col items-center gap-6 md:gap-12">
                     {section.title && (
-                        <h2 className="text-2xl md:text-3xl text-[#23abff]">
+                        <h2 className="text-2xl md:text-3xl text-black">
                             {section.title}
                         </h2>
                     )}
