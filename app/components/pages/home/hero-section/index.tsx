@@ -96,7 +96,7 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
               <RichText content={homeInfo.introduction.raw} />
             </div>
 
-            <Button className="w-full sm:w-max bg-black text-white hover:bg-gray-800 rounded-lg px-8 py-4 text-lg shadow-lg hover:shadow-xl transition-all mt-6 lg:mt-24" onClick={handleContact}>
+            <Button className="w-full sm:w-max bg-black text-white hover:bg-gray-800 rounded-lg px-8 py-4 text-lg shadow-lg hover:shadow-xl transition-all mt-6 lg:mt-12" onClick={handleContact}>
               Contact me
             </Button>
           </div>
