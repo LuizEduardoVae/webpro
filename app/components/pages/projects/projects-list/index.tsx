@@ -15,11 +15,12 @@ export const ProjectsList = ({ projects }: ProjectsListProps) => {
             {projects.map((project, i) => (
                 <motion.div
                     key={project.title}
+                    className="w-full h-full"
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: i * 0.1 }}
                 >
-                    <Link href={`/projects/${project.slug}`}>
+                    <Link href={`/projects/${project.slug}`} className="block w-full h-full">
                         <ProjectCard project={project} />
                     </Link>
                 </motion.div>
