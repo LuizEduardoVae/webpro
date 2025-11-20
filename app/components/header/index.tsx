@@ -1,39 +1,37 @@
-'use client'
+'use client';
 
-import Image from 'next/image'
-import Link from 'next/link'
-import { NavItem } from './nav-item'
+import Link from "next/link";
+import { motion } from "framer-motion";
 
 const NAV_ITEMS = [
-    {
-        label: 'Home',
-        href: '/',
-    },
-    {
-        label: 'Projetos',
-        href: '/projects',
-    },
-]
+    { label: 'HOME', href: '/' },
+    { label: 'WORKS', href: '/#projects' },
+    { label: 'BOOKMARKS', href: '/#bookmarks' },
+    { label: 'DESIGN GALLERY', href: '/#gallery' },
+];
 
 export const Header = () => {
     return (
-        <header className="absolute top-0 w-full z-10 h-24 flex items-center justify-center">
-            <div className="container flex items-center justify-between">
-                <Link href="/">
-                    <Image
-                        width={58}
-                        height={49}
-                        src="/images/logo.svg"
-                        alt="Logo GB Dev"
-                    />
-                </Link>
+        <motion.header
+            className="absolute top-0 w-full z-50 flex items-center justify-between px-8 py-8 text-sm font-semibold tracking-wide text-gray-800 uppercase"
+            initial={{ top: -100 }}
+            animate={{ top: 0 }}
+            transition={{ duration: 0.5 }}
+        >
+            {/* Left: Navigation */}
+            <nav className="flex items-center gap-8">
+                {NAV_ITEMS.map((item) => (
+                    <Link href={item.href} key={item.label} className="hover:text-black transition-colors">
+                        {item.label}
+                    </Link>
+                ))}
+            </nav>
 
-                <nav className="flex items-center gap-4 sm:gap-10">
-                    {NAV_ITEMS.map((item) => (
-                        <NavItem {...item} key={item.label} />
-                    ))}
-                </nav>
+            {/* Right: Location & Time */}
+            <div className="flex items-center gap-12 hidden sm:flex">
+                <span>RIO DE JANEIRO, BRASIL</span>
+                <span>09:00 PM GMT-3</span>
             </div>
-        </header>
-    )
-}
+        </motion.header>
+    );
+};

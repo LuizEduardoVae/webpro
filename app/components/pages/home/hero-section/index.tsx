@@ -23,9 +23,12 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
   };
 
   return (
-    <section className="w-full min-h-screen flex flex-col justify-center bg-gradient-to-br from-neutral-50 to-neutral-200 relative overflow-hidden pt-32 pb-16">
-      {/* Depth Effect */}
-      <div className="absolute top-0 left-0 w-[800px] h-[800px] bg-gradient-to-br from-gray-200 to-transparent opacity-40 blur-3xl -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+    <section className="w-full min-h-screen flex flex-col justify-center bg-page-bg relative overflow-hidden pt-32 pb-16">
+      {/* Noise Texture */}
+      <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none bg-[url('/images/noise.png')] mix-blend-overlay" />
+
+      {/* Gradient Spot */}
+      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-bl from-purple-900/20 to-transparent blur-[120px] rounded-full pointer-events-none translate-x-1/3 -translate-y-1/3" />
 
       <div className="container relative z-10 max-w-screen-xl mx-auto px-8">
         <motion.div
@@ -38,7 +41,7 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
           <div className="relative z-10">
             <div className="relative inline-block">
               <motion.h1
-                className="font-sans font-extrabold text-[12vw] leading-none text-primary tracking-tighter"
+                className="font-sans font-extrabold text-[13vw] leading-[0.8] text-primary tracking-tighter"
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
@@ -47,7 +50,7 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
               </motion.h1>
 
               <motion.h1
-                className="font-serif italic text-[11vw] leading-none text-primary -mt-[2vw] sm:-mt-[3vw]"
+                className="font-serif italic text-[13vw] leading-[0.8] text-primary -mt-[2vw]"
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
@@ -55,62 +58,57 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
                 Vedoato.
               </motion.h1>
 
+              {/* Profile & Callout */}
               <motion.div
-                className="absolute top-0 right-0 translate-x-1/3 -translate-y-1/3 w-24 h-24 sm:w-32 sm:h-32 lg:w-48 lg:h-48 rounded-full overflow-hidden ring-4 ring-white shadow-xl z-20"
-                initial={{ opacity: 0, scale: 0 }}
+                className="absolute top-[5%] right-[10%] sm:right-[15%] z-20 flex items-center gap-4"
+                initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: 0.6, type: "spring" }}
+                transition={{ duration: 0.5, delay: 0.6 }}
               >
-                <Image
-                  width={192}
-                  height={192}
-                  className="w-full h-full object-cover"
-                  src={homeInfo.profilePicture.url}
-                  alt="Luiz Eduardo Vedoato"
-                />
+                {/* Callout */}
+                <div className="hidden sm:flex items-center bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg border border-white/50">
+                  <span className="text-sm font-medium text-gray-800">Vamos resolver problemas e criar novos.</span>
+                </div>
+
+                {/* Avatar */}
+                <div className="w-20 h-20 sm:w-28 sm:h-28 rounded-full overflow-hidden ring-4 ring-white shadow-xl relative">
+                  <Image
+                    width={112}
+                    height={112}
+                    className="w-full h-full object-cover"
+                    src={homeInfo.profilePicture.url}
+                    alt="Luiz Eduardo Vedoato"
+                  />
+                </div>
               </motion.div>
             </div>
           </div>
 
           {/* Content Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mt-12">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end mt-12">
 
-            {/* Left Column: Socials & Techs */}
-            <div className="lg:col-span-4 flex flex-col gap-8">
-              <div className="flex items-center gap-4">
-                {homeInfo.socials.map((contact, i) => (
-                  <a
-                    href={contact.url}
-                    key={`contact-${i}`}
-                    target="_blank"
-                    className="w-10 h-10 flex items-center justify-center rounded-full border border-black/20 hover:bg-black hover:text-white transition-all duration-300 text-primary"
-                  >
-                    <CMSIcon key={contact.iconSvg} icon={contact.iconSvg} />
-                  </a>
-                ))}
-              </div>
-
-              <div className="flex flex-wrap gap-2">
-                {homeInfo.technologies.map((tech, i) => (
-                  <TechBadge
-                    name={tech.name}
-                    key={tech.name}
-                    {...techBadgeAnimation}
-                    transition={{ duration: 0.2, delay: i * 0.1 }}
-                  />
-                ))}
-              </div>
+            {/* Left Column: Socials */}
+            <div className="lg:col-span-4 flex gap-4">
+              {homeInfo.socials.map((contact, i) => (
+                <a
+                  href={contact.url}
+                  key={`contact-${i}`}
+                  target="_blank"
+                  className="w-12 h-12 flex items-center justify-center rounded-full border border-gray-300 hover:bg-black hover:text-white hover:border-black transition-all duration-300 text-gray-600"
+                >
+                  <CMSIcon key={contact.iconSvg} icon={contact.iconSvg} />
+                </a>
+              ))}
             </div>
 
             {/* Right Column: Intro & CTA */}
-            <div className="lg:col-span-8 flex flex-col gap-8">
+            <div className="lg:col-span-8 flex flex-col gap-8 items-start lg:items-end text-left lg:text-right">
               <div className="text-text-secondary text-lg sm:text-xl leading-relaxed max-w-2xl">
                 <RichText content={homeInfo.introduction.raw} />
               </div>
 
-              <Button className="w-max bg-primary text-white hover:bg-black rounded-full px-8 py-4 text-lg shadow-lg hover:shadow-xl transition-all" onClick={handleContact}>
+              <Button className="w-max bg-black text-white hover:bg-gray-800 rounded-full px-8 py-4 text-lg shadow-lg hover:shadow-xl transition-all" onClick={handleContact}>
                 Entre em contato
-                <HiArrowNarrowRight size={20} />
               </Button>
             </div>
 
