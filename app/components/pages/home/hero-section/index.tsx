@@ -41,7 +41,7 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
           <div className="relative z-10">
             <div className="relative inline-block">
               <motion.h1
-                className="font-sans font-extrabold text-[13vw] leading-[0.8] text-primary tracking-tighter"
+                className="font-sans font-extrabold text-[17vw] leading-[0.8] text-primary tracking-tighter"
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
@@ -66,7 +66,12 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
                 transition={{ duration: 0.5, delay: 0.6 }}
               >
                 {/* Callout */}
-                <div className="hidden sm:flex items-center bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg border border-white/50">
+                <div className="hidden sm:flex items-center gap-3 bg-white/90 backdrop-blur-sm px-4 py-3 rounded-2xl shadow-sm border border-white/40">
+                  <div className="flex items-end gap-[2px] h-4">
+                    <span className="w-1 h-2 bg-primary rounded-full animate-pulse" />
+                    <span className="w-1 h-4 bg-primary rounded-full animate-pulse delay-75" />
+                    <span className="w-1 h-3 bg-primary rounded-full animate-pulse delay-150" />
+                  </div>
                   <span className="text-sm font-medium text-gray-800">Vamos resolver problemas e criar novos.</span>
                 </div>
 
@@ -88,7 +93,7 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end mt-12">
 
             {/* Left Column: Socials */}
-            <div className="lg:col-span-4 flex gap-4">
+            <div className="lg:col-span-5 flex gap-4">
               {homeInfo.socials.map((contact, i) => (
                 <a
                   href={contact.url}
@@ -102,12 +107,12 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
             </div>
 
             {/* Right Column: Intro & CTA */}
-            <div className="lg:col-span-8 flex flex-col gap-8 items-start lg:items-end text-left lg:text-right">
-              <div className="text-text-secondary text-lg sm:text-xl leading-relaxed max-w-2xl">
+            <div className="lg:col-span-7 flex flex-col gap-8 items-start text-left">
+              <div className="text-text-secondary text-lg sm:text-xl leading-relaxed max-w-xl">
                 <RichText content={homeInfo.introduction.raw} />
               </div>
 
-              <Button className="w-max bg-black text-white hover:bg-gray-800 rounded-full px-8 py-4 text-lg shadow-lg hover:shadow-xl transition-all" onClick={handleContact}>
+              <Button className="w-max bg-black text-white hover:bg-gray-800 rounded-2xl px-8 py-4 text-lg shadow-lg hover:shadow-xl transition-all" onClick={handleContact}>
                 Entre em contato
               </Button>
             </div>

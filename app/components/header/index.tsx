@@ -5,9 +5,7 @@ import { motion } from "framer-motion";
 
 const NAV_ITEMS = [
     { label: 'HOME', href: '/' },
-    { label: 'WORKS', href: '/#projects' },
-    { label: 'BOOKMARKS', href: '/#bookmarks' },
-    { label: 'DESIGN GALLERY', href: '/#gallery' },
+    { label: 'PROJETOS', href: '/#projects' },
 ];
 
 export const Header = () => {
