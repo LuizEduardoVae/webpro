@@ -23,7 +23,7 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
   };
 
   return (
-    <section className="w-full lg:h-[755px] bg-page-bg bg-no-repeat bg-center bg-cover relative flex flex-col justify-center pt-24 pb-12 sm:py-32 lg:pb-[110px]">
+    <section className="w-full lg:min-h-screen bg-page-bg bg-no-repeat bg-center bg-cover relative flex flex-col justify-center pt-24 pb-12 lg:pt-32 lg:pb-16">
       {/* Background Effects */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
         <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] rounded-full bg-gradient-to-br from-gray-100/50 to-transparent blur-[80px] mix-blend-soft-light opacity-60" />
@@ -74,7 +74,7 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
         </div>
 
         {/* Content Grid - Footer Alignment */}
-        <div className="flex flex-col lg:flex-row justify-between items-start mt-20 sm:mt-10 relative z-20 w-full gap-12 lg:gap-0">
+        <div className="flex flex-col lg:flex-row justify-between items-start mt-20 lg:mt-10 relative z-20 w-full gap-12 lg:gap-0">
 
           {/* Left: Socials */}
           <div className="flex gap-4">
@@ -96,7 +96,7 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
               <RichText content={homeInfo.introduction.raw} />
             </div>
 
-            <Button className="w-full sm:w-max bg-black text-white hover:bg-gray-800 rounded-lg px-8 py-4 text-lg shadow-lg hover:shadow-xl transition-all mt-6 sm:mt-10" onClick={handleContact}>
+            <Button className="w-full sm:w-max bg-black text-white hover:bg-gray-800 rounded-lg px-8 py-4 text-lg shadow-lg hover:shadow-xl transition-all mt-6 lg:mt-10" onClick={handleContact}>
               Contact me
             </Button>
           </div>
