@@ -27,21 +27,21 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
       {/* Noise Texture */}
       <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none bg-[url('/images/noise.png')] mix-blend-overlay" />
 
-      {/* Gradient Spot - Purple Glow */}
-      <div className="absolute top-[-10%] right-[-5%] w-[800px] h-[800px] bg-gradient-to-bl from-purple-600/30 to-transparent blur-[100px] rounded-full pointer-events-none z-0" />
+      {/* Subtle Dark Gradient - Bottom Left */}
+      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-gray-200/40 to-transparent blur-[100px] rounded-full pointer-events-none z-0" />
 
       <div className="container relative z-10 max-w-screen-xl mx-auto px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="flex flex-col gap-12"
+          className="flex flex-col gap-4"
         >
           {/* Header / Name Section */}
-          <div className="relative z-10">
-            <div className="relative inline-block w-full text-center sm:text-left">
+          <div className="relative z-10 w-full">
+            <div className="relative flex flex-col items-center sm:items-start w-full">
               <motion.h1
-                className="font-sans font-extrabold text-[18vw] leading-[0.8] text-primary tracking-tighter relative z-10"
+                className="font-sans font-extrabold text-[21vw] leading-[0.75] text-primary tracking-tighter relative z-10"
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
@@ -50,7 +50,7 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
               </motion.h1>
 
               <motion.h1
-                className="font-serif italic text-[18vw] leading-[0.8] text-primary -mt-[4vw] relative z-10"
+                className="font-serif italic text-[21vw] leading-[0.75] text-primary -mt-[5vw] sm:-mt-[6vw] relative z-10 ml-[5vw]"
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
@@ -58,28 +58,29 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
                 Vedoato.
               </motion.h1>
 
-              {/* Profile & Callout - Higher Z-Index to overlay text */}
+              {/* Profile & Callout - Precise Positioning */}
               <motion.div
-                className="absolute top-[10%] right-[5%] sm:right-[15%] z-50 flex items-center gap-4"
+                className="absolute top-[18%] right-[10%] sm:right-[15%] lg:right-[20%] z-50 flex items-center gap-4"
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.6 }}
               >
                 {/* Callout */}
-                <div className="hidden sm:flex items-center gap-3 bg-white px-5 py-3 rounded-full shadow-xl border border-gray-100">
-                  <div className="flex items-end gap-[3px] h-4">
-                    <span className="w-1 h-2 bg-black rounded-full animate-pulse" />
-                    <span className="w-1 h-4 bg-black rounded-full animate-pulse delay-75" />
+                <div className="hidden sm:flex items-center gap-3 bg-white px-6 py-4 rounded-full shadow-2xl border border-gray-100 relative -mr-6 z-10">
+                  <div className="flex items-end gap-[3px] h-5">
+                    <span className="w-1 h-3 bg-black rounded-full animate-pulse" />
+                    <span className="w-1 h-5 bg-black rounded-full animate-pulse delay-75" />
                     <span className="w-1 h-3 bg-black rounded-full animate-pulse delay-150" />
+                    <span className="w-1 h-4 bg-black rounded-full animate-pulse delay-100" />
                   </div>
-                  <span className="text-sm font-medium text-gray-900">Vamos resolver problemas e criar novos.</span>
+                  <span className="text-base font-medium text-gray-900 whitespace-nowrap">Vamos resolver problemas e criar novos.</span>
                 </div>
 
                 {/* Avatar */}
-                <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full overflow-hidden ring-4 ring-white shadow-2xl relative bg-gray-200">
+                <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-full overflow-hidden ring-4 ring-white shadow-2xl relative bg-gray-200 z-20">
                   <Image
-                    width={128}
-                    height={128}
+                    width={144}
+                    height={144}
                     className="w-full h-full object-cover"
                     src={homeInfo.profilePicture.url}
                     alt="Luiz Eduardo Vedoato"
@@ -89,30 +90,30 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
             </div>
           </div>
 
-          {/* Content Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end mt-12 relative z-20">
+          {/* Content Grid - Footer Alignment */}
+          <div className="flex flex-col lg:flex-row justify-between items-end mt-20 relative z-20 w-full">
 
-            {/* Left Column: Socials */}
-            <div className="lg:col-span-5 flex gap-4">
+            {/* Left: Socials */}
+            <div className="flex gap-4 mb-8 lg:mb-0">
               {homeInfo.socials.map((contact, i) => (
                 <a
                   href={contact.url}
                   key={`contact-${i}`}
                   target="_blank"
-                  className="w-12 h-12 flex items-center justify-center rounded-full border border-gray-300 hover:bg-black hover:text-white hover:border-black transition-all duration-300 text-gray-600"
+                  className="w-14 h-14 flex items-center justify-center rounded-full border border-gray-300 hover:bg-black hover:text-white hover:border-black transition-all duration-300 text-gray-600"
                 >
                   <CMSIcon key={contact.iconSvg} icon={contact.iconSvg} />
                 </a>
               ))}
             </div>
 
-            {/* Right Column: Intro & CTA */}
-            <div className="lg:col-span-7 flex flex-col gap-8 items-start text-left">
-              <div className="text-text-secondary text-lg sm:text-xl leading-relaxed max-w-xl">
+            {/* Right: Intro & CTA */}
+            <div className="flex flex-col gap-8 items-start lg:items-end text-left lg:text-right max-w-xl">
+              <div className="text-text-secondary text-lg sm:text-xl leading-relaxed">
                 <RichText content={homeInfo.introduction.raw} />
               </div>
 
-              <Button className="w-max bg-black text-white hover:bg-gray-800 rounded-2xl px-8 py-4 text-lg shadow-lg hover:shadow-xl transition-all" onClick={handleContact}>
+              <Button className="w-max bg-black text-white hover:bg-gray-800 rounded-2xl px-10 py-5 text-lg shadow-lg hover:shadow-xl transition-all" onClick={handleContact}>
                 Entre em contato
               </Button>
             </div>
