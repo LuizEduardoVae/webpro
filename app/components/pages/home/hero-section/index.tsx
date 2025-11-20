@@ -79,7 +79,7 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
           </div>
 
           {/* Content Grid - Footer Alignment */}
-          <div className="flex flex-col lg:flex-row justify-between items-start mt-12 sm:mt-20 relative z-20 w-full gap-8 lg:gap-0">
+          <div className="flex flex-col lg:flex-row justify-between items-start mt-2 sm:mt-4 relative z-20 w-full gap-8 lg:gap-0">
 
             {/* Left: Socials */}
             <div className="flex gap-4">
@@ -96,8 +96,8 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
             </div>
 
             {/* Right: Intro & CTA */}
-            <div className="flex flex-col gap-6 sm:gap-8 items-start lg:items-end text-left lg:text-right max-w-xl w-full lg:w-auto">
-              <div className="text-text-secondary text-base sm:text-lg sm:text-xl leading-relaxed text-justify lg:text-right">
+            <div className="flex flex-col gap-6 sm:gap-8 items-start lg:items-end text-left max-w-xl w-full lg:w-auto">
+              <div className="text-text-secondary text-base sm:text-lg sm:text-xl leading-relaxed text-justify hyphens-auto">
                 <RichText content={homeInfo.introduction.raw} />
               </div>
 
