@@ -27,8 +27,8 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
       {/* Noise Texture */}
       <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none bg-[url('/images/noise.png')] mix-blend-overlay" />
 
-      {/* Gradient Spot */}
-      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-bl from-purple-900/20 to-transparent blur-[120px] rounded-full pointer-events-none translate-x-1/3 -translate-y-1/3" />
+      {/* Gradient Spot - Purple Glow */}
+      <div className="absolute top-[-10%] right-[-5%] w-[800px] h-[800px] bg-gradient-to-bl from-purple-600/30 to-transparent blur-[100px] rounded-full pointer-events-none z-0" />
 
       <div className="container relative z-10 max-w-screen-xl mx-auto px-8">
         <motion.div
@@ -39,9 +39,9 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
         >
           {/* Header / Name Section */}
           <div className="relative z-10">
-            <div className="relative inline-block">
+            <div className="relative inline-block w-full text-center sm:text-left">
               <motion.h1
-                className="font-sans font-extrabold text-[17vw] leading-[0.8] text-primary tracking-tighter"
+                className="font-sans font-extrabold text-[18vw] leading-[0.8] text-primary tracking-tighter relative z-10"
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
@@ -50,7 +50,7 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
               </motion.h1>
 
               <motion.h1
-                className="font-serif italic text-[13vw] leading-[0.8] text-primary -mt-[2vw]"
+                className="font-serif italic text-[18vw] leading-[0.8] text-primary -mt-[4vw] relative z-10"
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
@@ -58,28 +58,28 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
                 Vedoato.
               </motion.h1>
 
-              {/* Profile & Callout */}
+              {/* Profile & Callout - Higher Z-Index to overlay text */}
               <motion.div
-                className="absolute top-[5%] right-[10%] sm:right-[15%] z-20 flex items-center gap-4"
+                className="absolute top-[10%] right-[5%] sm:right-[15%] z-50 flex items-center gap-4"
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.6 }}
               >
                 {/* Callout */}
-                <div className="hidden sm:flex items-center gap-3 bg-white/90 backdrop-blur-sm px-4 py-3 rounded-2xl shadow-sm border border-white/40">
-                  <div className="flex items-end gap-[2px] h-4">
-                    <span className="w-1 h-2 bg-primary rounded-full animate-pulse" />
-                    <span className="w-1 h-4 bg-primary rounded-full animate-pulse delay-75" />
-                    <span className="w-1 h-3 bg-primary rounded-full animate-pulse delay-150" />
+                <div className="hidden sm:flex items-center gap-3 bg-white px-5 py-3 rounded-full shadow-xl border border-gray-100">
+                  <div className="flex items-end gap-[3px] h-4">
+                    <span className="w-1 h-2 bg-black rounded-full animate-pulse" />
+                    <span className="w-1 h-4 bg-black rounded-full animate-pulse delay-75" />
+                    <span className="w-1 h-3 bg-black rounded-full animate-pulse delay-150" />
                   </div>
-                  <span className="text-sm font-medium text-gray-800">Vamos resolver problemas e criar novos.</span>
+                  <span className="text-sm font-medium text-gray-900">Vamos resolver problemas e criar novos.</span>
                 </div>
 
                 {/* Avatar */}
-                <div className="w-20 h-20 sm:w-28 sm:h-28 rounded-full overflow-hidden ring-4 ring-white shadow-xl relative">
+                <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full overflow-hidden ring-4 ring-white shadow-2xl relative bg-gray-200">
                   <Image
-                    width={112}
-                    height={112}
+                    width={128}
+                    height={128}
                     className="w-full h-full object-cover"
                     src={homeInfo.profilePicture.url}
                     alt="Luiz Eduardo Vedoato"
@@ -90,7 +90,7 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
           </div>
 
           {/* Content Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end mt-12">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end mt-12 relative z-20">
 
             {/* Left Column: Socials */}
             <div className="lg:col-span-5 flex gap-4">
