@@ -35,72 +35,60 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="flex flex-col gap-4"
+          className="flex flex-col gap-8 sm:gap-12"
         >
           {/* Header / Name Section */}
           <div className="relative z-10 w-full">
             <div className="relative flex flex-col items-center sm:items-start w-full">
-              <motion.h1
-                className="font-sans font-extrabold text-[21vw] leading-[0.75] text-primary tracking-tighter relative z-10"
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-              >
-                Luiz
-              </motion.h1>
+              <div className="relative">
+                <motion.h1
+                  className="font-sans font-extrabold text-7xl sm:text-9xl md:text-[10rem] lg:text-[14rem] xl:text-[16rem] leading-[0.8] text-primary tracking-tighter relative z-10"
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
+                >
+                  Luiz
+                </motion.h1>
+
+                {/* Avatar - Positioned on the 'Z' */}
+                <motion.div
+                  className="absolute -top-4 -right-4 sm:top-0 sm:-right-12 lg:top-4 lg:-right-16 z-20 w-16 h-16 sm:w-24 sm:h-24 lg:w-32 lg:h-32 rounded-full overflow-hidden ring-4 ring-white shadow-xl bg-gray-200"
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, delay: 0.6 }}
+                >
+                  <Image
+                    width={128}
+                    height={128}
+                    className="w-full h-full object-cover"
+                    src={homeInfo.profilePicture.url}
+                    alt="Luiz Eduardo Vedoato"
+                  />
+                </motion.div>
+              </div>
 
               <motion.h1
-                className="font-serif italic text-[21vw] leading-[0.75] text-primary -mt-[5vw] sm:-mt-[6vw] relative z-10 ml-[5vw]"
+                className="font-serif italic text-7xl sm:text-9xl md:text-[10rem] lg:text-[14rem] xl:text-[16rem] leading-[0.8] text-primary -mt-2 sm:-mt-4 md:-mt-8 lg:-mt-12 relative z-10 ml-0 sm:ml-[5vw]"
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
               >
                 Vedoato.
               </motion.h1>
-
-              {/* Profile & Callout - Precise Positioning */}
-              <motion.div
-                className="absolute top-[18%] right-[10%] sm:right-[15%] lg:right-[20%] z-50 flex items-center gap-4"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: 0.6 }}
-              >
-                {/* Callout */}
-                <div className="hidden sm:flex items-center gap-3 bg-white px-6 py-4 rounded-full shadow-2xl border border-gray-100 relative -mr-6 z-10">
-                  <div className="flex items-end gap-[3px] h-5">
-                    <span className="w-1 h-3 bg-black rounded-full animate-pulse" />
-                    <span className="w-1 h-5 bg-black rounded-full animate-pulse delay-75" />
-                    <span className="w-1 h-3 bg-black rounded-full animate-pulse delay-150" />
-                    <span className="w-1 h-4 bg-black rounded-full animate-pulse delay-100" />
-                  </div>
-                  <span className="text-base font-medium text-gray-900 whitespace-nowrap">Vamos resolver problemas e criar novos.</span>
-                </div>
-
-                {/* Avatar */}
-                <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-full overflow-hidden ring-4 ring-white shadow-2xl relative bg-gray-200 z-20">
-                  <Image
-                    width={144}
-                    height={144}
-                    className="w-full h-full object-cover"
-                    src={homeInfo.profilePicture.url}
-                    alt="Luiz Eduardo Vedoato"
-                  />
-                </div>
-              </motion.div>
             </div>
           </div>
 
           {/* Content Grid - Footer Alignment */}
-          <div className="flex flex-col lg:flex-row justify-between items-end mt-20 relative z-20 w-full">
+          <div className="flex flex-col lg:flex-row justify-between items-start mt-12 sm:mt-20 relative z-20 w-full gap-8 lg:gap-0">
 
             {/* Left: Socials */}
-            <div className="flex gap-4 mb-8 lg:mb-0">
+            <div className="flex gap-4">
               {homeInfo.socials.map((contact, i) => (
                 <a
                   href={contact.url}
                   key={`contact-${i}`}
                   target="_blank"
-                  className="w-14 h-14 flex items-center justify-center rounded-full border border-gray-300 hover:bg-black hover:text-white hover:border-black transition-all duration-300 text-gray-600"
+                  className="w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center rounded-full border border-gray-300 hover:bg-black hover:text-white hover:border-black transition-all duration-300 text-gray-600"
                 >
                   <CMSIcon key={contact.iconSvg} icon={contact.iconSvg} />
                 </a>
@@ -108,13 +96,13 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
             </div>
 
             {/* Right: Intro & CTA */}
-            <div className="flex flex-col gap-8 items-start lg:items-end text-left lg:text-right max-w-xl">
-              <div className="text-text-secondary text-lg sm:text-xl leading-relaxed">
+            <div className="flex flex-col gap-6 sm:gap-8 items-start lg:items-end text-left lg:text-right max-w-xl w-full lg:w-auto">
+              <div className="text-text-secondary text-base sm:text-lg sm:text-xl leading-relaxed text-justify lg:text-right">
                 <RichText content={homeInfo.introduction.raw} />
               </div>
 
-              <Button className="w-max bg-black text-white hover:bg-gray-800 rounded-2xl px-10 py-5 text-lg shadow-lg hover:shadow-xl transition-all" onClick={handleContact}>
-                Entre em contato
+              <Button className="w-full sm:w-max bg-black text-white hover:bg-gray-800 rounded-lg px-8 py-4 text-lg shadow-lg hover:shadow-xl transition-all" onClick={handleContact}>
+                Contact me
               </Button>
             </div>
 
