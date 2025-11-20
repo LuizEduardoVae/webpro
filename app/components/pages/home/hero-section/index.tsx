@@ -23,91 +23,85 @@ export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
   };
 
   return (
-    <section className="w-full min-h-screen flex flex-col justify-center bg-page-bg relative overflow-hidden pt-32 pb-16">
-      {/* Noise Texture */}
-      <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none bg-[url('/images/noise.png')] mix-blend-overlay" />
+    <section className="w-full lg:h-[755px] bg-page-bg bg-no-repeat bg-center bg-cover relative flex flex-col justify-center pt-24 pb-12 sm:py-32 lg:pb-[110px]">
+      {/* Background Effects */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+        <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] rounded-full bg-gradient-to-br from-gray-100/50 to-transparent blur-[80px] mix-blend-soft-light opacity-60" />
+        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-gray-200/40 to-transparent blur-[100px] rounded-full pointer-events-none z-0" />
+        <div className="absolute inset-0 bg-[url('/images/noise.png')] opacity-[0.03] mix-blend-overlay" />
+      </div>
 
-      {/* Subtle Dark Gradient - Bottom Left */}
-      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-gray-200/40 to-transparent blur-[100px] rounded-full pointer-events-none z-0" />
-
-      <div className="container relative z-10 max-w-screen-xl mx-auto px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="flex flex-col gap-8 sm:gap-12"
-        >
-          {/* Header / Name Section */}
-          <div className="relative z-10 w-full">
-            <div className="relative flex flex-col items-center sm:items-start w-full">
-              <div className="relative">
-                <motion.h1
-                  className="font-sans font-extrabold text-[18vw] sm:text-9xl md:text-[10rem] lg:text-[14rem] xl:text-[16rem] leading-[0.8] text-primary tracking-tighter relative z-10"
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8 }}
-                >
-                  Luiz
-                </motion.h1>
-
-                {/* Avatar - Positioned on the 'Z' */}
-                <motion.div
-                  className="absolute -top-6 -right-6 sm:-top-4 sm:-right-16 lg:top-0 lg:-right-20 z-20 w-16 h-16 sm:w-24 sm:h-24 lg:w-32 lg:h-32 rounded-full overflow-hidden ring-4 ring-white shadow-xl bg-gray-200"
-                  initial={{ opacity: 0, scale: 0 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5, delay: 0.6 }}
-                >
-                  <Image
-                    width={128}
-                    height={128}
-                    className="w-full h-full object-cover"
-                    src={homeInfo.profilePicture.url}
-                    alt="Luiz Eduardo Vedoato"
-                  />
-                </motion.div>
-              </div>
-
+      <div className="container flex flex-col items-start justify-between h-full relative z-10">
+        {/* Header / Name Section */}
+        <div className="relative z-10 w-full">
+          <div className="relative flex flex-col items-center sm:items-start w-full">
+            <div className="relative">
               <motion.h1
-                className="font-serif italic text-[18vw] sm:text-9xl md:text-[10rem] lg:text-[14rem] xl:text-[16rem] leading-[0.8] text-primary -mt-[2vw] sm:-mt-4 md:-mt-8 lg:-mt-12 relative z-10 ml-0 sm:ml-[5vw]"
+                className="font-sans font-extrabold text-[18vw] sm:text-9xl md:text-[10rem] lg:text-[14rem] xl:text-[16rem] leading-[0.8] text-primary tracking-tighter relative z-10"
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
+                transition={{ duration: 0.8 }}
               >
-                Vedoato.
+                Luiz
               </motion.h1>
+
+              {/* Avatar - Positioned on the 'Z' */}
+              <motion.div
+                className="absolute -top-6 -right-6 sm:-top-4 sm:-right-16 lg:top-0 lg:-right-20 z-20 w-16 h-16 sm:w-24 sm:h-24 lg:w-32 lg:h-32 rounded-full overflow-hidden ring-4 ring-white shadow-xl bg-gray-200"
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.6 }}
+              >
+                <Image
+                  width={128}
+                  height={128}
+                  className="w-full h-full object-cover"
+                  src={homeInfo.profilePicture.url}
+                  alt="Luiz Eduardo Vedoato"
+                />
+              </motion.div>
             </div>
+
+            <motion.h1
+              className="font-serif italic text-[18vw] sm:text-9xl md:text-[10rem] lg:text-[14rem] xl:text-[16rem] leading-[0.8] text-primary -mt-[2vw] sm:-mt-4 md:-mt-8 lg:-mt-12 relative z-10 ml-0 sm:ml-[5vw]"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              Vedoato.
+            </motion.h1>
+          </div>
+        </div>
+
+        {/* Content Grid - Footer Alignment */}
+        <div className="flex flex-col lg:flex-row justify-between items-start mt-20 sm:mt-10 relative z-20 w-full gap-12 lg:gap-0">
+
+          {/* Left: Socials */}
+          <div className="flex gap-4">
+            {homeInfo.socials.map((contact, i) => (
+              <a
+                href={contact.url}
+                key={`contact-${i}`}
+                target="_blank"
+                className="w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center rounded-full border border-gray-300 hover:bg-black hover:text-white hover:border-black transition-all duration-300 text-gray-600"
+              >
+                <CMSIcon key={contact.iconSvg} icon={contact.iconSvg} />
+              </a>
+            ))}
           </div>
 
-          {/* Content Grid - Footer Alignment */}
-          <div className="flex flex-col lg:flex-row justify-between items-start mt-6 sm:mt-10 relative z-20 w-full gap-8 lg:gap-0">
-
-            {/* Left: Socials */}
-            <div className="flex gap-4">
-              {homeInfo.socials.map((contact, i) => (
-                <a
-                  href={contact.url}
-                  key={`contact-${i}`}
-                  target="_blank"
-                  className="w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center rounded-full border border-gray-300 hover:bg-black hover:text-white hover:border-black transition-all duration-300 text-gray-600"
-                >
-                  <CMSIcon key={contact.iconSvg} icon={contact.iconSvg} />
-                </a>
-              ))}
+          {/* Right: Intro & CTA */}
+          <div className="flex flex-col gap-6 sm:gap-8 items-start lg:items-end text-left lg:text-right max-w-xl w-full lg:w-auto">
+            <div className="text-text-secondary text-base sm:text-lg sm:text-xl leading-relaxed">
+              <RichText content={homeInfo.introduction.raw} />
             </div>
 
-            {/* Right: Intro & CTA */}
-            <div className="flex flex-col gap-6 sm:gap-8 items-start lg:items-end text-left lg:text-right max-w-xl w-full lg:w-auto">
-              <div className="text-text-secondary text-base sm:text-lg sm:text-xl leading-relaxed">
-                <RichText content={homeInfo.introduction.raw} />
-              </div>
-
-              <Button className="w-full sm:w-max bg-black text-white hover:bg-gray-800 rounded-lg px-8 py-4 text-lg shadow-lg hover:shadow-xl transition-all mt-6 sm:mt-10" onClick={handleContact}>
-                Contact me
-              </Button>
-            </div>
-
+            <Button className="w-full sm:w-max bg-black text-white hover:bg-gray-800 rounded-lg px-8 py-4 text-lg shadow-lg hover:shadow-xl transition-all mt-6 sm:mt-10" onClick={handleContact}>
+              Contact me
+            </Button>
           </div>
-        </motion.div>
+
+        </div>
       </div>
     </section>
   );
