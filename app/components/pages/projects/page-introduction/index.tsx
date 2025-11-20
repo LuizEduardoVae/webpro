@@ -37,7 +37,7 @@ import { motion } from "framer-motion";
 
 export const PageIntroduction = () => {
   return (
-    <section className="w-full py-20 lg:py-32 flex flex-col items-center justify-center px-2">
+    <section className="w-full pt-16 pb-4 lg:pt-32 lg:pb-12 flex flex-col items-center justify-center px-2">
       <SectionTitle
         subtitle="Projects"
         title="My Projects"
@@ -47,8 +47,7 @@ export const PageIntroduction = () => {
       <motion.div
         className="flex flex-col items-center"
         initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
         <p className="text-gray-700 text-center max-w-[640px] my-6 text-sm sm:text-base">
