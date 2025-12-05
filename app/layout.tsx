@@ -49,23 +49,22 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <Toaster />
         <BackToTop />
 
-        <NewHeader />
+        {/* Note: ProfilePicture needs to be fetched. RootLayout is a server component but it's tricky to pass async data to client components if not careful. 
+            However, NewHeader is a Client Component (it was marked "use client" in my previous thought, but let me check).
+            Actually, NewHeader was not "use client" in the file content I wrote (Step 35), but it imports Link.
+            Wait, I need to fetch the profile picture here to pass it. 
+            BUT RootLayout wraps everything. 
+            I'll temporarily mock it or fetch it if I can make RootLayout async (Next.js 13+ supports it).
+            However, I already have `getPageData` in `page.tsx`.
+            To avoid prop drilling or double fetching, I will remove NewHeader from RootLayout and add it to page.tsx 
+            where I have the data, as discussed before.
+            
+            Let's REMOVE NewHeader from here.
+         */}
+        {/* <NewHeader /> moved to page.tsx to access data */}
         {children}
         {/* ContactForm might be redundant with the new footer contact section, but keeping it for now if needed, though the new design has a footer with email. I'll comment it out to match new design aesthetics strictly. */}
         {/* <ContactForm /> */}
-        {/* Actually, the new footer expects props. I'll need to fetch them or pass them. 
-            Layout server components can't easily fetch page-specific data unless I move the footer to page.tsx or fetch globally.
-            For now, I'll render NewFooter without props in Layout, or move NewFooter to page.tsx. 
-            The design has the footer as part of the page flow. 
-            However, usually Footer is in Layout. 
-            The `NewFooter` takes `socials`. I can't fetch `pageData` in RootLayout easily without making it async and fetching the same query.
-            I will keep NewFooter in Layout but I'll need to handle the data. 
-            Alternatively, I can accept that `socials` might be empty in the layout for now, or move Footer to page.tsx.
-            Given the user wants to "replace layout", I'll stick to Layout.tsx for structural components.
-            But wait, `RootLayout` doesn't fetch data.
-            I will remove `NewFooter` from `RootLayout` and put it in `page.tsx` so I can pass the fetched data.
-            Same for `NewHeader`? No, Header is static links mostly.
-        */}
       </body>
     </html>
   )
