@@ -80,15 +80,6 @@ const getPageData = async (): Promise<HomePageData> => {
 export default async function Home() {
   const { page: pageData, workExperiences, collegeExperiences } = await getPageData();
 
-  const YOUTUBE_VIDEOS = [
-    { title: "Can AI Predict Protein Structures?", url: "https://youtu.be/z1ovhRd9gQk?si=kpUxWSqG32_yd09P", thumb: "https://img.youtube.com/vi/z1ovhRd9gQk/maxresdefault.jpg", category: "AI & Bio" },
-    { title: "Day in the life of a PhD Researcher", url: "https://youtu.be/DJ9XBJYgLzI?si=-87W0Fi0SHBcsC78", thumb: "https://img.youtube.com/vi/DJ9XBJYgLzI/maxresdefault.jpg", category: "Vlog" },
-    { title: "Python for Biologists: Ep 04", url: "https://youtu.be/pw5WxzTW4YI?si=WkbFhd-b-DRYFrHQ", thumb: "https://img.youtube.com/vi/pw5WxzTW4YI/maxresdefault.jpg", category: "Tutorial" },
-    { title: "The Best Laptops for Coding", url: "https://youtu.be/QBxoa7_ZlSI?si=13adfkaEwPC7_ggj", thumb: "https://img.youtube.com/vi/QBxoa7_ZlSI/maxresdefault.jpg", category: "Tech Review" },
-    // Fifth link was a playlist, I'll stick to 4 for the grid or repeat one if needed, but 4 looks good in grid (2x2 or 1 big + 3 small). 
-    // The design had 4 slots.
-  ];
-
   return (
     <>
       <NewHeader profilePicture={pageData.profilePicture?.url} />
@@ -176,47 +167,139 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Videos Section (Was Featured Projects grid, now Youtube Grid) */}
+      import {getLatestVideos} from "./lib/youtube";
+
+      // ... existing imports ...
+
+      // Helper for relative time (simple version)
+      function getRelativeTime(dateString: string) {
+  const date = new Date(dateString);
+      const now = new Date();
+      const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+
+      if (diffInSeconds < 60) return "Just now";
+      if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)} mins ago`;
+      if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)} hours ago`;
+      if (diffInSeconds < 604800) return `${Math.floor(diffInSeconds / 86400)} days ago`;
+      if (diffInSeconds < 2592000) return `${Math.floor(diffInSeconds / 604800)} weeks ago`;
+      return date.toLocaleDateString();
+}
+
+      export default async function Home() {
+  const pageData = await fetchHygraphQuery();
+      const videos = await getLatestVideos();
+
+      // ... existing code ...
+
+      {/* Videos Section (New Dr. Sorel Style) */}
       <section id="videos" className="scroll-mt-32 py-24 px-6 relative">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-end justify-between mb-12 animate-enter delay-100">
             <div>
-              <h2 className="text-3xl font-bold tracking-tight mb-2 text-zinc-900">Latest Videos</h2>
-              <p className="text-zinc-500">Content from my YouTube channel.</p>
+              <h2 className="text-3xl tracking-tight mb-2 text-zinc-900 font-sans font-semibold">Latest Videos</h2>
+              <p className="text-zinc-500 font-sans">Visualizing complex science for everyone.</p>
             </div>
-            <a href="https://www.youtube.com/@LuizEduardoVedoato" target="_blank" className="hidden md:flex items-center gap-1 text-sm font-medium transition-colors text-rose-600 hover:text-rose-700">
-              Visit Channel <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="16" height="16" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5 12h14m-7-7l7 7l-7 7"></path></svg>
+            <a href="https://www.youtube.com/@LuizEduardoVedoato" target="_blank" className="hidden md:flex items-center gap-1 text-sm font-medium transition-colors text-rose-600 hover:text-rose-700 font-sans">
+              View Channel <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="16" height="16" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5 12h14m-7-7l7 7l-7 7"></path></svg>
             </a>
           </div>
 
+          {/* Video Grid */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {YOUTUBE_VIDEOS.map((video, index) => (
-              <a href={video.url} target="_blank" key={index} className={`group relative aspect-video rounded-3xl overflow-hidden cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 ${index === 0 ? 'lg:col-span-2' : ''}`}>
-                <div className="absolute inset-0 bg-zinc-900">
-                  <Image
-                    src={video.thumb}
-                    alt={video.title}
-                    fill
-                    className="object-cover opacity-60 group-hover:opacity-40 transition-opacity"
-                    unoptimized // Youtube images are external
-                  />
-                </div>
 
+            {/* Video 1 (Featured - Large) */}
+            {videos[0] && (
+              <a href={videos[0].url} target="_blank" className="group relative col-span-1 lg:col-span-2 aspect-video rounded-3xl overflow-hidden cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1">
+                {/* Thumbnail Placeholder with Gradient */}
+                <div className="absolute inset-0 bg-gradient-to-br group-hover:scale-105 transition-transform duration-700 from-zinc-800 to-black"></div>
+                {videos[0].thumbnail && (
+                  <div className="absolute inset-0 bg-cover bg-center opacity-40 mix-blend-overlay" style={{ backgroundImage: `url('${videos[0].thumbnail}')` }}></div>
+                )}
+
+                {/* Content Overlay */}
                 <div className="absolute inset-0 p-8 flex flex-col justify-between">
                   <div className="flex justify-between items-start">
-                    <span className="px-3 py-1 rounded-full backdrop-blur-md text-xs font-medium border bg-white/20 text-white border-white/10">
-                      {video.category}
-                    </span>
+                    <span className="px-3 py-1 rounded-full backdrop-blur-md text-xs font-medium border bg-white/20 text-white border-white/10 font-sans">New Release</span>
                     <div className="h-12 w-12 rounded-full backdrop-blur-md flex items-center justify-center group-hover:bg-rose-500 transition-colors bg-white/10 text-white">
                       <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="20" height="20" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"></path></svg>
                     </div>
                   </div>
                   <div>
-                    <h3 className="text-2xl font-bold mb-2 leading-tight text-white">{video.title}</h3>
+                    <h3 className="text-2xl mb-2 leading-tight text-white font-sans font-semibold">{videos[0].title}</h3>
+                    <p className="text-sm line-clamp-2 text-zinc-300 font-sans">
+                      {videos[0].viewCount ? `${videos[0].viewCount} views` : 'Watch now'} • {getRelativeTime(videos[0].publishedAt)}
+                    </p>
                   </div>
                 </div>
               </a>
-            ))}
+            )}
+
+            {/* Video 2 (Light Card) */}
+            {videos[1] && (
+              <a href={videos[1].url} target="_blank" className="group relative aspect-video lg:aspect-auto rounded-3xl overflow-hidden cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 border bg-white border-zinc-200">
+                <div className="absolute inset-0 bg-gradient-to-tr opacity-50 group-hover:opacity-100 transition-opacity from-rose-100 to-orange-50"></div>
+                {videos[1].thumbnail && (
+                  <Image src={videos[1].thumbnail} alt={videos[1].title} fill className="object-cover opacity-20 mix-blend-multiply group-hover:opacity-10 transition-opacity" />
+                )}
+                <div className="absolute inset-0 p-6 flex flex-col justify-end">
+                  <div className="absolute top-6 right-6 h-10 w-10 rounded-full shadow-sm flex items-center justify-center group-hover:scale-110 transition-transform bg-white text-zinc-900">
+                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="16" height="16" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"></path></svg>
+                  </div>
+                  <span className="text-xs font-semibold mb-1 uppercase tracking-wide text-rose-600 font-sans">Latest</span>
+                  <h3 className="text-lg font-bold leading-tight text-zinc-900 font-sans line-clamp-2">{videos[1].title}</h3>
+                  <p className="text-xs text-zinc-500 mt-2 font-sans">{videos[1].duration || "10:00"} min • {getRelativeTime(videos[1].publishedAt)}</p>
+                </div>
+              </a>
+            )}
+
+            {/* Video 3 (Dark Card) */}
+            {videos[2] && (
+              <a href={videos[2].url} target="_blank" className="group relative aspect-video rounded-3xl overflow-hidden cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 bg-zinc-900">
+                <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/20 to-purple-500/20"></div>
+                {videos[2].thumbnail && (
+                  <Image src={videos[2].thumbnail} alt={videos[2].title} fill className="object-cover opacity-40 group-hover:opacity-20 transition-opacity" />
+                )}
+                <div className="absolute inset-0 p-6 flex flex-col justify-between">
+                  <div className="flex justify-end">
+                    <div className="h-10 w-10 rounded-full backdrop-blur flex items-center justify-center group-hover:bg-white group-hover:text-zinc-900 transition-all bg-white/10 text-white">
+                      <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="16" height="16" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"></path></svg>
+                    </div>
+                  </div>
+                  <div>
+                    <span className="text-xs font-medium mb-1 block text-indigo-300 font-sans">Video</span>
+                    <h3 className="text-lg font-bold leading-tight text-white font-sans line-clamp-2">{videos[2].title}</h3>
+                  </div>
+                </div>
+              </a>
+            )}
+
+            {/* Video 4 (Clean Card) */}
+            {videos[3] && (
+              <a href={videos[3].url} target="_blank" className="group relative aspect-video rounded-3xl overflow-hidden cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 border lg:col-span-2 bg-white border-zinc-200">
+                <div className="absolute inset-0 flex items-center justify-center group-hover:bg-zinc-100 transition-colors bg-zinc-50">
+                  <span className="group-hover:scale-110 transition-transform duration-500 text-zinc-300">
+                    {/* Abstract geometric shape placeholder */}
+                    <svg width="100%" height="100%" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full opacity-10"><path d="M0 100L100 0H0V100Z" fill="currentColor"></path></svg>
+                  </span>
+                </div>
+                {videos[3].thumbnail && (
+                  <div className="absolute right-0 top-0 bottom-0 w-1/2 opacity-20 mask-image-linear-to-l from-black to-transparent">
+                    <Image src={videos[3].thumbnail} alt={videos[3].title} fill className="object-cover" />
+                  </div>
+                )}
+                <div className="absolute inset-0 p-8 flex items-center justify-between">
+                  <div className="max-w-xs relative z-10">
+                    <span className="text-xs font-semibold mb-2 block uppercase tracking-wide text-emerald-600 font-sans">Featured</span>
+                    <h3 className="text-xl font-bold mb-2 text-zinc-900 font-sans line-clamp-2">{videos[3].title}</h3>
+                    <p className="text-sm text-zinc-500 font-sans line-clamp-1">{videos[3].duration ? `${videos[3].duration} • ` : ''}{getRelativeTime(videos[3].publishedAt)}</p>
+                  </div>
+                  <div className="h-16 w-16 rounded-full shadow-xl flex items-center justify-center group-hover:scale-110 transition-transform bg-zinc-900 text-white shrink-0 ml-4 relative z-10">
+                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"></path></svg>
+                  </div>
+                </div>
+              </a>
+            )}
+
           </div>
         </div>
       </section>
