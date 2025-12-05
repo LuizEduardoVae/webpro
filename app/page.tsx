@@ -32,6 +32,8 @@ const getPageData = async (): Promise<HomePageData> => {
         technologies {
           name
         }
+        anopublicacao
+        jornalcongresso
       }
       knowTechs {
         iconSvg
@@ -144,15 +146,16 @@ export default async function Home() {
             {pageData.highlightProjects.map((project, index) => (
               <Link href={`/projects/${project.slug}`} key={project.slug} className="group flex flex-col sm:flex-row sm:items-baseline gap-4 p-5 rounded-2xl border border-zinc-200 hover:border-rose-200 bg-white hover:shadow-lg hover:shadow-rose-100/50 transition-all cursor-pointer">
                 <div className="w-32 shrink-0">
-                  {/* Using project main tech or date if available, currently putting tech badge */}
-                  <span className="text-xs font-mono font-medium text-rose-600 bg-rose-50 px-2 py-1 rounded-md">
-                    {project.technologies[0]?.name || "Project"}
-                  </span>
+                  {/* Display Date (Year only) */}
+                  <div className="text-xs font-mono font-medium text-rose-600 bg-rose-50 px-2 py-1 rounded-md inline-block">
+                    {project.anopublicacao ? new Date(project.anopublicacao).getFullYear() : (project.technologies[0]?.name || "2024")}
+                  </div>
                 </div>
                 <div className="flex-1">
                   <h3 className="text-base font-bold text-zinc-900 group-hover:text-rose-600 transition-colors">{project.title}</h3>
+                  {/* Prioritize jornalcongresso, fallback to shortDescription */}
                   <p className="text-sm text-zinc-500 mt-1 line-clamp-1">
-                    {project.shortDescription}
+                    {project.jornalcongresso || project.shortDescription}
                   </p>
                   <div className="flex gap-2 mt-3 flex-wrap">
                     {project.technologies.slice(0, 3).map((tech, i) => (
@@ -228,7 +231,12 @@ export default async function Home() {
             {pageData.knowTechs.map((tech, index) => (
               <div key={index} className="group p-8 rounded-3xl border transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border-zinc-200 bg-white">
                 <div className="h-12 w-12 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform bg-zinc-50">
-                  <div dangerouslySetInnerHTML={{ __html: tech.iconSvg }} className="w-8 h-8" />
+                  {tech.iconSvg ? (
+                    <div dangerouslySetInnerHTML={{ __html: tech.iconSvg }} className="w-8 h-8 [&>svg]:w-full [&>svg]:h-full" />
+                  ) : (
+                    // Fallback icon if SVG is missing
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-zinc-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 12h14M12 5l7 7-7 7" /></svg>
+                  )}
                 </div>
                 <h3 className="text-lg font-bold mb-2 text-zinc-900">{tech.name}</h3>
                 <p className="text-sm text-zinc-500 leading-relaxed">
