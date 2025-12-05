@@ -17,6 +17,10 @@ module.exports = {
       },
       fontFamily: {
         mono: ['var(--font-plex-mono)', 'monospace'],
+        inter: ['var(--font-inter)', 'sans-serif'],
+      },
+      animation: {
+        'ping-slow': 'ping 3s cubic-bezier(0, 0, 0.2, 1) infinite',
       },
       boxShadow: {
         button: '0px 4px 20px rgba(0, 0, 0, 0.1)',
