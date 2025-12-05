@@ -251,7 +251,7 @@ export default async function Home() {
       </section>
 
       {/* ME Section (Experience + Education) */}
-      <section id="me" className="py-24 px-6 bg-zinc-50/50">
+      <section id="me" className="scroll-mt-32 py-24 px-6 bg-zinc-50/50">
         <div className="max-w-5xl mx-auto">
           <div className="mb-12">
             <h2 className="text-3xl font-bold tracking-tight mb-4 text-zinc-900">Me</h2>
