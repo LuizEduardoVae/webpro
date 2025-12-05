@@ -98,7 +98,7 @@ export default async function Home() {
         <div className="max-w-5xl mr-auto ml-auto relative">
 
           {/* Animated Pill - Replaced Open for Work with Latest Paper/Project */}
-          <div className="animate-enter inline-flex items-center gap-2 px-3 py-1.5 rounded-full border mb-8 backdrop-blur shadow-sm transition-transform hover:scale-105 cursor-pointer bg-white/80 border-zinc-200">
+          <Link href={`/projects/${pageData.highlightProjects[0]?.slug}`} className="animate-enter inline-flex items-center gap-2 px-3 py-1.5 rounded-full border mb-8 backdrop-blur shadow-sm transition-transform hover:scale-105 cursor-pointer bg-white/80 border-zinc-200">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 bg-rose-400"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-rose-500"></span>
@@ -107,7 +107,7 @@ export default async function Home() {
               Check out my latest project: {pageData.highlightProjects[0]?.title || "New Video"}
             </span>
             <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="12" height="12" viewBox="0 0 24 24" className="text-zinc-400"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5 12h14m-7-7l7 7l-7 7"></path></svg>
-          </div>
+          </Link>
 
           <h1 className="animate-enter delay-100 text-5xl md:text-7xl font-bold tracking-tighter mb-6 leading-[1.05] text-zinc-900">
             Hi, my name is Luiz. <br />
@@ -132,7 +132,7 @@ export default async function Home() {
       </header>
 
       {/* Featured Projects (Was Experience list, now Projects list) */}
-      <section id="projects" className="py-12 px-6 border-t border-b border-zinc-100 bg-zinc-50/40">
+      <section id="projects" className="scroll-mt-32 py-12 px-6 border-t border-b border-zinc-100 bg-zinc-50/40">
         <div className="max-w-5xl mx-auto">
           <div className="flex items-end justify-between mb-8">
             <div>
@@ -177,7 +177,7 @@ export default async function Home() {
       </section>
 
       {/* Videos Section (Was Featured Projects grid, now Youtube Grid) */}
-      <section id="videos" className="py-24 px-6 relative">
+      <section id="videos" className="scroll-mt-32 py-24 px-6 relative">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-end justify-between mb-12 animate-enter delay-100">
             <div>
@@ -222,7 +222,7 @@ export default async function Home() {
       </section>
 
       {/* Research Areas (Was Technologies) */}
-      <section id="research" className="py-24 px-6 border-b border-zinc-100">
+      <section id="research" className="scroll-mt-32 py-24 px-6 border-b border-zinc-100">
         <div className="max-w-5xl mx-auto">
           <div className="mb-12">
             <h2 className="text-3xl font-bold tracking-tight mb-4 text-zinc-900">Research Areas</h2>
