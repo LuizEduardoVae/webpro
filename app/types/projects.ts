@@ -3,7 +3,7 @@ import type { RichTextContent } from "@graphcms/rich-text-types";
 export type KnowTech = {
     iconSvg: string;
     name: string;
-    startDate:string;
+    startDate: string;
 }
 
 export type ProjectSection = {
@@ -21,7 +21,7 @@ export type Project = {
     title: string
     shortDescription: string
     technologies: KnowTech[]
-    pageThumbnail:{
+    pageThumbnail: {
         url: string
     }
     sections: ProjectSection[]
@@ -31,5 +31,7 @@ export type Project = {
     }
     liveProjectUrl?: string
     githubUrl?: string
+    anopublicacao?: string
+    jornalcongresso?: string
 
 }
