@@ -142,7 +142,7 @@ export default async function Home() {
                   <h3 className="text-base font-bold text-zinc-900 group-hover:text-rose-600 transition-colors">{experience.role}</h3>
                   <p className="text-sm text-zinc-500 mt-1 line-clamp-1">
                     {/* Assuming raw description needs parsing, but simplified here */}
-                    {experience.description?.raw?.children?.[0]?.children?.[0]?.text || "Developer"}
+                    {(experience.description?.raw as any)?.children?.[0]?.children?.[0]?.text || "Developer"}
                   </p>
                   <div className="flex gap-2 mt-3 flex-wrap">
                     {experience.technologies.slice(0, 3).map((tech, i) => (
