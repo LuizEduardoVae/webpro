@@ -6,6 +6,7 @@ import { ContactForm } from './components/contact-form'
 import { Toaster } from './components/toaster'
 import { BackToTop } from './components/back-to-top'
 import { NewFooter } from './components/new-footer'
+import ScrollToTop from './components/scroll-to-top'
 
 export const metadata = {
   title: {
