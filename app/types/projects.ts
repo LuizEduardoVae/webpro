@@ -32,6 +32,8 @@ export type Project = {
     liveProjectUrl?: string
     githubUrl?: string
     anopublicacao?: string
-    jornalcongresso?: string
+    jornalcongresso?: {
+        raw: RichTextContent
+    }
 
 }

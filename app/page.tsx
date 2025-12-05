@@ -33,7 +33,9 @@ const getPageData = async (): Promise<HomePageData> => {
           name
         }
         anopublicacao
-        jornalcongresso
+        jornalcongresso {
+          raw
+        }
       }
       knowTechs {
         iconSvg
@@ -155,7 +157,7 @@ export default async function Home() {
                   <h3 className="text-base font-bold text-zinc-900 group-hover:text-rose-600 transition-colors">{project.title}</h3>
                   {/* Prioritize jornalcongresso, fallback to shortDescription */}
                   <p className="text-sm text-zinc-500 mt-1 line-clamp-1">
-                    {project.jornalcongresso || project.shortDescription}
+                    {(project.jornalcongresso?.raw as any)?.children?.[0]?.children?.[0]?.text || project.shortDescription}
                   </p>
                   <div className="flex gap-2 mt-3 flex-wrap">
                     {project.technologies.slice(0, 3).map((tech, i) => (
