@@ -98,25 +98,25 @@ export default async function Home() {
   const videos = await getLatestVideos();
 
 
-  // Helper for sorting experiences (LinkedIn style: Newest Start Date first, tie-break with End Date)
+  // Helper for sorting experiences (LinkedIn style: Present first, then by End Date Descending)
   function sortExperiences<T extends { startDate: string; endDate?: string | null }>(experiences: T[] | undefined): T[] {
     if (!experiences) return [];
 
     return [...experiences].sort((a, b) => {
-      // 1. Compare Start Date (Desc - Newest first)
-      const startDateA = new Date(a.startDate).getTime();
-      const startDateB = new Date(b.startDate).getTime();
-
-      if (startDateA !== startDateB) {
-        return startDateB - startDateA;
-      }
-
-      // 2. Tie-breaker: End Date (Desc - "Present/Null" is newest/largest)
+      // 1. Compare End Date (Desc - "Present/Null" is newest/largest)
       // If endDate is missing/null, treat as "Present" (Future/Infinity)
       const endDateA = a.endDate ? new Date(a.endDate).getTime() : Infinity;
       const endDateB = b.endDate ? new Date(b.endDate).getTime() : Infinity;
 
-      return endDateB - endDateA;
+      if (endDateA !== endDateB) {
+        return endDateB - endDateA;
+      }
+
+      // 2. Tie-breaker: Start Date (Desc - Newest first)
+      const startDateA = new Date(a.startDate).getTime();
+      const startDateB = new Date(b.startDate).getTime();
+
+      return startDateB - startDateA;
     });
   }
 
