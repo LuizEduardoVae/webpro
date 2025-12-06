@@ -349,7 +349,7 @@ export default async function Home() {
                     <div className="text-sm text-zinc-400 mb-1">{new Date(job.startDate).getFullYear()} - {job.endDate ? new Date(job.endDate).getFullYear() : 'Present'}</div>
                     <h4 className="font-bold text-zinc-900">{job.role}</h4>
                     <div className="text-sm font-medium text-zinc-600 mb-2">{job.companyName}</div>
-                    <p className="text-sm text-zinc-500 line-clamp-2">
+                    <p className="text-sm text-zinc-500">
                       {(job.description?.raw as any)?.children?.[0]?.children?.[0]?.text || "Role description"}
                     </p>
                   </div>
