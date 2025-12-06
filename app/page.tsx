@@ -45,7 +45,7 @@ const getPageData = async (): Promise<HomePageData> => {
         startDate
       }
     }
-    workExperiences {
+    workExperiences(orderBy: startDate_DESC) {
       companyLogo {
         url
       }
@@ -61,7 +61,7 @@ const getPageData = async (): Promise<HomePageData> => {
         name
       }
     }
-    collegeExperiences {
+    collegeExperiences(orderBy: startDate_DESC) {
       collegeLogo {
         url
       }
@@ -313,7 +313,7 @@ export default async function Home() {
                       {experience.companyName}
                     </a>
 
-                    <div className="text-xs text-zinc-400 font-mono mt-1 mb-3 uppercase tracking-wider">
+                    <div className="text-xs text-zinc-400 font-sans mt-1 mb-3 uppercase tracking-wider">
                       {new Date(experience.startDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })} - {experience.endDate ? new Date(experience.endDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : "Present"}
                     </div>
 
@@ -342,7 +342,7 @@ export default async function Home() {
                       {experience.role}
                     </div>
 
-                    <div className="text-xs text-zinc-400 font-mono mt-1 mb-3 uppercase tracking-wider">
+                    <div className="text-xs text-zinc-400 font-sans mt-1 mb-3 uppercase tracking-wider">
                       {new Date(experience.startDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })} - {experience.endDate ? new Date(experience.endDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : "Present"}
                     </div>
 
