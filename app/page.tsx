@@ -199,101 +199,54 @@ export default async function Home() {
           </div>
 
           {/* Video Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[300px]">
-
-            {/* Video 1 (Featured - Large: 2x2) */}
-            {videos[0] && (
-              <a href={videos[0].url} target="_blank" className="group relative md:col-span-2 lg:col-span-2 row-span-2 rounded-3xl overflow-hidden cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1">
-                {/* Thumbnail Placeholder with Gradient */}
-                <div className="absolute inset-0 bg-gradient-to-br group-hover:scale-105 transition-transform duration-700 from-zinc-800 to-black"></div>
-                {videos[0].thumbnail && (
-                  <div className="absolute inset-0 bg-cover bg-center opacity-40 mix-blend-overlay" style={{ backgroundImage: `url('${videos[0].thumbnail}')` }}></div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {videos.slice(0, 4).map((video, index) => (
+              <a
+                key={video.id}
+                href={video.url}
+                target="_blank"
+                className={`group relative aspect-video rounded-3xl overflow-hidden cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 ${index === 0 || index === 3 ? "md:col-span-2 lg:col-span-2" : "col-span-1"
+                  }`}
+              >
+                {/* Image */}
+                {video.thumbnail && (
+                  <img
+                    src={video.thumbnail}
+                    alt={video.title}
+                    className="absolute inset-0 h-full w-full object-cover transform transition-transform duration-700 group-hover:scale-105"
+                  />
                 )}
 
-                {/* Content Overlay */}
-                <div className="absolute inset-0 p-8 flex flex-col justify-between">
-                  <div className="flex justify-between items-start">
-                    <span className="px-3 py-1 rounded-full backdrop-blur-md text-xs font-medium border bg-white/20 text-white border-white/10 font-sans">New Release</span>
-                    <div className="h-12 w-12 rounded-full backdrop-blur-md flex items-center justify-center group-hover:bg-rose-500 transition-colors bg-white/10 text-white">
-                      <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="20" height="20" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"></path></svg>
-                    </div>
+                {/* Clean Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent p-8 flex flex-col justify-end">
+
+                  {/* Label */}
+                  <div className="mb-2">
+                    <span className="inline-block px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-xs font-medium text-white border border-white/10 font-sans">
+                      {video.tags?.[0] || 'Video'}
+                    </span>
                   </div>
-                  <div>
-                    <h3 className="text-3xl mb-3 leading-tight text-white font-sans font-semibold line-clamp-2">{videos[0].title}</h3>
-                    <p className="text-sm line-clamp-2 text-zinc-300 font-sans">
-                      {videos[0].viewCount ? `${videos[0].viewCount} views` : 'Watch now'} • {getRelativeTime(videos[0].publishedAt)}
-                    </p>
+
+                  {/* Title */}
+                  <h3 className="text-xl md:text-2xl font-bold leading-tight text-white mb-2 font-sans line-clamp-2">
+                    {video.title}
+                  </h3>
+
+                  {/* Meta */}
+                  <div className="flex items-center gap-2 text-sm text-zinc-300 font-sans">
+                    <span>{video.viewCount ? `${video.viewCount} views` : 'Watch now'}</span>
+                    <span>•</span>
+                    <span>{getRelativeTime(video.publishedAt)}</span>
+                    {video.duration && (
+                      <>
+                        <span>•</span>
+                        <span>{video.duration}</span>
+                      </>
+                    )}
                   </div>
                 </div>
               </a>
-            )}
-
-            {/* Video 2 (Vertical - Tall: 1x2) */}
-            {videos[1] && (
-              <a href={videos[1].url} target="_blank" className="group relative col-span-1 row-span-2 rounded-3xl overflow-hidden cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 border bg-white border-zinc-200">
-                <div className="absolute inset-0 bg-gradient-to-tr opacity-50 group-hover:opacity-100 transition-opacity from-rose-100 to-orange-50"></div>
-                {videos[1].thumbnail && (
-                  <Image src={videos[1].thumbnail} alt={videos[1].title} fill className="object-cover opacity-50 mix-blend-multiply group-hover:opacity-10 transition-opacity" />
-                )}
-                <div className="absolute inset-0 p-6 flex flex-col justify-end">
-                  <div className="absolute top-6 right-6 h-10 w-10 rounded-full shadow-sm flex items-center justify-center group-hover:scale-110 transition-transform bg-white text-zinc-900">
-                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="16" height="16" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"></path></svg>
-                  </div>
-                  <span className="text-xs font-semibold mb-2 uppercase tracking-wide text-rose-600 font-sans">{videos[1].tags?.[0] || 'Latest'}</span>
-                  <h3 className="text-xl font-bold leading-tight text-zinc-900 font-sans line-clamp-4 mb-2">{videos[1].title}</h3>
-                  <p className="text-xs text-zinc-500 font-sans">{videos[1].duration || "10:00"} min • {getRelativeTime(videos[1].publishedAt)}</p>
-                </div>
-              </a>
-            )}
-
-            {/* Video 3 (Standard - 1x1) */}
-            {videos[2] && (
-              <a href={videos[2].url} target="_blank" className="group relative col-span-1 row-span-1 rounded-3xl overflow-hidden cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 bg-zinc-900">
-                <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/20 to-purple-500/20"></div>
-                {videos[2].thumbnail && (
-                  <Image src={videos[2].thumbnail} alt={videos[2].title} fill className="object-cover opacity-60 group-hover:opacity-20 transition-opacity" />
-                )}
-                <div className="absolute inset-0 p-6 flex flex-col justify-between">
-                  <div className="flex justify-end">
-                    <div className="h-10 w-10 rounded-full backdrop-blur flex items-center justify-center group-hover:bg-white group-hover:text-zinc-900 transition-all bg-white/10 text-white">
-                      <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="16" height="16" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"></path></svg>
-                    </div>
-                  </div>
-                  <div>
-                    <span className="text-xs font-medium mb-1 block text-indigo-300 font-sans">{videos[2].tags?.[0] || 'Video'}</span>
-                    <h3 className="text-lg font-bold leading-tight text-white font-sans line-clamp-2">{videos[2].title}</h3>
-                  </div>
-                </div>
-              </a>
-            )}
-
-            {/* Video 4 (Wide - 2x1) */}
-            {videos[3] && (
-              <a href={videos[3].url} target="_blank" className="group relative md:col-span-2 lg:col-span-2 row-span-1 rounded-3xl overflow-hidden cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 border bg-white border-zinc-200">
-                <div className="absolute inset-0 flex items-center justify-center group-hover:bg-zinc-100 transition-colors bg-zinc-50">
-                  <span className="group-hover:scale-110 transition-transform duration-500 text-zinc-300">
-                    {/* Abstract geometric shape placeholder */}
-                    <svg width="100%" height="100%" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full opacity-10"><path d="M0 100L100 0H0V100Z" fill="currentColor"></path></svg>
-                  </span>
-                </div>
-                {videos[3].thumbnail && (
-                  <div className="absolute right-0 top-0 bottom-0 w-1/2 opacity-60 mask-image-linear-to-l from-black to-transparent">
-                    <Image src={videos[3].thumbnail} alt={videos[3].title} fill className="object-cover" />
-                  </div>
-                )}
-                <div className="absolute inset-0 p-8 flex items-center justify-between">
-                  <div className="max-w-xs relative z-10">
-                    <span className="text-xs font-semibold mb-2 block uppercase tracking-wide text-emerald-600 font-sans">{videos[3].tags?.[0] || 'Featured'}</span>
-                    <h3 className="text-xl font-bold mb-2 text-zinc-900 font-sans line-clamp-2">{videos[3].title}</h3>
-                    <p className="text-sm text-zinc-500 font-sans line-clamp-1">{videos[3].duration ? `${videos[3].duration} • ` : ''}{getRelativeTime(videos[3].publishedAt)}</p>
-                  </div>
-                  <div className="h-16 w-16 rounded-full shadow-xl flex items-center justify-center group-hover:scale-110 transition-transform bg-zinc-900 text-white shrink-0 ml-4 relative z-10">
-                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"></path></svg>
-                  </div>
-                </div>
-              </a>
-            )}
-
+            ))}
           </div>
         </div>
       </section>
