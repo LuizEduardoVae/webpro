@@ -100,7 +100,7 @@ export default async function Home() {
 
 
   return (
-    <> Basic sorting logic removed.
+    <>
       <NewHeader profilePicture={pageData.profilePicture?.url} />
 
       {/* Hero Section */}
@@ -350,5 +350,6 @@ export default async function Home() {
       </section>
 
       <NewFooter socials={pageData.socials} />
-      )
+    </>
+  )
 }
