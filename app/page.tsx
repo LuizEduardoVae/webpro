@@ -98,6 +98,28 @@ export default async function Home() {
   const videos = await getLatestVideos();
 
 
+  // Helper for sorting experiences (LinkedIn style: Newest Start Date first, tie-break with End Date)
+  function sortExperiences<T extends { startDate: string; endDate?: string | null }>(experiences: T[] | undefined): T[] {
+    if (!experiences) return [];
+
+    return [...experiences].sort((a, b) => {
+      // 1. Compare Start Date (Desc - Newest first)
+      const startDateA = new Date(a.startDate).getTime();
+      const startDateB = new Date(b.startDate).getTime();
+
+      if (startDateA !== startDateB) {
+        return startDateB - startDateA;
+      }
+
+      // 2. Tie-breaker: End Date (Desc - "Present/Null" is newest/largest)
+      // If endDate is missing/null, treat as "Present" (Future/Infinity)
+      const endDateA = a.endDate ? new Date(a.endDate).getTime() : Infinity;
+      const endDateB = b.endDate ? new Date(b.endDate).getTime() : Infinity;
+
+      return endDateB - endDateA;
+    });
+  }
+
 
   return (
     <>
@@ -303,7 +325,7 @@ export default async function Home() {
                 Experience
               </h3>
               <div className="space-y-8 pl-3 border-l border-zinc-200">
-                {workExperiences?.sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime()).map((experience, index) => (
+                {sortExperiences(workExperiences).map((experience, index) => (
                   <div key={index} className="relative pl-6 group">
                     <span className="absolute -left-[17px] top-1.5 w-2 h-2 rounded-full bg-white border-2 border-zinc-300 group-hover:border-rose-500 transition-colors"></span>
 
@@ -332,7 +354,7 @@ export default async function Home() {
                 Education
               </h3>
               <div className="space-y-8 pl-3 border-l border-zinc-200">
-                {collegeExperiences?.sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime()).map((experience, index) => (
+                {sortExperiences(collegeExperiences).map((experience, index) => (
                   <div key={index} className="relative pl-6 group">
                     <span className="absolute -left-[17px] top-1.5 w-2 h-2 rounded-full bg-white border-2 border-zinc-300 group-hover:border-rose-500 transition-colors"></span>
 
