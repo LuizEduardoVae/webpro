@@ -16,6 +16,8 @@ export function NewFooter({ socials = [] }: NewFooterProps) {
         if (url.includes('twitter') || url.includes('x.com')) return 'X / Twitter';
         if (url.includes('linkedin')) return 'LinkedIn';
         if (url.includes('github')) return 'GitHub';
+        if (url.includes('lattes')) return 'Lattes Curriculum';
+        if (url.includes('researchgate')) return 'ResearchGate';
         return 'Link';
     };
 

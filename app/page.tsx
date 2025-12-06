@@ -191,7 +191,7 @@ export default async function Home() {
           <div className="flex items-end justify-between mb-12 animate-enter delay-100">
             <div>
               <h2 className="text-3xl tracking-tight mb-2 text-zinc-900 font-sans font-semibold">Latest Videos</h2>
-              <p className="text-zinc-500 font-sans">In-depth technical analysis and engineering reviews.</p>
+              <p className="text-zinc-500 font-sans">Classes, vlogs, and educational content.</p>
             </div>
             <a href="https://www.youtube.com/@LuizEduardoVedoato" target="_blank" className="hidden md:flex items-center gap-1 text-sm font-medium transition-colors text-rose-600 hover:text-rose-700 font-sans">
               View Channel <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="16" height="16" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5 12h14m-7-7l7 7l-7 7"></path></svg>
@@ -262,7 +262,7 @@ export default async function Home() {
         <div className="max-w-5xl mx-auto">
           <div className="mb-12">
             <h2 className="text-3xl font-bold tracking-tight mb-4 text-zinc-900">Research Areas</h2>
-            <p className="text-zinc-500 max-w-xl">Investigating scalable systems and data intelligence.</p>
+            <p className="text-zinc-500 max-w-xl">Areas of Learning & Interest.</p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6">

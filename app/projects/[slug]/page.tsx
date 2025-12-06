@@ -6,15 +6,24 @@ import { Metadata } from "next";
 
 
 type ProjectProps = {
-    params:{
+    params: {
         slug: string;
     }
 }
 
 
-const getProjectDetails = async (slug: string): Promise<ProjectPageData> => {
+const getProjectDetails = async (slug: string): Promise<{ project: ProjectPageData['project'], page: any }> => {
     const query = `
     query ProjectQuery {
+        page(where: {slug: "home"}) {
+            profilePicture {
+                url
+            }
+            socials {
+                url
+                iconSvg
+            }
+        }
         project(where: { slug: "${slug}" }) {
             pageThumbnail { 
                 url
@@ -42,25 +51,28 @@ const getProjectDetails = async (slug: string): Promise<ProjectPageData> => {
         }
     }
     `
-    return fetchHygraphQuery<ProjectPageData>(
-        query,
-    )
+    return fetchHygraphQuery(query)
 }
 
-export default async function Project({ params: {slug} }: ProjectProps){
-    const { project } = await getProjectDetails(slug)
+import { NewHeader } from "@/app/components/new-header";
+import { NewFooter } from "@/app/components/new-footer";
+
+export default async function Project({ params: { slug } }: ProjectProps) {
+    const { project, page } = await getProjectDetails(slug)
 
     if (!project) {
-        return <div>Projeto não encontrado.</div> // ou use notFound()
+        return <div>Projeto não encontrado.</div>
     }
-    
-    return(
+
+    return (
         <>
+            <NewHeader profilePicture={page.profilePicture?.url} />
             <ProjectDetails project={project} />
             <ProjectSections sections={project.sections || []} />
+            <NewFooter socials={page.socials} />
         </>
     )
- }
+}
 
 
 export async function generateStaticParams() {
@@ -71,7 +83,7 @@ export async function generateStaticParams() {
             }
         } 
     `;
-   
+
     const { projects } = await fetchHygraphQuery<ProjectsPageStaticData>(query);
 
     return projects;
@@ -90,7 +102,7 @@ export async function generateMetadata({
         }
     }
 
-    return{
+    return {
         title: project.title,
         description: project.description.text,
         openGraph: {
