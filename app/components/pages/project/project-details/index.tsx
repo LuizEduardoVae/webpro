@@ -31,11 +31,9 @@ export const ProjectDetails = ({ project }: ProjectDetailsProps) => {
 
             <div className="relative z-10 flex flex-col items-center max-w-4xl mx-auto text-center">
 
-                <SectionTitle
-                    subtitle="Project Details"
-                    title={project.title}
-                    className="text-center items-center sm:[&>h3]:text-4xl [&>h3]:text-zinc-900 mb-8"
-                />
+                <h1 className="text-3xl sm:text-4xl font-bold text-zinc-900 tracking-tight font-sans mb-8">
+                    {project.title}
+                </h1>
 
                 <div className="text-zinc-600 leading-relaxed space-y-4 max-w-2xl mx-auto mb-8 font-sans">
                     <RichText content={project.description.raw} />
