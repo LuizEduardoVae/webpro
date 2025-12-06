@@ -14,59 +14,69 @@ export interface YouTubeVideo {
 
 export async function getLatestVideos(): Promise<YouTubeVideo[]> {
     try {
-        // 1. Fetch latest uploads from the playlist
-        const playlistResponse = await fetch(
-            `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${UPLOADS_PLAYLIST_ID}&maxResults=4&key=${YOUTUBE_API_KEY}`,
-            { next: { revalidate: 3600 } } // Revalidate every hour
-        );
-
-        if (!playlistResponse.ok) {
-            console.error("Failed to fetch playlist items", await playlistResponse.text());
-            return [];
-        }
-
-        const playlistData = await playlistResponse.json();
-
-        if (!playlistData.items || playlistData.items.length === 0) {
-            return [];
-        }
-
-        // 2. Extract video IDs to fetch details (duration, view count)
-        const videoIds = playlistData.items.map((item: any) => item.snippet.resourceId.videoId).join(',');
-
-        // 3. Fetch video details
-        const videosResponse = await fetch(
-            `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics&id=${videoIds}&key=${YOUTUBE_API_KEY}`,
+        // 1. Fetch latest 3 uploads from the main uploads playlist
+        const uploadsResponse = await fetch(
+            `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${UPLOADS_PLAYLIST_ID}&maxResults=3&key=${YOUTUBE_API_KEY}`,
             { next: { revalidate: 3600 } }
         );
 
-        if (!videosResponse.ok) {
-            console.error("Failed to fetch video details", await videosResponse.text());
-            // Fallback to basic info from playlist items if video details fail
-            return playlistData.items.map((item: any) => ({
-                id: item.snippet.resourceId.videoId,
-                title: item.snippet.title,
-                thumbnail: item.snippet.thumbnails.maxres?.url || item.snippet.thumbnails.high?.url || item.snippet.thumbnails.medium?.url,
-                publishedAt: item.snippet.publishedAt,
-                url: `https://www.youtube.com/watch?v=${item.snippet.resourceId.videoId}`
-            }));
+        let videos: YouTubeVideo[] = [];
+
+        if (uploadsResponse.ok) {
+            const uploadsData = await uploadsResponse.json();
+
+            if (uploadsData.items && uploadsData.items.length > 0) {
+                // Extract video IDs
+                const videoIds = uploadsData.items.map((item: any) => item.snippet.resourceId.videoId).join(',');
+
+                // Fetch validation details for these 3 videos
+                const videosResponse = await fetch(
+                    `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics&id=${videoIds}&key=${YOUTUBE_API_KEY}`,
+                    { next: { revalidate: 3600 } }
+                );
+
+                if (videosResponse.ok) {
+                    const videosData = await videosResponse.json();
+                    videos = videosData.items.map((item: any) => ({
+                        id: item.id,
+                        title: item.snippet.title,
+                        thumbnail: item.snippet.thumbnails.maxres?.url || item.snippet.thumbnails.high?.url || item.snippet.thumbnails.medium?.url,
+                        publishedAt: item.snippet.publishedAt,
+                        duration: parseDuration(item.contentDetails.duration),
+                        viewCount: formatViewCount(item.statistics.viewCount),
+                        url: `https://www.youtube.com/watch?v=${item.id}`
+                    }));
+                }
+            }
         }
 
-        const videosData = await videosResponse.json();
+        // 2. Fetch "Fourier" Playlist details explicitly
+        const FOURIER_PLAYLIST_ID = "PLVi9FKj16_xwPXXacjIbn7EDPkUJ8AVTj";
+        const playlistResponse = await fetch(
+            `https://www.googleapis.com/youtube/v3/playlists?part=snippet,contentDetails&id=${FOURIER_PLAYLIST_ID}&key=${YOUTUBE_API_KEY}`,
+            { next: { revalidate: 3600 } }
+        );
 
-        // 4. Merge and format data
-        return videosData.items.map((item: any) => {
-            const duration = parseDuration(item.contentDetails.duration);
-            return {
-                id: item.id,
-                title: item.snippet.title,
-                thumbnail: item.snippet.thumbnails.maxres?.url || item.snippet.thumbnails.high?.url || item.snippet.thumbnails.medium?.url,
-                publishedAt: item.snippet.publishedAt,
-                duration: duration,
-                viewCount: formatViewCount(item.statistics.viewCount),
-                url: `https://www.youtube.com/watch?v=${item.id}`
-            };
-        });
+        if (playlistResponse.ok) {
+            const playlistData = await playlistResponse.json();
+            if (playlistData.items && playlistData.items.length > 0) {
+                const playlist = playlistData.items[0];
+                const fourierItem: YouTubeVideo = {
+                    id: playlist.id,
+                    title: playlist.snippet.title,
+                    thumbnail: playlist.snippet.thumbnails.maxres?.url || playlist.snippet.thumbnails.high?.url || playlist.snippet.thumbnails.medium?.url,
+                    publishedAt: playlist.snippet.publishedAt, // or use latest update time if available
+                    duration: `${playlist.contentDetails.itemCount} videos`, // Special display for playlist
+                    viewCount: "Series", // Special label
+                    url: `https://www.youtube.com/playlist?list=${playlist.id}`
+                };
+
+                // Push to the end of the array (4th slot)
+                videos.push(fourierItem);
+            }
+        }
+
+        return videos;
 
     } catch (error) {
         console.error("Error fetching YouTube videos:", error);
