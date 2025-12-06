@@ -7,14 +7,29 @@ export function ScrollReset() {
     const pathname = usePathname()
 
     useEffect(() => {
-        // Force scroll to top on mount (reload)
+        // 1. Force scroll restoration to manual
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+
+        // 2. Force scroll to top on mount
         window.scrollTo(0, 0);
 
-        // If there's a hash in the URL, remove it without scrolling to it
+        // 3. Clear hash without scrolling
         if (window.location.hash) {
             window.history.replaceState(null, '', window.location.pathname);
         }
-    }, [pathname]); // Runs on route change too, which is generally good for SPA nav
+
+        // 4. Force top on unload (refresh)
+        const handleUnload = () => {
+            window.scrollTo(0, 0);
+        };
+        window.addEventListener('beforeunload', handleUnload);
+
+        return () => {
+            window.removeEventListener('beforeunload', handleUnload);
+        }
+    }, [pathname]);
 
     return null
 }

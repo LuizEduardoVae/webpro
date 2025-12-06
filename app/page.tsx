@@ -199,11 +199,11 @@ export default async function Home() {
           </div>
 
           {/* Video Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[250px]">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[300px]">
 
             {/* Video 1 (Featured - Large: 2x2) */}
             {videos[0] && (
-              <a href={videos[0].url} target="_blank" className="group relative md:col-span-2 md:row-span-2 rounded-3xl overflow-hidden cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1">
+              <a href={videos[0].url} target="_blank" className="group relative md:col-span-2 lg:col-span-2 row-span-2 rounded-3xl overflow-hidden cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1">
                 {/* Thumbnail Placeholder with Gradient */}
                 <div className="absolute inset-0 bg-gradient-to-br group-hover:scale-105 transition-transform duration-700 from-zinc-800 to-black"></div>
                 {videos[0].thumbnail && (
@@ -230,7 +230,7 @@ export default async function Home() {
 
             {/* Video 2 (Vertical - Tall: 1x2) */}
             {videos[1] && (
-              <a href={videos[1].url} target="_blank" className="group relative md:col-span-1 md:row-span-2 rounded-3xl overflow-hidden cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 border bg-white border-zinc-200">
+              <a href={videos[1].url} target="_blank" className="group relative col-span-1 row-span-2 rounded-3xl overflow-hidden cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 border bg-white border-zinc-200">
                 <div className="absolute inset-0 bg-gradient-to-tr opacity-50 group-hover:opacity-100 transition-opacity from-rose-100 to-orange-50"></div>
                 {videos[1].thumbnail && (
                   <Image src={videos[1].thumbnail} alt={videos[1].title} fill className="object-cover opacity-50 mix-blend-multiply group-hover:opacity-10 transition-opacity" />
@@ -248,7 +248,7 @@ export default async function Home() {
 
             {/* Video 3 (Standard - 1x1) */}
             {videos[2] && (
-              <a href={videos[2].url} target="_blank" className="group relative md:col-span-1 md:row-span-1 rounded-3xl overflow-hidden cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 bg-zinc-900">
+              <a href={videos[2].url} target="_blank" className="group relative col-span-1 row-span-1 rounded-3xl overflow-hidden cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 bg-zinc-900">
                 <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/20 to-purple-500/20"></div>
                 {videos[2].thumbnail && (
                   <Image src={videos[2].thumbnail} alt={videos[2].title} fill className="object-cover opacity-60 group-hover:opacity-20 transition-opacity" />
@@ -269,7 +269,7 @@ export default async function Home() {
 
             {/* Video 4 (Wide - 2x1) */}
             {videos[3] && (
-              <a href={videos[3].url} target="_blank" className="group relative md:col-span-2 md:row-span-1 rounded-3xl overflow-hidden cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 border bg-white border-zinc-200">
+              <a href={videos[3].url} target="_blank" className="group relative md:col-span-2 lg:col-span-2 row-span-1 rounded-3xl overflow-hidden cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 border bg-white border-zinc-200">
                 <div className="absolute inset-0 flex items-center justify-center group-hover:bg-zinc-100 transition-colors bg-zinc-50">
                   <span className="group-hover:scale-110 transition-transform duration-500 text-zinc-300">
                     {/* Abstract geometric shape placeholder */}
