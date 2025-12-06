@@ -218,7 +218,7 @@ export default async function Home() {
                 )}
 
                 {/* Clean Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent p-8 flex flex-col justify-end">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent p-8 flex flex-col justify-end">
 
                   {/* Label */}
                   <div className="mb-2">
