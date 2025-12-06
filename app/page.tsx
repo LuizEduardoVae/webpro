@@ -5,6 +5,7 @@ import { NewHeader } from "./components/new-header"
 import Image from "next/image"
 import Link from "next/link"
 import { getLatestVideos } from "./lib/youtube";
+import { RichText } from "./components/rich-text";
 
 const getPageData = async (): Promise<HomePageData> => {
   const query = `
@@ -96,8 +97,17 @@ export default async function Home() {
   const { page: pageData, workExperiences, collegeExperiences } = await getPageData();
   const videos = await getLatestVideos();
 
+  // Sort experiences by startDate (descending: Newest first)
+  const sortedWorkExperiences = workExperiences?.sort((a, b) =>
+    new Date(b.startDate).getTime() - new Date(a.startDate).getTime()
+  );
+
+  const sortedCollegeExperiences = collegeExperiences?.sort((a, b) =>
+    new Date(b.startDate).getTime() - new Date(a.startDate).getTime()
+  );
+
   return (
-    <>
+    <> Basic sorting logic implemented.
       <NewHeader profilePicture={pageData.profilePicture?.url} />
 
       {/* Hero Section */}
@@ -287,30 +297,32 @@ export default async function Home() {
       </section>
 
       {/* ME Section (Experience + Education) */}
-      <section id="me" className="scroll-mt-32 py-24 px-6 bg-zinc-50/50">
+      {/* Me Section - New Design */}
+      <section id="me" className="py-24 md:py-32 px-6">
         <div className="max-w-5xl mx-auto">
-          <div className="mb-12">
-            <h2 className="text-3xl font-bold tracking-tight mb-4 text-zinc-900">Me</h2>
-            <p className="text-zinc-500 max-w-xl">My academic and professional journey.</p>
-          </div>
+          <h2 className="text-3xl font-bold tracking-tight mb-12 text-zinc-900">Me</h2>
 
           <div className="grid md:grid-cols-2 gap-12">
-            {/* Experiences */}
+            {/* Experience */}
             <div>
-              <h3 className="text-xl font-bold mb-6 text-zinc-900 flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+              <h3 className="text-xl font-medium text-zinc-900 mb-6 flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-zinc-900"></span>
                 Experience
               </h3>
-              <div className="space-y-8">
-                {workExperiences.map((job, i) => (
-                  <div key={i} className="relative pl-8 border-l border-zinc-200">
-                    <div className="absolute -left-1.5 top-1.5 h-3 w-3 rounded-full border border-white bg-zinc-300"></div>
-                    <div className="text-sm text-zinc-400 mb-1">{new Date(job.startDate).getFullYear()} - {job.endDate ? new Date(job.endDate).getFullYear() : 'Present'}</div>
-                    <h4 className="font-bold text-zinc-900">{job.role}</h4>
-                    <div className="text-sm font-medium text-zinc-600 mb-2">{job.companyName}</div>
-                    <p className="text-sm text-zinc-500">
-                      {(job.description?.raw as any)?.children?.[0]?.children?.[0]?.text || "Role description"}
-                    </p>
+              <div className="space-y-8 pl-3 border-l border-zinc-200">
+                {sortedWorkExperiences?.map((experience, index) => (
+                  <div key={index} className="relative pl-6">
+                    <span className="absolute -left-[17px] top-1.5 w-2 h-2 rounded-full bg-white border-2 border-zinc-300"></span>
+                    <div className="mb-1 text-sm text-zinc-500 font-mono">
+                      {getRelativeTime(experience.startDate)} - {experience.endDate ? getRelativeTime(experience.endDate) : "Present"}
+                    </div>
+                    <h4 className="text-lg font-semibold text-zinc-900">{experience.role}</h4>
+                    <a href={experience.companyUrl} target="_blank" className="text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors mb-2 block">
+                      {experience.companyName}
+                    </a>
+                    <div className="text-sm text-zinc-500 leading-relaxed font-sans">
+                      <RichText content={experience.description.raw} />
+                    </div>
                   </div>
                 ))}
               </div>
@@ -318,20 +330,24 @@ export default async function Home() {
 
             {/* Education */}
             <div>
-              <h3 className="text-xl font-bold mb-6 text-zinc-900 flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+              <h3 className="text-xl font-medium text-zinc-900 mb-6 flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-zinc-900"></span>
                 Education
               </h3>
-              <div className="space-y-8">
-                {collegeExperiences.map((edu, i) => (
-                  <div key={i} className="relative pl-8 border-l border-zinc-200">
-                    <div className="absolute -left-1.5 top-1.5 h-3 w-3 rounded-full border border-white bg-zinc-300"></div>
-                    <div className="text-sm text-zinc-400 mb-1">{new Date(edu.startDate).getFullYear()} - {edu.endDate ? new Date(edu.endDate).getFullYear() : 'Present'}</div>
-                    <h4 className="font-bold text-zinc-900">{edu.collegeName}</h4>
-                    <div className="text-sm font-medium text-zinc-600 mb-2">{edu.role}</div>
-                    <p className="text-sm text-zinc-500">
-                      {(edu.description?.raw as any)?.children?.[0]?.children?.[0]?.text || "Education details"}
-                    </p>
+              <div className="space-y-8 pl-3 border-l border-zinc-200">
+                {sortedCollegeExperiences?.map((experience, index) => (
+                  <div key={index} className="relative pl-6">
+                    <span className="absolute -left-[17px] top-1.5 w-2 h-2 rounded-full bg-white border-2 border-zinc-300"></span>
+                    <div className="mb-1 text-sm text-zinc-500 font-mono">
+                      {new Date(experience.startDate).getFullYear()} - {experience.endDate ? new Date(experience.endDate).getFullYear() : "Present"}
+                    </div>
+                    <h4 className="text-lg font-semibold text-zinc-900">{experience.collegeName}</h4>
+                    <div className="text-sm font-medium text-zinc-600 mb-2 block">
+                      {experience.role}
+                    </div>
+                    <div className="text-sm text-zinc-500 leading-relaxed font-sans">
+                      <RichText content={experience.description.raw} />
+                    </div>
                   </div>
                 ))}
               </div>
