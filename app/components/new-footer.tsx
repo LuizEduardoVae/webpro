@@ -10,10 +10,19 @@ interface NewFooterProps {
 }
 
 export function NewFooter({ socials = [] }: NewFooterProps) {
+    const getSocialName = (url: string) => {
+        if (url.includes('youtube')) return 'YouTube';
+        if (url.includes('instagram')) return 'Instagram';
+        if (url.includes('twitter') || url.includes('x.com')) return 'X / Twitter';
+        if (url.includes('linkedin')) return 'LinkedIn';
+        if (url.includes('github')) return 'GitHub';
+        return 'Link';
+    };
+
     return (
         <footer
             id="contact"
-            className="py-12 px-6 mt-12 rounded-t-[3rem] mx-2 mb-2 shadow-2xl bg-zinc-900 text-white"
+            className="py-12 px-6 mt-24 w-full bg-zinc-900 text-white"
         >
             <div className="max-w-5xl mx-auto py-12">
                 <div className="flex flex-col md:flex-row justify-between gap-12 items-start">
@@ -73,7 +82,7 @@ export function NewFooter({ socials = [] }: NewFooterProps) {
                                                 dangerouslySetInnerHTML={{ __html: social.iconSvg }}
                                                 className="w-4 h-4 [&>svg]:w-full [&>svg]:h-full"
                                             />
-                                            Link
+                                            {getSocialName(social.url)}
                                         </a>
                                     </li>
                                 ))}
@@ -84,7 +93,7 @@ export function NewFooter({ socials = [] }: NewFooterProps) {
 
                 <div className="pt-16 mt-16 border-t flex flex-col md:flex-row justify-between items-center gap-4 border-zinc-800">
                     <p className="text-xs text-zinc-500">
-                        © {new Date().getFullYear()} Luiz Vedoato. Designed with Code.
+                        © {new Date().getFullYear()} Luiz Vedoato.
                     </p>
                 </div>
             </div>
