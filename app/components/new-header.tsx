@@ -59,7 +59,7 @@ export function NewHeader({ profilePicture }: NewHeaderProps) {
                         href="#contact"
                         className="hidden sm:inline-flex items-center justify-center h-9 px-4 text-xs font-medium rounded-full transition-transform active:scale-95 shadow-lg text-white bg-zinc-900 hover:bg-zinc-800 shadow-zinc-200"
                     >
-                        Describe Project
+                        Entre em contato
                     </Link>
                 </div>
             </div>
