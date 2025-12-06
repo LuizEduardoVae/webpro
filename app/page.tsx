@@ -321,7 +321,7 @@ export default async function Home() {
                       {experience.companyName}
                     </a>
                     <div className="text-sm text-zinc-500 leading-relaxed font-sans">
-                      <RichText content={experience.description.raw} />
+                      {experience.description?.raw && <RichText content={experience.description.raw} />}
                     </div>
                   </div>
                 ))}
@@ -346,7 +346,7 @@ export default async function Home() {
                       {experience.role}
                     </div>
                     <div className="text-sm text-zinc-500 leading-relaxed font-sans">
-                      <RichText content={experience.description.raw} />
+                      {experience.description?.raw && <RichText content={experience.description.raw} />}
                     </div>
                   </div>
                 ))}
@@ -357,6 +357,5 @@ export default async function Home() {
       </section>
 
       <NewFooter socials={pageData.socials} />
-    </>
-  )
+      )
 }
