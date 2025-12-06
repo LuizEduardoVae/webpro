@@ -239,7 +239,7 @@ export default async function Home() {
                   <div className="absolute top-6 right-6 h-10 w-10 rounded-full shadow-sm flex items-center justify-center group-hover:scale-110 transition-transform bg-white text-zinc-900">
                     <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="16" height="16" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"></path></svg>
                   </div>
-                  <span className="text-xs font-semibold mb-1 uppercase tracking-wide text-rose-600 font-sans">Latest</span>
+                  <span className="text-xs font-semibold mb-1 uppercase tracking-wide text-rose-600 font-sans">{videos[1].tags?.[0] || 'Latest'}</span>
                   <h3 className="text-lg font-bold leading-tight text-zinc-900 font-sans line-clamp-2">{videos[1].title}</h3>
                   <p className="text-xs text-zinc-500 mt-2 font-sans">{videos[1].duration || "10:00"} min • {getRelativeTime(videos[1].publishedAt)}</p>
                 </div>
@@ -260,7 +260,7 @@ export default async function Home() {
                     </div>
                   </div>
                   <div>
-                    <span className="text-xs font-medium mb-1 block text-indigo-300 font-sans">Video</span>
+                    <span className="text-xs font-medium mb-1 block text-indigo-300 font-sans">{videos[2].tags?.[0] || 'Video'}</span>
                     <h3 className="text-lg font-bold leading-tight text-white font-sans line-clamp-2">{videos[2].title}</h3>
                   </div>
                 </div>
@@ -277,13 +277,13 @@ export default async function Home() {
                   </span>
                 </div>
                 {videos[3].thumbnail && (
-                  <div className="absolute right-0 top-0 bottom-0 w-1/2 opacity-20 mask-image-linear-to-l from-black to-transparent">
+                  <div className="absolute right-0 top-0 bottom-0 w-1/2 opacity-60 mask-image-linear-to-l from-black to-transparent">
                     <Image src={videos[3].thumbnail} alt={videos[3].title} fill className="object-cover" />
                   </div>
                 )}
                 <div className="absolute inset-0 p-8 flex items-center justify-between">
                   <div className="max-w-xs relative z-10">
-                    <span className="text-xs font-semibold mb-2 block uppercase tracking-wide text-emerald-600 font-sans">Featured</span>
+                    <span className="text-xs font-semibold mb-2 block uppercase tracking-wide text-emerald-600 font-sans">{videos[3].tags?.[0] || 'Featured'}</span>
                     <h3 className="text-xl font-bold mb-2 text-zinc-900 font-sans line-clamp-2">{videos[3].title}</h3>
                     <p className="text-sm text-zinc-500 font-sans line-clamp-1">{videos[3].duration ? `${videos[3].duration} • ` : ''}{getRelativeTime(videos[3].publishedAt)}</p>
                   </div>

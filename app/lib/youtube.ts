@@ -10,6 +10,7 @@ export interface YouTubeVideo {
     duration?: string;
     viewCount?: string;
     url: string;
+    tags?: string[];
 }
 
 export async function getLatestVideos(): Promise<YouTubeVideo[]> {
@@ -44,7 +45,8 @@ export async function getLatestVideos(): Promise<YouTubeVideo[]> {
                         publishedAt: item.snippet.publishedAt,
                         duration: parseDuration(item.contentDetails.duration),
                         viewCount: formatViewCount(item.statistics.viewCount),
-                        url: `https://www.youtube.com/watch?v=${item.id}`
+                        url: `https://www.youtube.com/watch?v=${item.id}`,
+                        tags: item.snippet.tags || []
                     }));
                 }
             }
@@ -68,7 +70,8 @@ export async function getLatestVideos(): Promise<YouTubeVideo[]> {
                     publishedAt: playlist.snippet.publishedAt, // or use latest update time if available
                     duration: `${playlist.contentDetails.itemCount} videos`, // Special display for playlist
                     viewCount: "Series", // Special label
-                    url: `https://www.youtube.com/playlist?list=${playlist.id}`
+                    url: `https://www.youtube.com/playlist?list=${playlist.id}`,
+                    tags: playlist.snippet.tags || ["Playlist"]
                 };
 
                 // Push to the end of the array (4th slot)
