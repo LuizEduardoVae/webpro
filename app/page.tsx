@@ -251,7 +251,8 @@ export default async function Home() {
                     </div>
                   </div>
                 </a>
-              ))}
+              )
+            })}
           </div>
         </div>
       </section>
