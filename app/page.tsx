@@ -4,6 +4,7 @@ import { NewFooter } from "./components/new-footer"
 import { NewHeader } from "./components/new-header"
 import Image from "next/image"
 import Link from "next/link"
+import { getLatestVideos } from "./lib/youtube";
 
 const getPageData = async (): Promise<HomePageData> => {
   const query = `
@@ -77,8 +78,23 @@ const getPageData = async (): Promise<HomePageData> => {
   return fetchHygraphQuery(query)
 }
 
+// Helper for relative time (simple version)
+function getRelativeTime(dateString: string) {
+  const date = new Date(dateString);
+  const now = new Date();
+  const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+
+  if (diffInSeconds < 60) return "Just now";
+  if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)} mins ago`;
+  if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)} hours ago`;
+  if (diffInSeconds < 604800) return `${Math.floor(diffInSeconds / 86400)} days ago`;
+  if (diffInSeconds < 2592000) return `${Math.floor(diffInSeconds / 604800)} weeks ago`;
+  return date.toLocaleDateString();
+}
+
 export default async function Home() {
   const { page: pageData, workExperiences, collegeExperiences } = await getPageData();
+  const videos = await getLatestVideos();
 
   return (
     <>
@@ -167,29 +183,7 @@ export default async function Home() {
         </div>
       </section>
 
-      import {getLatestVideos} from "./lib/youtube";
 
-      // ... existing imports ...
-
-      // Helper for relative time (simple version)
-      function getRelativeTime(dateString: string) {
-  const date = new Date(dateString);
-      const now = new Date();
-      const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
-
-      if (diffInSeconds < 60) return "Just now";
-      if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)} mins ago`;
-      if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)} hours ago`;
-      if (diffInSeconds < 604800) return `${Math.floor(diffInSeconds / 86400)} days ago`;
-      if (diffInSeconds < 2592000) return `${Math.floor(diffInSeconds / 604800)} weeks ago`;
-      return date.toLocaleDateString();
-}
-
-      export default async function Home() {
-  const pageData = await fetchHygraphQuery();
-      const videos = await getLatestVideos();
-
-      // ... existing code ...
 
       {/* Videos Section (New Dr. Sorel Style) */}
       <section id="videos" className="scroll-mt-32 py-24 px-6 relative">
