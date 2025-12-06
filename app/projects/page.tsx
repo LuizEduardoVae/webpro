@@ -5,7 +5,7 @@ import { HomePageData } from "../types/page-info"
 import Link from "next/link"
 
 const getPageData = async (): Promise<HomePageData> => {
-  // Reusing the same query or similar one to get all projectsasdasd
+  // Reusing the same query or similar one to get all projectsasdasdasdasdas
   // In a real app we might have a dedicated query for all projects
   const query = `
     query PageInfoQuery {
