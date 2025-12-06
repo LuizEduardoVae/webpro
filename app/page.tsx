@@ -200,53 +200,58 @@ export default async function Home() {
 
           {/* Video Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {videos.slice(0, 4).map((video, index) => (
-              <a
-                key={video.id}
-                href={video.url}
-                target="_blank"
-                className={`group relative aspect-video rounded-3xl overflow-hidden cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 ${index === 0 || index === 3 ? "md:col-span-2 lg:col-span-2" : "col-span-1"
-                  }`}
-              >
-                {/* Image */}
-                {video.thumbnail && (
-                  <img
-                    src={video.thumbnail}
-                    alt={video.title}
-                    className="absolute inset-0 h-full w-full object-cover transform transition-transform duration-700 group-hover:scale-105"
-                  />
-                )}
+            {videos.slice(0, 4).map((video, index) => {
+              const isLarge = index === 0 || index === 3;
+              // Reference strictly uses lg:col-span-2. MD is 1 col.
+              // Single col items (index 1, 2) should stretch (aspect-auto) on LG to match row height.
+              return (
+                <a
+                  key={video.id}
+                  href={video.url}
+                  target="_blank"
+                  className={`group relative rounded-3xl overflow-hidden cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 block 
+                  ${isLarge ? "col-span-1 lg:col-span-2 aspect-video" : "col-span-1 aspect-video lg:aspect-auto"}
+                `}
+                >
+                  {/* Image */}
+                  {video.thumbnail && (
+                    <img
+                      src={video.thumbnail}
+                      alt={video.title}
+                      className="absolute inset-0 h-full w-full object-cover transform transition-transform duration-700 group-hover:scale-105"
+                    />
+                  )}
 
-                {/* Clean Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent p-8 flex flex-col justify-end">
+                  {/* Clean Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent p-8 flex flex-col justify-end">
 
-                  {/* Label */}
-                  <div className="mb-2">
-                    <span className="inline-block px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-xs font-medium text-white border border-white/10 font-sans">
-                      {video.tags?.[0] || 'Video'}
-                    </span>
+                    {/* Label */}
+                    <div className="mb-2">
+                      <span className="inline-block px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-xs font-medium text-white border border-white/10 font-sans">
+                        {video.tags?.[0] || 'Video'}
+                      </span>
+                    </div>
+
+                    {/* Title */}
+                    <h3 className="text-xl md:text-2xl font-bold leading-tight text-white mb-2 font-sans line-clamp-2">
+                      {video.title}
+                    </h3>
+
+                    {/* Meta */}
+                    <div className="flex items-center gap-2 text-sm text-zinc-300 font-sans">
+                      <span>{video.viewCount ? `${video.viewCount} views` : 'Watch now'}</span>
+                      <span>•</span>
+                      <span>{getRelativeTime(video.publishedAt)}</span>
+                      {video.duration && (
+                        <>
+                          <span>•</span>
+                          <span>{video.duration}</span>
+                        </>
+                      )}
+                    </div>
                   </div>
-
-                  {/* Title */}
-                  <h3 className="text-xl md:text-2xl font-bold leading-tight text-white mb-2 font-sans line-clamp-2">
-                    {video.title}
-                  </h3>
-
-                  {/* Meta */}
-                  <div className="flex items-center gap-2 text-sm text-zinc-300 font-sans">
-                    <span>{video.viewCount ? `${video.viewCount} views` : 'Watch now'}</span>
-                    <span>•</span>
-                    <span>{getRelativeTime(video.publishedAt)}</span>
-                    {video.duration && (
-                      <>
-                        <span>•</span>
-                        <span>{video.duration}</span>
-                      </>
-                    )}
-                  </div>
-                </div>
-              </a>
-            ))}
+                </a>
+              ))}
           </div>
         </div>
       </section>
