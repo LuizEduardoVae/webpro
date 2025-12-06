@@ -199,11 +199,11 @@ export default async function Home() {
           </div>
 
           {/* Video Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[250px]">
 
-            {/* Video 1 (Featured - Large) */}
+            {/* Video 1 (Featured - Large: 2x2) */}
             {videos[0] && (
-              <a href={videos[0].url} target="_blank" className="group relative col-span-1 lg:col-span-2 aspect-video rounded-3xl overflow-hidden cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1">
+              <a href={videos[0].url} target="_blank" className="group relative md:col-span-2 md:row-span-2 rounded-3xl overflow-hidden cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1">
                 {/* Thumbnail Placeholder with Gradient */}
                 <div className="absolute inset-0 bg-gradient-to-br group-hover:scale-105 transition-transform duration-700 from-zinc-800 to-black"></div>
                 {videos[0].thumbnail && (
@@ -219,7 +219,7 @@ export default async function Home() {
                     </div>
                   </div>
                   <div>
-                    <h3 className="text-2xl mb-2 leading-tight text-white font-sans font-semibold">{videos[0].title}</h3>
+                    <h3 className="text-3xl mb-3 leading-tight text-white font-sans font-semibold line-clamp-2">{videos[0].title}</h3>
                     <p className="text-sm line-clamp-2 text-zinc-300 font-sans">
                       {videos[0].viewCount ? `${videos[0].viewCount} views` : 'Watch now'} • {getRelativeTime(videos[0].publishedAt)}
                     </p>
@@ -228,30 +228,30 @@ export default async function Home() {
               </a>
             )}
 
-            {/* Video 2 (Light Card) */}
+            {/* Video 2 (Vertical - Tall: 1x2) */}
             {videos[1] && (
-              <a href={videos[1].url} target="_blank" className="group relative aspect-video lg:aspect-auto rounded-3xl overflow-hidden cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 border bg-white border-zinc-200">
+              <a href={videos[1].url} target="_blank" className="group relative md:col-span-1 md:row-span-2 rounded-3xl overflow-hidden cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 border bg-white border-zinc-200">
                 <div className="absolute inset-0 bg-gradient-to-tr opacity-50 group-hover:opacity-100 transition-opacity from-rose-100 to-orange-50"></div>
                 {videos[1].thumbnail && (
-                  <Image src={videos[1].thumbnail} alt={videos[1].title} fill className="object-cover opacity-20 mix-blend-multiply group-hover:opacity-10 transition-opacity" />
+                  <Image src={videos[1].thumbnail} alt={videos[1].title} fill className="object-cover opacity-50 mix-blend-multiply group-hover:opacity-10 transition-opacity" />
                 )}
                 <div className="absolute inset-0 p-6 flex flex-col justify-end">
                   <div className="absolute top-6 right-6 h-10 w-10 rounded-full shadow-sm flex items-center justify-center group-hover:scale-110 transition-transform bg-white text-zinc-900">
                     <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="16" height="16" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"></path></svg>
                   </div>
-                  <span className="text-xs font-semibold mb-1 uppercase tracking-wide text-rose-600 font-sans">{videos[1].tags?.[0] || 'Latest'}</span>
-                  <h3 className="text-lg font-bold leading-tight text-zinc-900 font-sans line-clamp-2">{videos[1].title}</h3>
-                  <p className="text-xs text-zinc-500 mt-2 font-sans">{videos[1].duration || "10:00"} min • {getRelativeTime(videos[1].publishedAt)}</p>
+                  <span className="text-xs font-semibold mb-2 uppercase tracking-wide text-rose-600 font-sans">{videos[1].tags?.[0] || 'Latest'}</span>
+                  <h3 className="text-xl font-bold leading-tight text-zinc-900 font-sans line-clamp-4 mb-2">{videos[1].title}</h3>
+                  <p className="text-xs text-zinc-500 font-sans">{videos[1].duration || "10:00"} min • {getRelativeTime(videos[1].publishedAt)}</p>
                 </div>
               </a>
             )}
 
-            {/* Video 3 (Dark Card) */}
+            {/* Video 3 (Standard - 1x1) */}
             {videos[2] && (
-              <a href={videos[2].url} target="_blank" className="group relative aspect-video rounded-3xl overflow-hidden cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 bg-zinc-900">
+              <a href={videos[2].url} target="_blank" className="group relative md:col-span-1 md:row-span-1 rounded-3xl overflow-hidden cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 bg-zinc-900">
                 <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/20 to-purple-500/20"></div>
                 {videos[2].thumbnail && (
-                  <Image src={videos[2].thumbnail} alt={videos[2].title} fill className="object-cover opacity-40 group-hover:opacity-20 transition-opacity" />
+                  <Image src={videos[2].thumbnail} alt={videos[2].title} fill className="object-cover opacity-60 group-hover:opacity-20 transition-opacity" />
                 )}
                 <div className="absolute inset-0 p-6 flex flex-col justify-between">
                   <div className="flex justify-end">
@@ -267,9 +267,9 @@ export default async function Home() {
               </a>
             )}
 
-            {/* Video 4 (Clean Card) */}
+            {/* Video 4 (Wide - 2x1) */}
             {videos[3] && (
-              <a href={videos[3].url} target="_blank" className="group relative aspect-video rounded-3xl overflow-hidden cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 border lg:col-span-2 bg-white border-zinc-200">
+              <a href={videos[3].url} target="_blank" className="group relative md:col-span-2 md:row-span-1 rounded-3xl overflow-hidden cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 border bg-white border-zinc-200">
                 <div className="absolute inset-0 flex items-center justify-center group-hover:bg-zinc-100 transition-colors bg-zinc-50">
                   <span className="group-hover:scale-110 transition-transform duration-500 text-zinc-300">
                     {/* Abstract geometric shape placeholder */}

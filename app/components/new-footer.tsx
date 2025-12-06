@@ -29,7 +29,7 @@ export function NewFooter({ socials = [] }: NewFooterProps) {
                             emails frequently.
                         </p>
                         <a
-                            href="mailto:contact@luizvedoato.com"
+                            href="mailto:retro-54.wicket@icloud.com"
                             className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-medium transition-colors bg-white text-zinc-900 hover:bg-zinc-200"
                         >
                             <svg
