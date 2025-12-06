@@ -303,17 +303,21 @@ export default async function Home() {
                 Experience
               </h3>
               <div className="space-y-8 pl-3 border-l border-zinc-200">
-                {workExperiences?.map((experience, index) => (
-                  <div key={index} className="relative pl-6">
-                    <span className="absolute -left-[17px] top-1.5 w-2 h-2 rounded-full bg-white border-2 border-zinc-300"></span>
-                    <div className="mb-1 text-sm text-zinc-500 font-mono">
-                      {getRelativeTime(experience.startDate)} - {experience.endDate ? getRelativeTime(experience.endDate) : "Present"}
-                    </div>
-                    <h4 className="text-lg font-semibold text-zinc-900">{experience.role}</h4>
-                    <a href={experience.companyUrl} target="_blank" className="text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors mb-2 block">
+                {workExperiences?.sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime()).map((experience, index) => (
+                  <div key={index} className="relative pl-6 group">
+                    <span className="absolute -left-[17px] top-1.5 w-2 h-2 rounded-full bg-white border-2 border-zinc-300 group-hover:border-rose-500 transition-colors"></span>
+
+                    <h4 className="text-lg font-bold text-zinc-900 leading-tight">{experience.role}</h4>
+
+                    <a href={experience.companyUrl} target="_blank" className="text-base text-zinc-700 hover:text-rose-600 transition-colors font-medium block mt-1">
                       {experience.companyName}
                     </a>
-                    <div className="text-sm text-zinc-500 leading-relaxed font-sans">
+
+                    <div className="text-xs text-zinc-400 font-mono mt-1 mb-3 uppercase tracking-wider">
+                      {new Date(experience.startDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })} - {experience.endDate ? new Date(experience.endDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : "Present"}
+                    </div>
+
+                    <div className="text-sm text-zinc-600 leading-relaxed font-sans">
                       {experience.description?.raw && <RichText content={experience.description.raw} />}
                     </div>
                   </div>
@@ -328,17 +332,21 @@ export default async function Home() {
                 Education
               </h3>
               <div className="space-y-8 pl-3 border-l border-zinc-200">
-                {collegeExperiences?.map((experience, index) => (
-                  <div key={index} className="relative pl-6">
-                    <span className="absolute -left-[17px] top-1.5 w-2 h-2 rounded-full bg-white border-2 border-zinc-300"></span>
-                    <div className="mb-1 text-sm text-zinc-500 font-mono">
-                      {new Date(experience.startDate).getFullYear()} - {experience.endDate ? new Date(experience.endDate).getFullYear() : "Present"}
-                    </div>
-                    <h4 className="text-lg font-semibold text-zinc-900">{experience.collegeName}</h4>
-                    <div className="text-sm font-medium text-zinc-600 mb-2 block">
+                {collegeExperiences?.sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime()).map((experience, index) => (
+                  <div key={index} className="relative pl-6 group">
+                    <span className="absolute -left-[17px] top-1.5 w-2 h-2 rounded-full bg-white border-2 border-zinc-300 group-hover:border-rose-500 transition-colors"></span>
+
+                    <h4 className="text-lg font-bold text-zinc-900 leading-tight">{experience.collegeName}</h4>
+
+                    <div className="text-base text-zinc-700 font-medium mt-1">
                       {experience.role}
                     </div>
-                    <div className="text-sm text-zinc-500 leading-relaxed font-sans">
+
+                    <div className="text-xs text-zinc-400 font-mono mt-1 mb-3 uppercase tracking-wider">
+                      {new Date(experience.startDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })} - {experience.endDate ? new Date(experience.endDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : "Present"}
+                    </div>
+
+                    <div className="text-sm text-zinc-600 leading-relaxed font-sans">
                       {experience.description?.raw && <RichText content={experience.description.raw} />}
                     </div>
                   </div>
