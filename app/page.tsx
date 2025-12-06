@@ -97,17 +97,10 @@ export default async function Home() {
   const { page: pageData, workExperiences, collegeExperiences } = await getPageData();
   const videos = await getLatestVideos();
 
-  // Sort experiences by startDate (descending: Newest first)
-  const sortedWorkExperiences = workExperiences?.sort((a, b) =>
-    new Date(b.startDate).getTime() - new Date(a.startDate).getTime()
-  );
 
-  const sortedCollegeExperiences = collegeExperiences?.sort((a, b) =>
-    new Date(b.startDate).getTime() - new Date(a.startDate).getTime()
-  );
 
   return (
-    <> Basic sorting logic implemented.
+    <> Basic sorting logic removed.
       <NewHeader profilePicture={pageData.profilePicture?.url} />
 
       {/* Hero Section */}
@@ -310,7 +303,7 @@ export default async function Home() {
                 Experience
               </h3>
               <div className="space-y-8 pl-3 border-l border-zinc-200">
-                {sortedWorkExperiences?.map((experience, index) => (
+                {workExperiences?.map((experience, index) => (
                   <div key={index} className="relative pl-6">
                     <span className="absolute -left-[17px] top-1.5 w-2 h-2 rounded-full bg-white border-2 border-zinc-300"></span>
                     <div className="mb-1 text-sm text-zinc-500 font-mono">
@@ -335,7 +328,7 @@ export default async function Home() {
                 Education
               </h3>
               <div className="space-y-8 pl-3 border-l border-zinc-200">
-                {sortedCollegeExperiences?.map((experience, index) => (
+                {collegeExperiences?.map((experience, index) => (
                   <div key={index} className="relative pl-6">
                     <span className="absolute -left-[17px] top-1.5 w-2 h-2 rounded-full bg-white border-2 border-zinc-300"></span>
                     <div className="mb-1 text-sm text-zinc-500 font-mono">
