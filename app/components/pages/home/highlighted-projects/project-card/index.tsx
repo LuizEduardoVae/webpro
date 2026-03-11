@@ -28,13 +28,15 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
         exit={{ opacity: 0, y: 100, scale: 0.5 }}
         transition={{ duration: 0.3, delay: 0.3 }}
       >
-        <Image
-          src={project.thumbnail.url}
-          width={500}
-          height={350}
-          alt={`Thumbnail do projeto ${project.title}`}
-          className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
-        />
+        {project.thumbnail?.url && (
+          <Image
+            src={project.thumbnail.url}
+            width={500}
+            height={350}
+            alt={`Thumbnail do projeto ${project.title}`}
+            className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
+          />
+        )}
       </motion.div>
 
       <div className="flex flex-col justify-center">

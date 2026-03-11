@@ -50,14 +50,16 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
   return (
     <div className="w-full rounded-lg h-[436px] flex flex-col bg-white overflow-hidden border-2 border-transparent hover:border-gray-800 opacity-90 hover:opacity-100 transition-all group shadow-md">
       <div className="w-full h-48 overflow-hidden bg-gray-100">
-        <Image
-          width={380}
-          height={200}
-          src={project.thumbnail.url}
-          alt={`Thumbnail do projeto ${project.title}`}
-          unoptimized
-          className="w-full h-full object-cover group-hover:scale-110 duration-500 transition-all"
-        />
+        {project.thumbnail?.url && (
+          <Image
+            width={380}
+            height={200}
+            src={project.thumbnail.url}
+            alt={`Thumbnail do projeto ${project.title}`}
+            unoptimized
+            className="w-full h-full object-cover group-hover:scale-110 duration-500 transition-all"
+          />
+        )}
       </div>
 
       <div className="flex-1 flex flex-col p-8">

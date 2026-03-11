@@ -106,14 +106,14 @@ export async function generateMetadata({
         title: project.title,
         description: project.description.text,
         openGraph: {
-            images: [
+            images: project.thumbnail?.url ? [
                 {
                     url: project.thumbnail.url,
                     width: 1200,
                     height: 630,
                 }
 
-            ]
+            ] : []
         }
     }
 }
