@@ -143,11 +143,11 @@ export default async function Home() {
 
           <h1 className="animate-enter delay-100 text-5xl md:text-7xl font-bold tracking-tighter mb-6 leading-[1.05] text-zinc-900">
             Hi, my name is Luiz. <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-orange-500">Creator &amp; Researcher.</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-orange-500">Researcher &amp; Engineering Student.</span>
           </h1>
 
           <p className="animate-enter delay-200 text-lg md:text-xl max-w-2xl leading-relaxed font-light mb-10 text-zinc-500">
-            I’m the creator of the ‘LuizVedoato’ channel on Youtube, an Electrical Engineering student at the Federal University of Espírito Santo, and a researcher in the field of Data Science.
+            I’m a Data Science researcher and an Electrical Engineering student at the Federal University of Espírito Santo. I also create educational content on YouTube.
           </p>
 
           <div className="animate-enter delay-300 flex flex-wrap items-center gap-4">
