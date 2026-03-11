@@ -71,7 +71,7 @@ export const HighLightedProjects = ({ projects }: HighLightedProjectsProps) => {
 //             <HiArrowNarrowRight />
 //           </Link>
 //         </p>
-//       </div>
+//       </div>dasdasdasdas
 //     </section>
 //   );
 // };
