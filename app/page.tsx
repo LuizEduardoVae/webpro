@@ -24,25 +24,25 @@ const getPageData = async (): Promise<HomePageData> => {
         url
         iconSvg
       }
-      highlightProjects {
-        slug
-        thumbnail {
-          url
-        }
-        title
-        shortDescription
-        technologies {
-          name
-        }
-        anopublicacao
-        jornalcongresso {
-          raw
-        }
-      }
       knowTechs {
         iconSvg
         name
         startDate
+      }
+    }
+    highlightProjects: projects(first: 4, orderBy: createdAt_DESC) {
+      slug
+      thumbnail {
+        url
+      }
+      title
+      shortDescription
+      technologies {
+        name
+      }
+      anopublicacao
+      jornalcongresso {
+        raw
       }
     }
     workExperiences(orderBy: startDate_DESC) {
@@ -93,8 +93,10 @@ function getRelativeTime(dateString: string) {
   return date.toLocaleDateString();
 }
 
+export const revalidate = 60; // Automatic ISR every 60s
+
 export default async function Home() {
-  const { page: pageData, workExperiences, collegeExperiences } = await getPageData();
+  const { page: pageData, workExperiences, collegeExperiences, highlightProjects } = await getPageData();
   const videos = await getLatestVideos();
 
 
@@ -130,13 +132,13 @@ export default async function Home() {
         <div className="max-w-5xl mr-auto ml-auto relative">
 
           {/* Animated Pill - Replaced Open for Work with Latest Paper/Project */}
-          <Link href={`/projects/${pageData.highlightProjects[0]?.slug}`} className="animate-enter inline-flex items-center gap-2 px-3 py-1.5 rounded-full border mb-8 backdrop-blur shadow-sm transition-transform hover:scale-105 cursor-pointer bg-white/80 border-zinc-200">
+          <Link href={`/projects/${highlightProjects[0]?.slug}`} className="animate-enter inline-flex items-center gap-2 px-3 py-1.5 rounded-full border mb-8 backdrop-blur shadow-sm transition-transform hover:scale-105 cursor-pointer bg-white/80 border-zinc-200">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 bg-rose-400"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-rose-500"></span>
             </span>
             <span className="text-xs font-medium text-zinc-600">
-              Check out my latest project: {pageData.highlightProjects[0]?.title || "New Video"}
+              Check out my latest project: {highlightProjects[0]?.title || "New Video"}
             </span>
             <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="12" height="12" viewBox="0 0 24 24" className="text-zinc-400"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5 12h14m-7-7l7 7l-7 7"></path></svg>
           </Link>
@@ -177,7 +179,7 @@ export default async function Home() {
           </div>
 
           <div className="space-y-4">
-            {pageData.highlightProjects.map((project, index) => (
+            {highlightProjects.map((project, index) => (
               <Link href={`/projects/${project.slug}`} key={project.slug} className="group flex flex-col sm:flex-row sm:items-baseline gap-4 p-5 rounded-2xl border border-zinc-200 hover:border-rose-200 bg-white hover:shadow-lg hover:shadow-rose-100/50 transition-all cursor-pointer">
                 <div className="w-32 shrink-0">
                   {/* Display Date (Year only) */}

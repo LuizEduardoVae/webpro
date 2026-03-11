@@ -19,7 +19,6 @@ export type HomePageInfo = {
     }
     socials: Social[]
     knowTechs: KnowTech[]
-    highlightProjects: Project[]
 }
 
 export type ProjectPageData = {
@@ -40,6 +39,6 @@ export type HomePageData = {
     page: HomePageInfo
     workExperiences: WorkExperience[]
     collegeExperiences: CollegeExperience[]
-
+    highlightProjects: Project[]
 }
 

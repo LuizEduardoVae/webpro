@@ -23,21 +23,21 @@ const getPageData = async (): Promise<HomePageData> => {
           url
           iconSvg
         }
-        highlightProjects {
-          slug
-          thumbnail {
-            url
-          }
-          title
-          shortDescription
-          technologies {
-            name
-          }
-          anopublicacao
-          jornalcongresso {
-            raw
-          }
+      projects(first: 100, orderBy: createdAt_DESC) {
+        slug
+        thumbnail {
+          url
         }
+        title
+        shortDescription
+        technologies {
+          name
+        }
+        anopublicacao
+        jornalcongresso {
+          raw
+        }
+      }
         knowTechs {
           iconSvg
           name
@@ -57,8 +57,10 @@ const getPageData = async (): Promise<HomePageData> => {
   return fetchHygraphQuery(query)
 }
 
+export const revalidate = 60; // Automatic ISR every 60s
+
 export default async function Projects() {
-  const { page: pageData } = await getPageData();
+  const { page: pageData, projects } = await getPageData();
 
   return (
     <>
@@ -72,7 +74,7 @@ export default async function Projects() {
           </div>
 
           <div className="space-y-4">
-            {pageData.highlightProjects.map((project, index) => (
+            {projects.map((project, index) => (
               <Link href={`/projects/${project.slug}`} key={project.slug} className="group flex flex-col sm:flex-row sm:items-baseline gap-4 p-5 rounded-2xl border border-zinc-200 hover:border-rose-200 bg-white hover:shadow-lg hover:shadow-rose-100/50 transition-all cursor-pointer">
                 <div className="w-32 shrink-0">
                   <div className="text-xs font-mono font-medium text-rose-600 bg-rose-50 px-2 py-1 rounded-md inline-block">

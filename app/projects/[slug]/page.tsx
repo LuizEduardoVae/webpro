@@ -12,6 +12,8 @@ type ProjectProps = {
 }
 
 
+export const revalidate = 60; // Automatic ISR every 60s
+
 const getProjectDetails = async (slug: string): Promise<{ project: ProjectPageData['project'], page: any }> => {
     const query = `
     query ProjectQuery {
