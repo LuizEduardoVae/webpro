@@ -30,7 +30,7 @@ const getPageData = async (): Promise<HomePageData & { projects: Project[] }> =>
           startDate
         }
       }
-      projects(first: 100, orderBy: createdAt_DESC) {
+      projects(first: 100, orderBy: anopublicacao_DESC) {
         slug
         thumbnail {
           url
@@ -79,7 +79,7 @@ export default async function Projects() {
               <Link href={`/projects/${project.slug}`} key={project.slug} className="group flex flex-col sm:flex-row sm:items-baseline gap-4 p-5 rounded-2xl border border-zinc-200 hover:border-rose-200 bg-white hover:shadow-lg hover:shadow-rose-100/50 transition-all cursor-pointer">
                 <div className="w-32 shrink-0">
                   <div className="text-xs font-mono font-medium text-rose-600 bg-rose-50 px-2 py-1 rounded-md inline-block">
-                    {project.anopublicacao ? new Date(project.anopublicacao).getFullYear() : (project.technologies[0]?.name || "2024")}
+                    {project.anopublicacao ? new Date(project.anopublicacao).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : (project.technologies[0]?.name || "2024")}
                   </div>
                 </div>
                 <div className="flex-1">

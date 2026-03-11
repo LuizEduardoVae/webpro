@@ -30,7 +30,7 @@ const getPageData = async (): Promise<HomePageData> => {
         startDate
       }
     }
-    highlightProjects: projects(first: 3, orderBy: createdAt_DESC) {
+    highlightProjects: projects(first: 3, orderBy: anopublicacao_DESC) {
       slug
       thumbnail {
         url
@@ -184,7 +184,7 @@ export default async function Home() {
                 <div className="w-32 shrink-0">
                   {/* Display Date (Year only) */}
                   <div className="text-xs font-mono font-medium text-rose-600 bg-rose-50 px-2 py-1 rounded-md inline-block">
-                    {project.anopublicacao ? new Date(project.anopublicacao).getFullYear() : (project.technologies[0]?.name || "2024")}
+                    {project.anopublicacao ? new Date(project.anopublicacao).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : (project.technologies[0]?.name || "2024")}
                   </div>
                 </div>
                 <div className="flex-1">
