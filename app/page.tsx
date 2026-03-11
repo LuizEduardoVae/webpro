@@ -30,7 +30,7 @@ const getPageData = async (): Promise<HomePageData> => {
         startDate
       }
     }
-    highlightProjects: projects(first: 4, orderBy: createdAt_DESC) {
+    highlightProjects: projects(first: 3, orderBy: createdAt_DESC) {
       slug
       thumbnail {
         url
