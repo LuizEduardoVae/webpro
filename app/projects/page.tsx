@@ -2,9 +2,10 @@ import { fetchHygraphQuery } from "../utils/fetch-hygraph-query"
 import { NewFooter } from "../components/new-footer"
 import { NewHeader } from "../components/new-header"
 import { HomePageData } from "../types/page-info"
+import { Project } from "../types/projects"
 import Link from "next/link"
 
-const getPageData = async (): Promise<HomePageData> => {
+const getPageData = async (): Promise<HomePageData & { projects: Project[] }> => {
   // Reusing the same query or similar one to get all projectsasdasdasdasdas
   // In a real app we might have a dedicated query for all projects
   const query = `
@@ -23,6 +24,12 @@ const getPageData = async (): Promise<HomePageData> => {
           url
           iconSvg
         }
+        knowTechs {
+          iconSvg
+          name
+          startDate
+        }
+      }
       projects(first: 100, orderBy: createdAt_DESC) {
         slug
         thumbnail {
@@ -36,12 +43,6 @@ const getPageData = async (): Promise<HomePageData> => {
         anopublicacao
         jornalcongresso {
           raw
-        }
-      }
-        knowTechs {
-          iconSvg
-          name
-          startDate
         }
       }
       workExperiences {
