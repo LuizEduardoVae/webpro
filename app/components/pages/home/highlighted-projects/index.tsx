@@ -74,4 +74,4 @@ export const HighLightedProjects = ({ projects }: HighLightedProjectsProps) => {
 //       </div>dasdasdasdas
 //     </section>
 //   );
-// };
+// };dasdas
