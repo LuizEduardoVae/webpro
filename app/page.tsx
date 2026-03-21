@@ -91,7 +91,7 @@ export default async function Home() {
   const videos = await getLatestVideos();
 
   function sortExperiences<
-    T extends { startDate: string; endDate?: string | null },
+    T extends { startDate: string; endDate?: string | null }
   >(experiences: T[]): T[] {
     if (!experiences) return [];
 
@@ -347,7 +347,7 @@ export default async function Home() {
                         {exp.companyName}
                       </p>
                       {exp.description?.raw && (
-                        <div className="text-sm leading-relaxed text-zinc-600 line-clamp-3">
+                        <div className="text-sm leading-relaxed text-zinc-600">
                           <RichText content={exp.description.raw} />
                         </div>
                       )}
@@ -381,7 +381,7 @@ export default async function Home() {
                         {exp.role}
                       </p>
                       {exp.description?.raw && (
-                        <div className="text-sm leading-relaxed text-zinc-600 line-clamp-3">
+                        <div className="text-sm leading-relaxed text-zinc-600">
                           <RichText content={exp.description.raw} />
                         </div>
                       )}
@@ -421,7 +421,7 @@ export default async function Home() {
                   iconName = "smart_display";
 
                 const nameMatch = social.url.match(
-                  /github|linkedin|youtube|lattes|researchgate/i,
+                  /github|linkedin|youtube|lattes|researchgate/i
                 );
                 const name = nameMatch ? nameMatch[0] : `Link ${index + 1}`;
 
