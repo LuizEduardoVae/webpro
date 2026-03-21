@@ -79,22 +79,6 @@ const getPageData = async (): Promise<HomePageData> => {
   return fetchHygraphQuery(query);
 };
 
-function getRelativeTime(dateString: string) {
-  const date = new Date(dateString);
-  const now = new Date();
-  const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
-
-  if (diffInSeconds < 60) return "Just now";
-  if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)} mins ago`;
-  if (diffInSeconds < 86400)
-    return `${Math.floor(diffInSeconds / 3600)} hours ago`;
-  if (diffInSeconds < 604800)
-    return `${Math.floor(diffInSeconds / 86400)} days ago`;
-  if (diffInSeconds < 2592000)
-    return `${Math.floor(diffInSeconds / 604800)} weeks ago`;
-  return date.toLocaleDateString();
-}
-
 export const revalidate = 60;
 
 export default async function Home() {
@@ -159,12 +143,23 @@ export default async function Home() {
         {/* Section 2: Featured Projects */}
         <section className="bg-surface-container-low py-24" id="projects">
           <div className="max-w-screen-2xl mx-auto px-6">
-            <h2 className="font-headline text-4xl font-black uppercase mb-12 flex items-center gap-4">
-              <span className="material-symbols-outlined text-4xl">
-                architecture
-              </span>
-              Featured Projects
-            </h2>
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
+              <h2 className="font-headline text-4xl font-black uppercase flex items-center gap-4">
+                <span className="material-symbols-outlined text-4xl">
+                  architecture
+                </span>
+                Featured Projects
+              </h2>
+              <Link
+                href="/projects"
+                className="bg-primary text-white px-6 py-2 font-headline font-bold uppercase tracking-widest active:translate-x-1 active:translate-y-1 transition-all inline-flex items-center gap-2 self-start"
+              >
+                All Projects{" "}
+                <span className="material-symbols-outlined text-sm">
+                  arrow_forward
+                </span>
+              </Link>
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
               {highlightProjects.map((project) => (
                 <div
@@ -240,7 +235,7 @@ export default async function Home() {
                   </div>
 
                   <div className="mb-2">
-                    <span className="inline-block bg-black text-white px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-widest">
+                    <span className="inline-block border border-black text-black px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-widest bg-white">
                       {badgeLabel}
                     </span>
                   </div>
@@ -289,7 +284,7 @@ export default async function Home() {
                       {tech.name}
                     </h3>
                     <p className="text-on-primary-fixed-variant leading-relaxed">
-                      Expertise since {new Date(tech.startDate).getFullYear()}
+                      Since {new Date(tech.startDate).getFullYear()}
                     </p>
                   </div>
                 </div>
@@ -312,8 +307,9 @@ export default async function Home() {
                 Work Experience
               </h3>
 
+              {/* The vertical dashed line. Left is offset to center with the node dot */}
               <div
-                className="absolute left-[3px] md:left-4 top-[80px] bottom-0 w-0.5 scribble-line origin-top rotate-180"
+                className="absolute left-[7px] md:left-[21px] top-[80px] bottom-0 w-0.5 scribble-line origin-top rotate-180"
                 style={{
                   backgroundImage:
                     "repeating-linear-gradient(0deg, black, black 10px, transparent 10px, transparent 20px)",
@@ -322,8 +318,10 @@ export default async function Home() {
 
               <div className="space-y-12">
                 {workExperiences.map((exp, index) => (
-                  <div key={index} className="relative pl-12 md:pl-16">
-                    <div className="absolute left-[-5px] md:left-[8px] top-0 w-4 h-4 sketch-node bg-white z-10"></div>
+                  <div key={index} className="relative pl-8 md:pl-16">
+                    {/* The node dot */}
+                    <div className="absolute left-0 md:left-[14px] top-4 w-4 h-4 sketch-node bg-white z-10 flex items-center justify-center"></div>
+
                     <div className="scribble-border-sm p-6 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
                       <span className="font-mono text-xs font-bold bg-black text-white px-2 py-0.5">
                         {new Date(exp.startDate).getFullYear()} -{" "}
@@ -356,7 +354,7 @@ export default async function Home() {
               </h3>
 
               <div
-                className="absolute left-[3px] md:left-4 top-[80px] bottom-0 w-0.5 scribble-line origin-top rotate-180"
+                className="absolute left-[7px] md:left-[21px] top-[80px] bottom-0 w-0.5 scribble-line origin-top rotate-180"
                 style={{
                   backgroundImage:
                     "repeating-linear-gradient(0deg, black, black 10px, transparent 10px, transparent 20px)",
@@ -365,8 +363,8 @@ export default async function Home() {
 
               <div className="space-y-12">
                 {collegeExperiences.map((exp, index) => (
-                  <div key={index} className="relative pl-12 md:pl-16">
-                    <div className="absolute left-[-5px] md:left-[8px] top-0 w-4 h-4 sketch-node bg-white z-10"></div>
+                  <div key={index} className="relative pl-8 md:pl-16">
+                    <div className="absolute left-0 md:left-[14px] top-4 w-4 h-4 sketch-node bg-white z-10"></div>
                     <div className="scribble-border-sm p-6 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
                       <span className="font-mono text-xs font-bold bg-black text-white px-2 py-0.5">
                         {new Date(exp.startDate).getFullYear()} -{" "}
@@ -400,84 +398,18 @@ export default async function Home() {
               Let's Collaborate
             </h2>
             <p className="text-xl max-w-2xl mx-auto italic text-secondary">
-              Looking for research partnerships or speaking engagements
-              regarding Engineering AI.
+              Collaborations, sponsorships, or just saying hello. I check my
+              emails frequently.
             </p>
 
             <ContactEmailForm />
-
-            <div className="flex justify-center gap-10 pt-10 flex-wrap">
-              {pageData.socials.map((social, index) => {
-                let iconName = "link";
-                const urlLower = social.url.toLowerCase();
-                if (urlLower.includes("linkedin")) iconName = "work";
-                if (urlLower.includes("github")) iconName = "code";
-                if (urlLower.includes("lattes")) iconName = "school";
-                if (urlLower.includes("researchgate")) iconName = "menu_book";
-                if (
-                  urlLower.includes("youtube") ||
-                  urlLower.includes("youtu.be")
-                )
-                  iconName = "smart_display";
-
-                const nameMatch = social.url.match(
-                  /github|linkedin|youtube|lattes|researchgate/i,
-                );
-                const name = nameMatch ? nameMatch[0] : `Link ${index + 1}`;
-
-                return (
-                  <a
-                    key={index}
-                    href={social.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex flex-col items-center gap-2 group"
-                  >
-                    <div className="w-12 h-12 scribble-border flex items-center justify-center group-hover:bg-black group-hover:text-white transition-all bg-white">
-                      {social.iconSvg ? (
-                        <div
-                          dangerouslySetInnerHTML={{ __html: social.iconSvg }}
-                          className="w-6 h-6 [&>svg]:w-full [&>svg]:h-full fill-current"
-                        />
-                      ) : (
-                        <span className="material-symbols-outlined">
-                          {iconName}
-                        </span>
-                      )}
-                    </div>
-                    <span className="text-xs font-bold uppercase">{name}</span>
-                  </a>
-                );
-              })}
-            </div>
           </div>
         </section>
       </main>
 
       <footer className="w-full border-t-4 border-black bg-zinc-50">
-        <div className="flex flex-col md:flex-row justify-between items-center px-10 py-12 w-full max-w-screen-2xl mx-auto gap-6 text-black font-body text-sm tracking-tight">
-          <div className="font-headline font-bold uppercase text-lg">
-            LUIZ.ENG
-          </div>
-          <div className="flex gap-8 flex-wrap justify-center ml-auto">
-            {pageData.socials.map((social, i) => {
-              const nameMatch = social.url.match(
-                /github|linkedin|youtube|lattes|researchgate/i,
-              );
-              const name = nameMatch ? nameMatch[0] : `Link ${i + 1}`;
-              return (
-                <a
-                  key={i}
-                  href={social.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-zinc-600 hover:italic transition-all uppercase text-xs font-bold"
-                >
-                  {name}
-                </a>
-              );
-            })}
-          </div>
+        <div className="flex justify-center items-center px-10 py-12 w-full max-w-screen-2xl mx-auto text-black font-body text-sm tracking-tight font-bold">
+          <div>© 2026 Luiz Vedoato</div>
         </div>
       </footer>
     </>

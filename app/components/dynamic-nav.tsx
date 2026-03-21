@@ -22,11 +22,21 @@ export function DynamicNav() {
       },
     );
 
+    const handleScroll = () => {
+      // Fallback for when the user scrolls to the top
+      if (window.scrollY < 100) {
+        setActiveSection("");
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
     sections.forEach((section) => {
       observer.observe(section);
     });
 
     return () => {
+      window.removeEventListener("scroll", handleScroll);
       sections.forEach((section) => {
         observer.unobserve(section);
       });
@@ -102,13 +112,9 @@ export function DynamicNav() {
             Me/Contact
           </a>
         </div>
-        <div className="flex items-center gap-4">
-          <Link
-            href="/projects"
-            className="bg-primary text-on-primary-container px-6 py-1 font-headline uppercase tracking-widest hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
-          >
-            All Projects
-          </Link>
+        {/* Removed All Projects button to match request */}
+        <div className="flex items-center gap-4 w-[64px] md:w-auto">
+          {/* Placeholder to keep flex-between layout balanced if needed, or left empty */}
         </div>
       </div>
     </nav>

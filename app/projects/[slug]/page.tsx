@@ -76,29 +76,8 @@ export default async function Project({ params: { slug } }: ProjectProps) {
       <ProjectSections sections={project.sections || []} />
 
       <footer className="w-full border-t-4 border-black bg-zinc-50">
-        <div className="flex flex-col md:flex-row justify-between items-center px-10 py-12 w-full max-w-screen-2xl mx-auto gap-6 text-black font-body text-sm tracking-tight">
-          <div className="font-headline font-bold uppercase text-lg">
-            LUIZ.ENG
-          </div>
-          <div className="flex gap-8 flex-wrap justify-center ml-auto">
-            {page.socials.map((social: any, i: number) => {
-              const nameMatch = social.url.match(
-                /github|linkedin|youtube|lattes|researchgate/i,
-              );
-              const name = nameMatch ? nameMatch[0] : `Link ${i + 1}`;
-              return (
-                <a
-                  key={i}
-                  href={social.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-zinc-600 hover:italic transition-all uppercase text-xs font-bold"
-                >
-                  {name}
-                </a>
-              );
-            })}
-          </div>
+        <div className="flex justify-center items-center px-10 py-12 w-full max-w-screen-2xl mx-auto text-black font-body text-sm tracking-tight font-bold">
+          <div>© 2026 Luiz Vedoato</div>
         </div>
       </footer>
     </>

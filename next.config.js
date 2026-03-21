@@ -4,9 +4,24 @@ const nextConfig = {
     appDir: true,
   },
   images: {
-    domains: ['us-west-2.graphassets.com', 'i.ytimg.com', 'img.youtube.com'],
+    domains: ["us-west-2.graphassets.com", "i.ytimg.com", "img.youtube.com"],
   },
-}
+  async headers() {
+    return [
+      {
+        source: "/(.*)",
+        headers: [
+          { key: "X-Frame-Options", value: "DENY" },
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          {
+            key: "Permissions-Policy",
+            value: "camera=(), microphone=(), geolocation=()",
+          },
+        ],
+      },
+    ];
+  },
+};
 
-module.exports = nextConfig
-// teste123ds
+module.exports = nextConfig;

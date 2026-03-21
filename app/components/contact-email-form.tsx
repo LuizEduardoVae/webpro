@@ -3,26 +3,34 @@
 import { useState } from "react";
 
 export function ContactEmailForm() {
-  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("");
 
   const handleSend = () => {
-    if (!email.trim()) {
-      alert("Please enter a valid email address.");
+    if (!subject.trim()) {
+      alert("Please enter a subject.");
       return;
     }
 
-    const subject = encodeURIComponent(`Collaboration Request from ${email}`);
-    const cc = encodeURIComponent(email);
-    window.location.href = `mailto:retro-54.wicket@icloud.com?subject=${subject}&cc=${cc}`;
+    // Sanitize input: Strip HTML tags
+    let sanitizedSubject = subject.replace(/<[^>]*>?/gm, "");
+
+    // Limit to 200 characters
+    if (sanitizedSubject.length > 200) {
+      sanitizedSubject = sanitizedSubject.substring(0, 200);
+    }
+
+    const encodedSubject = encodeURIComponent(sanitizedSubject);
+    window.location.href = `mailto:retro-54.wicket@icloud.com?subject=${encodedSubject}`;
   };
 
   return (
     <div className="max-w-md mx-auto flex flex-col sm:flex-row gap-0">
       <input
-        type="email"
-        placeholder="YOUR EMAIL ADDRESS"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        type="text"
+        placeholder="EMAIL SUBJECT"
+        value={subject}
+        onChange={(e) => setSubject(e.target.value)}
+        maxLength={200}
         className="flex-1 scribble-border border-r-0 rounded-none px-6 py-4 focus:outline-none font-bold placeholder:text-zinc-400 bg-white text-black"
       />
       <button
