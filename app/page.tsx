@@ -332,10 +332,7 @@ export default async function Home() {
 
               <div className="space-y-12">
                 {sortedWorkExperiences.map((exp, index) => (
-                  <div key={index} className="relative pl-8 md:pl-16">
-                    {/* The node dot */}
-                    <div className="absolute left-0 md:left-[14px] top-[48px] w-4 h-4 sketch-node bg-white z-10 flex items-center justify-center"></div>
-
+                  <div key={index} className="relative">
                     <div className="scribble-border-sm p-6 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
                       <span className="font-mono text-xs font-bold bg-black text-white px-2 py-0.5">
                         {new Date(exp.startDate).getFullYear()} -{" "}
@@ -369,8 +366,7 @@ export default async function Home() {
 
               <div className="space-y-12">
                 {sortedCollegeExperiences.map((exp, index) => (
-                  <div key={index} className="relative pl-8 md:pl-16">
-                    <div className="absolute left-0 md:left-[14px] top-[48px] w-4 h-4 sketch-node bg-white z-10"></div>
+                  <div key={index} className="relative">
                     <div className="scribble-border-sm p-6 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
                       <span className="font-mono text-xs font-bold bg-black text-white px-2 py-0.5">
                         {new Date(exp.startDate).getFullYear()} -{" "}
