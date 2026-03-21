@@ -403,6 +403,51 @@ export default async function Home() {
             </p>
 
             <ContactEmailForm />
+
+            <div className="flex justify-center gap-10 pt-10 flex-wrap">
+              {pageData.socials.map((social, index) => {
+                let iconName = "link";
+                const urlLower = social.url.toLowerCase();
+                if (urlLower.includes("linkedin")) iconName = "work";
+                if (urlLower.includes("github")) iconName = "code";
+                if (urlLower.includes("lattes")) iconName = "school";
+                if (urlLower.includes("researchgate")) iconName = "menu_book";
+                if (
+                  urlLower.includes("youtube") ||
+                  urlLower.includes("youtu.be")
+                )
+                  iconName = "smart_display";
+
+                const nameMatch = social.url.match(
+                  /github|linkedin|youtube|lattes|researchgate/i,
+                );
+                const name = nameMatch ? nameMatch[0] : `Link ${index + 1}`;
+
+                return (
+                  <a
+                    key={index}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex flex-col items-center gap-2 group"
+                  >
+                    <div className="w-12 h-12 scribble-border flex items-center justify-center group-hover:bg-black group-hover:text-white transition-all bg-white">
+                      {social.iconSvg ? (
+                        <div
+                          dangerouslySetInnerHTML={{ __html: social.iconSvg }}
+                          className="w-6 h-6 [&>svg]:w-full [&>svg]:h-full fill-current"
+                        />
+                      ) : (
+                        <span className="material-symbols-outlined">
+                          {iconName}
+                        </span>
+                      )}
+                    </div>
+                    <span className="text-xs font-bold uppercase">{name}</span>
+                  </a>
+                );
+              })}
+            </div>
           </div>
         </section>
       </main>
