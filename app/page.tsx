@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { getLatestVideos } from "./lib/youtube";
 import { RichText } from "./components/rich-text";
+import { DynamicNav } from "./components/dynamic-nav";
+import { ContactEmailForm } from "./components/contact-email-form";
 
 const getPageData = async (): Promise<HomePageData> => {
   const query = `
@@ -104,73 +106,9 @@ export default async function Home() {
   } = await getPageData();
   const videos = await getLatestVideos();
 
-  type ExperienceType =
-    | (typeof workExperiences)[0]
-    | (typeof collegeExperiences)[0];
-
-  function sortExperiences(experiences: ExperienceType[]): ExperienceType[] {
-    if (!experiences) return [];
-
-    return [...experiences].sort((a, b) => {
-      const endDateA = a.endDate ? new Date(a.endDate).getTime() : Infinity;
-      const endDateB = b.endDate ? new Date(b.endDate).getTime() : Infinity;
-
-      if (endDateA !== endDateB) {
-        return endDateB - endDateA;
-      }
-
-      const startDateA = new Date(a.startDate).getTime();
-      const startDateB = new Date(b.startDate).getTime();
-
-      return startDateB - startDateA;
-    });
-  }
-
-  const allExperiences = sortExperiences([
-    ...workExperiences,
-    ...collegeExperiences,
-  ]);
-
   return (
     <>
-      <nav className="fixed top-0 w-full z-50 border-b-2 border-black bg-white/80 backdrop-blur-md shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-        <div className="flex justify-between items-center w-full px-6 py-4 max-w-screen-2xl mx-auto">
-          <Link
-            href="/"
-            className="text-2xl font-bold text-black tracking-widest font-headline uppercase"
-          >
-            LUIZ.ENG
-          </Link>
-          <div className="hidden md:flex gap-8 font-headline uppercase tracking-tighter">
-            <Link
-              className="text-black font-black border-b-4 border-black pb-1"
-              href="#projects"
-            >
-              Projects
-            </Link>
-            <Link
-              className="text-gray-500 hover:text-black transition-colors"
-              href="#research"
-            >
-              Resources
-            </Link>
-            <Link
-              className="text-gray-500 hover:text-black transition-colors"
-              href="#contact"
-            >
-              Contact
-            </Link>
-          </div>
-          <div className="flex items-center gap-4">
-            <Link
-              href="/projects"
-              className="bg-primary text-on-primary-container px-6 py-1 font-headline uppercase tracking-widest hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
-            >
-              All Projects
-            </Link>
-          </div>
-        </div>
-      </nav>
+      <DynamicNav />
 
       <main className="pt-24">
         {/* Section 1: Hero */}
@@ -184,10 +122,9 @@ export default async function Home() {
               </span>
             </h1>
             <p className="text-lg md:text-xl max-w-2xl leading-relaxed text-secondary italic">
-              I’m a Data Science researcher and an Electrical Engineering
-              student. I translate complex physical phenomena into digital
-              architectures, specializing in computational measurement and
-              machine learning models.
+              I'm a Data Science researcher and an Electrical Engineering
+              student at the Federal University of Espírito Santo. I also create
+              educational content on YouTube.
             </p>
             <div className="flex flex-wrap gap-4 pt-4">
               <Link
@@ -271,40 +208,52 @@ export default async function Home() {
         <section className="py-24 max-w-screen-2xl mx-auto px-6" id="videos">
           <h2 className="font-headline text-4xl font-black uppercase mb-12 flex items-center gap-4">
             <span className="material-symbols-outlined text-4xl">videocam</span>
-            Technical Breakdown Videos
+            LATEST VIDEOS
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {videos.slice(0, 4).map((video) => (
-              <a
-                key={video.id}
-                href={video.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group cursor-pointer block"
-              >
-                <div className="aspect-video scribble-border-sm mb-4 relative overflow-hidden">
-                  <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-all z-10"></div>
-                  {video.thumbnail && (
-                    <img
-                      src={video.thumbnail}
-                      alt={video.title}
-                      className="absolute inset-0 w-full h-full object-cover grayscale opacity-80 group-hover:opacity-100 transition-opacity"
-                    />
-                  )}
-                  <div className="absolute inset-0 flex items-center justify-center z-20">
-                    <span className="material-symbols-outlined text-5xl text-white drop-shadow-md">
-                      play_circle
+            {videos.slice(0, 4).map((video) => {
+              const isPlaylist = video.url.includes("playlist?list=");
+              const badgeLabel = isPlaylist ? "PLAYLIST" : "VIDEO";
+
+              return (
+                <a
+                  key={video.id}
+                  href={video.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group cursor-pointer block relative"
+                >
+                  <div className="aspect-video scribble-border-sm mb-4 relative overflow-hidden">
+                    <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-all z-10"></div>
+                    {video.thumbnail && (
+                      <img
+                        src={video.thumbnail}
+                        alt={video.title}
+                        className="absolute inset-0 w-full h-full object-cover grayscale opacity-80 group-hover:opacity-100 transition-opacity"
+                      />
+                    )}
+                    <div className="absolute inset-0 flex items-center justify-center z-20">
+                      <span className="material-symbols-outlined text-5xl text-white drop-shadow-md">
+                        play_circle
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="mb-2">
+                    <span className="inline-block bg-black text-white px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-widest">
+                      {badgeLabel}
                     </span>
                   </div>
-                </div>
-                <h4
-                  className="font-bold text-sm uppercase leading-tight px-1 line-clamp-2"
-                  title={video.title}
-                >
-                  {video.title}
-                </h4>
-              </a>
-            ))}
+
+                  <h4
+                    className="font-bold text-sm uppercase leading-tight px-1 line-clamp-2"
+                    title={video.title}
+                  >
+                    {video.title}
+                  </h4>
+                </a>
+              );
+            })}
           </div>
         </section>
 
@@ -315,7 +264,7 @@ export default async function Home() {
               <span className="material-symbols-outlined text-4xl">
                 science
               </span>
-              Research Areas & Expertise
+              RESEARCH AREAS
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
               {pageData.knowTechs.slice(0, 4).map((tech) => (
@@ -350,59 +299,97 @@ export default async function Home() {
         </section>
 
         {/* Section 5: Journey */}
-        <section className="py-24 max-w-screen-4xl mx-auto px-6 overflow-hidden">
+        <section className="py-24 max-w-screen-2xl mx-auto px-6" id="journey">
           <h2 className="font-headline text-4xl font-black uppercase mb-20 text-center">
             My Engineering Journey
           </h2>
-          <div className="relative max-w-4xl mx-auto">
-            {/* Dashed Line */}
-            <div
-              className="absolute left-8 top-0 bottom-0 w-0.5 scribble-line origin-top rotate-180"
-              style={{
-                backgroundImage:
-                  "repeating-linear-gradient(0deg, black, black 10px, transparent 10px, transparent 20px)",
-              }}
-            ></div>
 
-            {allExperiences.map((exp, index) => {
-              const title =
-                "role" in exp && exp.role
-                  ? exp.role
-                  : "collegeName" in exp
-                    ? exp.collegeName
-                    : "";
-              const subtitle =
-                "companyName" in exp && exp.companyName
-                  ? exp.companyName
-                  : "role" in exp && exp.role
-                    ? exp.role
-                    : "";
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 relative max-w-5xl mx-auto">
+            {/* Work Experience Column */}
+            <div className="relative">
+              <h3 className="font-headline text-2xl font-bold uppercase mb-12 flex items-center gap-3">
+                <span className="material-symbols-outlined">work</span>
+                Work Experience
+              </h3>
 
-              return (
-                <div key={index} className="relative pl-24 pb-16">
-                  <div className="absolute left-[26px] top-0 w-4 h-4 sketch-node bg-white z-10"></div>
-                  <div className="scribble-border-sm p-6 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-                    <span className="font-mono text-xs font-bold bg-black text-white px-2 py-0.5">
-                      {new Date(exp.startDate).getFullYear()} -{" "}
-                      {exp.endDate
-                        ? new Date(exp.endDate).getFullYear()
-                        : "PRESENT"}
-                    </span>
-                    <h4 className="font-headline text-xl font-black uppercase mt-2">
-                      {title}
-                    </h4>
-                    <p className="text-sm font-bold text-secondary mb-2">
-                      {subtitle}
-                    </p>
-                    {exp.description?.raw && (
-                      <div className="text-sm leading-relaxed text-zinc-600 line-clamp-3">
-                        <RichText content={exp.description.raw} />
-                      </div>
-                    )}
+              <div
+                className="absolute left-[3px] md:left-4 top-[80px] bottom-0 w-0.5 scribble-line origin-top rotate-180"
+                style={{
+                  backgroundImage:
+                    "repeating-linear-gradient(0deg, black, black 10px, transparent 10px, transparent 20px)",
+                }}
+              ></div>
+
+              <div className="space-y-12">
+                {workExperiences.map((exp, index) => (
+                  <div key={index} className="relative pl-12 md:pl-16">
+                    <div className="absolute left-[-5px] md:left-[8px] top-0 w-4 h-4 sketch-node bg-white z-10"></div>
+                    <div className="scribble-border-sm p-6 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                      <span className="font-mono text-xs font-bold bg-black text-white px-2 py-0.5">
+                        {new Date(exp.startDate).getFullYear()} -{" "}
+                        {exp.endDate
+                          ? new Date(exp.endDate).getFullYear()
+                          : "PRESENT"}
+                      </span>
+                      <h4 className="font-headline text-xl font-black uppercase mt-2">
+                        {exp.role}
+                      </h4>
+                      <p className="text-sm font-bold text-secondary mb-2">
+                        {exp.companyName}
+                      </p>
+                      {exp.description?.raw && (
+                        <div className="text-sm leading-relaxed text-zinc-600 line-clamp-3">
+                          <RichText content={exp.description.raw} />
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                ))}
+              </div>
+            </div>
+
+            {/* Education Column */}
+            <div className="relative">
+              <h3 className="font-headline text-2xl font-bold uppercase mb-12 flex items-center gap-3">
+                <span className="material-symbols-outlined">school</span>
+                Education
+              </h3>
+
+              <div
+                className="absolute left-[3px] md:left-4 top-[80px] bottom-0 w-0.5 scribble-line origin-top rotate-180"
+                style={{
+                  backgroundImage:
+                    "repeating-linear-gradient(0deg, black, black 10px, transparent 10px, transparent 20px)",
+                }}
+              ></div>
+
+              <div className="space-y-12">
+                {collegeExperiences.map((exp, index) => (
+                  <div key={index} className="relative pl-12 md:pl-16">
+                    <div className="absolute left-[-5px] md:left-[8px] top-0 w-4 h-4 sketch-node bg-white z-10"></div>
+                    <div className="scribble-border-sm p-6 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                      <span className="font-mono text-xs font-bold bg-black text-white px-2 py-0.5">
+                        {new Date(exp.startDate).getFullYear()} -{" "}
+                        {exp.endDate
+                          ? new Date(exp.endDate).getFullYear()
+                          : "PRESENT"}
+                      </span>
+                      <h4 className="font-headline text-xl font-black uppercase mt-2">
+                        {exp.collegeName}
+                      </h4>
+                      <p className="text-sm font-bold text-secondary mb-2">
+                        {exp.role}
+                      </p>
+                      {exp.description?.raw && (
+                        <div className="text-sm leading-relaxed text-zinc-600 line-clamp-3">
+                          <RichText content={exp.description.raw} />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </section>
 
@@ -417,16 +404,7 @@ export default async function Home() {
               regarding Engineering AI.
             </p>
 
-            <div className="max-w-md mx-auto flex flex-col sm:flex-row gap-0">
-              <input
-                type="email"
-                placeholder="YOUR EMAIL ADDRESS"
-                className="flex-1 scribble-border border-r-0 rounded-none px-6 py-4 focus:outline-none font-bold placeholder:text-zinc-400 bg-white"
-              />
-              <button className="bg-primary text-white font-headline font-bold uppercase tracking-widest px-8 py-4 border-2 border-black active:translate-x-1 active:translate-y-1 transition-all">
-                SEND
-              </button>
-            </div>
+            <ContactEmailForm />
 
             <div className="flex justify-center gap-10 pt-10 flex-wrap">
               {pageData.socials.map((social, index) => {
@@ -481,11 +459,7 @@ export default async function Home() {
           <div className="font-headline font-bold uppercase text-lg">
             LUIZ.ENG
           </div>
-          <div>
-            © {new Date().getFullYear()} Engineering Research Portfolio. Built
-            on Vellum.
-          </div>
-          <div className="flex gap-8 flex-wrap justify-center">
+          <div className="flex gap-8 flex-wrap justify-center ml-auto">
             {pageData.socials.map((social, i) => {
               const nameMatch = social.url.match(
                 /github|linkedin|youtube|lattes|researchgate/i,

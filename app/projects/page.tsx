@@ -1,13 +1,13 @@
-import { fetchHygraphQuery } from "../utils/fetch-hygraph-query"
-import { NewFooter } from "../components/new-footer"
-import { NewHeader } from "../components/new-header"
-import { HomePageData } from "../types/page-info"
-import { Project } from "../types/projects"
-import Link from "next/link"
+import { fetchHygraphQuery } from "../utils/fetch-hygraph-query";
+import { HomePageData } from "../types/page-info";
+import { Project } from "../types/projects";
+import Link from "next/link";
+import Image from "next/image";
+import { DynamicNav } from "../components/dynamic-nav";
 
-const getPageData = async (): Promise<HomePageData & { projects: Project[] }> => {
-  // Reusing the same query or similar one to get all projectsasdasdasdasdas
-  // In a real app we might have a dedicated query for all projects
+const getPageData = async (): Promise<
+  HomePageData & { projects: Project[] }
+> => {
   const query = `
     query PageInfoQuery {
       page(where: {slug: "home"}) {
@@ -45,66 +45,111 @@ const getPageData = async (): Promise<HomePageData & { projects: Project[] }> =>
           raw
         }
       }
-      workExperiences {
-        companyLogo {
-           url
-        }
-      }
-      collegeExperiences {
-         collegeName
-      }
     }
-  `
-  return fetchHygraphQuery(query)
-}
+  `;
+  return fetchHygraphQuery(query);
+};
 
-export const revalidate = 60; // Automatic ISR every 60s
+export const revalidate = 60;
 
 export default async function Projects() {
   const { page: pageData, projects } = await getPageData();
 
   return (
     <>
-      <NewHeader profilePicture={pageData.profilePicture?.url} />
+      <DynamicNav />
 
-      <main className="pt-32 pb-24 px-6">
-        <div className="max-w-5xl mx-auto">
-          <div className="mb-12">
-            <h1 className="text-4xl font-bold tracking-tight text-zinc-900 mb-4">All Projects</h1>
-            <p className="text-zinc-500">A collection of my work.</p>
+      <main className="pt-32 pb-24 px-6 bg-surface-container-low min-h-screen">
+        <div className="max-w-screen-2xl mx-auto">
+          <div className="mb-16">
+            <h1 className="font-headline text-5xl md:text-7xl font-black uppercase tracking-tighter">
+              All Projects
+            </h1>
+            <p className="text-xl italic text-secondary mt-4">
+              A comprehensive archive of research and engineering work.
+            </p>
           </div>
 
-          <div className="space-y-4">
-            {projects.map((project, index) => (
-              <Link href={`/projects/${project.slug}`} key={project.slug} className="group flex flex-col sm:flex-row sm:items-baseline gap-4 p-5 rounded-2xl border border-zinc-200 hover:border-rose-200 bg-white hover:shadow-lg hover:shadow-rose-100/50 transition-all cursor-pointer">
-                <div className="w-32 shrink-0">
-                  <div className="text-xs font-mono font-medium text-rose-600 bg-rose-50 px-2 py-1 rounded-md inline-block">
-                    {project.anopublicacao ? new Date(project.anopublicacao).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : (project.technologies[0]?.name || "2024")}
-                  </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            {projects.map((project) => (
+              <div
+                key={project.slug}
+                className="bg-white p-8 scribble-border-sm flex flex-col gap-6 hover:-translate-y-2 transition-transform"
+              >
+                <div className="aspect-video bg-surface-container overflow-hidden border border-black relative">
+                  {project.thumbnail?.url && (
+                    <Image
+                      src={project.thumbnail.url}
+                      alt={project.title}
+                      fill
+                      className="w-full h-full object-cover grayscale"
+                    />
+                  )}
                 </div>
-                <div className="flex-1">
-                  <h3 className="text-base font-bold text-zinc-900 group-hover:text-rose-600 transition-colors">{project.title}</h3>
-                  <p className="text-sm text-zinc-500 mt-1 line-clamp-1">
-                    {(project.jornalcongresso?.raw as any)?.children?.[0]?.children?.[0]?.text || project.shortDescription}
+
+                <div className="flex flex-col gap-2">
+                  <div className="flex justify-between items-start gap-4">
+                    <h3 className="font-headline text-2xl font-bold uppercase">
+                      {project.title}
+                    </h3>
+                  </div>
+                  <p className="text-xs font-bold text-secondary uppercase tracking-widest">
+                    {project.anopublicacao
+                      ? new Date(project.anopublicacao).toLocaleDateString(
+                          "en-US",
+                          { month: "short", day: "numeric", year: "numeric" },
+                        )
+                      : ""}
                   </p>
-                  <div className="flex gap-2 mt-3 flex-wrap">
-                    {project.technologies.slice(0, 3).map((tech, i) => (
-                      <span key={i} className="text-[10px] uppercase tracking-wider font-semibold text-zinc-400 border border-zinc-100 px-2 py-0.5 rounded-full bg-zinc-50">
-                        {tech.name}
-                      </span>
-                    ))}
-                  </div>
                 </div>
-                <div className="shrink-0 self-start sm:self-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="20" height="20" viewBox="0 0 24 24" className="text-zinc-300 group-hover:text-rose-500 transition-colors"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M7 7h10v10M7 17L17 7"></path></svg>
+
+                <p className="text-secondary text-sm leading-snug line-clamp-3 flex-1">
+                  {(project.jornalcongresso?.raw as any)?.children?.[0]
+                    ?.children?.[0]?.text || project.shortDescription}
+                </p>
+
+                <div className="mt-auto flex justify-between items-center pt-4">
+                  <span className="font-mono text-xs uppercase bg-black text-white px-2 py-1 truncate max-w-[200px]">
+                    {project.technologies[0]?.name || "Project"}
+                  </span>
+                  <Link href={`/projects/${project.slug}`}>
+                    <span className="material-symbols-outlined hover:scale-110 transition-transform">
+                      arrow_outward
+                    </span>
+                  </Link>
                 </div>
-              </Link>
+              </div>
             ))}
           </div>
         </div>
       </main>
 
-      <NewFooter socials={pageData.socials} />
+      <footer className="w-full border-t-4 border-black bg-zinc-50">
+        <div className="flex flex-col md:flex-row justify-between items-center px-10 py-12 w-full max-w-screen-2xl mx-auto gap-6 text-black font-body text-sm tracking-tight">
+          <div className="font-headline font-bold uppercase text-lg">
+            LUIZ.ENG
+          </div>
+          <div className="flex gap-8 flex-wrap justify-center ml-auto">
+            {pageData.socials.map((social, i) => {
+              const nameMatch = social.url.match(
+                /github|linkedin|youtube|lattes|researchgate/i,
+              );
+              const name = nameMatch ? nameMatch[0] : `Link ${i + 1}`;
+              return (
+                <a
+                  key={i}
+                  href={social.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-zinc-600 hover:italic transition-all uppercase text-xs font-bold"
+                >
+                  {name}
+                </a>
+              );
+            })}
+          </div>
+        </div>
+      </footer>
     </>
-  )
+  );
 }
