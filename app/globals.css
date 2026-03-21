@@ -8,7 +8,7 @@
   }
 
   body {
-    @apply bg-page-bg text-text-primary;
+    @apply bg-surface text-primary;
   }
 }
 
@@ -54,6 +54,34 @@
 
   .delay-300 {
     animation-delay: 300ms;
+  }
+
+  .scribble-border {
+    border: 2px solid black;
+    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+  }
+  .scribble-border-sm {
+    border: 2px solid black;
+    border-radius: 2% 5% 4% 3% / 5% 3% 6% 4%;
+  }
+  .scribble-line {
+    background-image: repeating-linear-gradient(
+      90deg,
+      black,
+      black 10px,
+      transparent 10px,
+      transparent 20px
+    );
+    height: 2px;
+    width: 100%;
+  }
+  .sketch-node {
+    border: 2px solid black;
+    border-radius: 50% 45% 52% 48% / 48% 52% 45% 50%;
+  }
+  .mask-sketch {
+    mask-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,0 Q50,5 100,0 T100,100 Q50,95 0,100 T0,0" fill="black"/></svg>');
+    -webkit-mask-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,0 Q50,5 100,0 T100,100 Q50,95 0,100 T0,0" fill="black"/></svg>');
   }
 }
 

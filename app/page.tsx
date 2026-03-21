@@ -1,9 +1,7 @@
-import { fetchHygraphQuery } from "./utils/fetch-hygraph-query"
-import { HomePageData } from "./types/page-info"
-import { NewFooter } from "./components/new-footer"
-import { NewHeader } from "./components/new-header"
-import Image from "next/image"
-import Link from "next/link"
+import { fetchHygraphQuery } from "./utils/fetch-hygraph-query";
+import { HomePageData } from "./types/page-info";
+import Image from "next/image";
+import Link from "next/link";
 import { getLatestVideos } from "./lib/youtube";
 import { RichText } from "./components/rich-text";
 
@@ -75,11 +73,10 @@ const getPageData = async (): Promise<HomePageData> => {
       role
     }
   }
-`
-  return fetchHygraphQuery(query)
-}
+`;
+  return fetchHygraphQuery(query);
+};
 
-// Helper for relative time (simple version)
 function getRelativeTime(dateString: string) {
   const date = new Date(dateString);
   const now = new Date();
@@ -87,26 +84,34 @@ function getRelativeTime(dateString: string) {
 
   if (diffInSeconds < 60) return "Just now";
   if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)} mins ago`;
-  if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)} hours ago`;
-  if (diffInSeconds < 604800) return `${Math.floor(diffInSeconds / 86400)} days ago`;
-  if (diffInSeconds < 2592000) return `${Math.floor(diffInSeconds / 604800)} weeks ago`;
+  if (diffInSeconds < 86400)
+    return `${Math.floor(diffInSeconds / 3600)} hours ago`;
+  if (diffInSeconds < 604800)
+    return `${Math.floor(diffInSeconds / 86400)} days ago`;
+  if (diffInSeconds < 2592000)
+    return `${Math.floor(diffInSeconds / 604800)} weeks ago`;
   return date.toLocaleDateString();
 }
 
-export const revalidate = 60; // Automatic ISR every 60s
+export const revalidate = 60;
 
 export default async function Home() {
-  const { page: pageData, workExperiences, collegeExperiences, highlightProjects } = await getPageData();
+  const {
+    page: pageData,
+    workExperiences,
+    collegeExperiences,
+    highlightProjects,
+  } = await getPageData();
   const videos = await getLatestVideos();
 
+  type ExperienceType =
+    | (typeof workExperiences)[0]
+    | (typeof collegeExperiences)[0];
 
-  // Helper for sorting experiences (LinkedIn style: Present first, then by End Date Descending)
-  function sortExperiences<T extends { startDate: string; endDate?: string | null }>(experiences: T[] | undefined): T[] {
+  function sortExperiences(experiences: ExperienceType[]): ExperienceType[] {
     if (!experiences) return [];
 
     return [...experiences].sort((a, b) => {
-      // 1. Compare End Date (Desc - "Present/Null" is newest/largest)
-      // If endDate is missing/null, treat as "Present" (Future/Infinity)
       const endDateA = a.endDate ? new Date(a.endDate).getTime() : Infinity;
       const endDateB = b.endDate ? new Date(b.endDate).getTime() : Infinity;
 
@@ -114,7 +119,6 @@ export default async function Home() {
         return endDateB - endDateA;
       }
 
-      // 2. Tie-breaker: Start Date (Desc - Newest first)
       const startDateA = new Date(a.startDate).getTime();
       const startDateB = new Date(b.startDate).getTime();
 
@@ -122,266 +126,386 @@ export default async function Home() {
     });
   }
 
+  const allExperiences = sortExperiences([
+    ...workExperiences,
+    ...collegeExperiences,
+  ]);
 
   return (
     <>
-      <NewHeader profilePicture={pageData.profilePicture?.url} />
-
-      {/* Hero Section */}
-      <header className="md:pt-48 md:pb-20 overflow-hidden pt-32 pr-6 pb-20 pl-6">
-        <div className="max-w-5xl mr-auto ml-auto relative">
-
-          {/* Animated Pill - Replaced Open for Work with Latest Paper/Project */}
-          <Link href={`/projects/${highlightProjects[0]?.slug}`} className="animate-enter inline-flex items-center gap-2 px-3 py-1.5 rounded-full border mb-8 backdrop-blur shadow-sm transition-transform hover:scale-105 cursor-pointer bg-white/80 border-zinc-200">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 bg-rose-400"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-rose-500"></span>
-            </span>
-            <span className="text-xs font-medium text-zinc-600">
-              Check out my latest project: {highlightProjects[0]?.title || "New Video"}
-            </span>
-            <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="12" height="12" viewBox="0 0 24 24" className="text-zinc-400"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5 12h14m-7-7l7 7l-7 7"></path></svg>
+      <nav className="fixed top-0 w-full z-50 border-b-2 border-black bg-white/80 backdrop-blur-md shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+        <div className="flex justify-between items-center w-full px-6 py-4 max-w-screen-2xl mx-auto">
+          <Link
+            href="/"
+            className="text-2xl font-bold text-black tracking-widest font-headline uppercase"
+          >
+            LUIZ.ENG
           </Link>
-
-          <h1 className="animate-enter delay-100 text-5xl md:text-7xl font-bold tracking-tighter mb-6 leading-[1.05] text-zinc-900">
-            Hi, my name is Luiz. <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-orange-500">Researcher &amp; Engineering Student.</span>
-          </h1>
-
-          <p className="animate-enter delay-200 text-lg md:text-xl max-w-2xl leading-relaxed font-light mb-10 text-zinc-500">
-            I’m a Data Science researcher and an Electrical Engineering student at the Federal University of Espírito Santo. I also create educational content on YouTube.
-          </p>
-
-          <div className="animate-enter delay-300 flex flex-wrap items-center gap-4">
-            <Link href="#projects" className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-rose-500/20 active:translate-y-0 bg-zinc-900 text-white">
-              <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="18" height="18" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" x2="8" y1="13" y2="13"></line><line x1="16" x2="8" y1="17" y2="17"></line><line x1="10" x2="8" y1="9" y2="9"></line></svg>
-              View Projects
+          <div className="hidden md:flex gap-8 font-headline uppercase tracking-tighter">
+            <Link
+              className="text-black font-black border-b-4 border-black pb-1"
+              href="#projects"
+            >
+              Projects
             </Link>
-            <Link href="#videos" className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-medium transition-colors border bg-white border-zinc-200 text-zinc-700 hover:bg-zinc-50 hover:border-zinc-300">
-              <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="18" height="18" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5"></circle><polygon points="10 8 16 12 10 16 10 8" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5"></polygon></svg>
-              Watch Videos
+            <Link
+              className="text-gray-500 hover:text-black transition-colors"
+              href="#research"
+            >
+              Resources
+            </Link>
+            <Link
+              className="text-gray-500 hover:text-black transition-colors"
+              href="#contact"
+            >
+              Contact
+            </Link>
+          </div>
+          <div className="flex items-center gap-4">
+            <Link
+              href="/projects"
+              className="bg-primary text-on-primary-container px-6 py-1 font-headline uppercase tracking-widest hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
+            >
+              All Projects
             </Link>
           </div>
         </div>
-      </header>
+      </nav>
 
-      {/* Featured Projects (Was Experience list, now Projects list) */}
-      <section id="projects" className="scroll-mt-32 py-12 px-6 border-t border-b border-zinc-100 bg-zinc-50/40">
-        <div className="max-w-5xl mx-auto">
-          <div className="flex items-end justify-between mb-8">
-            <div>
-              <h2 className="text-2xl font-bold tracking-tight text-zinc-900">Featured Projects</h2>
-              <p className="text-sm text-zinc-500 mt-1">Selected works and applications.</p>
-            </div>
-            <Link href="/projects" className="text-xs font-medium text-zinc-400 hover:text-zinc-900 flex items-center gap-1">
-              View All Projects <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="12" height="12" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6m4-3h6v6m-11 5L21 3"></path></svg>
-            </Link>
-          </div>
-
-          <div className="space-y-4">
-            {highlightProjects.map((project, index) => (
-              <Link href={`/projects/${project.slug}`} key={project.slug} className="group flex flex-col sm:flex-row sm:items-baseline gap-4 p-5 rounded-2xl border border-zinc-200 hover:border-rose-200 bg-white hover:shadow-lg hover:shadow-rose-100/50 transition-all cursor-pointer">
-                <div className="w-32 shrink-0">
-                  {/* Display Date (Year only) */}
-                  <div className="text-xs font-mono font-medium text-rose-600 bg-rose-50 px-2 py-1 rounded-md inline-block">
-                    {project.anopublicacao ? new Date(project.anopublicacao).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : (project.technologies[0]?.name || "2024")}
-                  </div>
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-base font-bold text-zinc-900 group-hover:text-rose-600 transition-colors">{project.title}</h3>
-                  {/* Prioritize jornalcongresso, fallback to shortDescription */}
-                  <p className="text-sm text-zinc-500 mt-1 line-clamp-1">
-                    {(project.jornalcongresso?.raw as any)?.children?.[0]?.children?.[0]?.text || project.shortDescription}
-                  </p>
-                  <div className="flex gap-2 mt-3 flex-wrap">
-                    {project.technologies.slice(0, 3).map((tech, i) => (
-                      <span key={i} className="text-[10px] uppercase tracking-wider font-semibold text-zinc-400 border border-zinc-100 px-2 py-0.5 rounded-full bg-zinc-50">
-                        {tech.name}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-                <div className="shrink-0 self-start sm:self-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="20" height="20" viewBox="0 0 24 24" className="text-zinc-300 group-hover:text-rose-500 transition-colors"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M7 7h10v10M7 17L17 7"></path></svg>
-                </div>
+      <main className="pt-24">
+        {/* Section 1: Hero */}
+        <section className="max-w-screen-2xl mx-auto px-6 py-20 flex flex-col md:flex-row items-center gap-12 lg:gap-24">
+          <div className="flex-1 space-y-8">
+            <h1 className="font-headline text-5xl md:text-7xl lg:text-8xl font-black leading-none tracking-tighter">
+              Hi, I'm Luiz
+              <br />
+              <span className="text-outline">
+                Researcher & Engineering Student
+              </span>
+            </h1>
+            <p className="text-lg md:text-xl max-w-2xl leading-relaxed text-secondary italic">
+              I’m a Data Science researcher and an Electrical Engineering
+              student. I translate complex physical phenomena into digital
+              architectures, specializing in computational measurement and
+              machine learning models.
+            </p>
+            <div className="flex flex-wrap gap-4 pt-4">
+              <Link
+                className="bg-primary text-white px-8 py-4 font-headline font-bold uppercase tracking-widest shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all"
+                href="#projects"
+              >
+                View Projects
               </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-
-
-      {/* Videos Section (New Dr. Sorel Style) */}
-      <section id="videos" className="scroll-mt-32 py-24 px-6 relative">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex items-end justify-between mb-12 animate-enter delay-100">
-            <div>
-              <h2 className="text-3xl tracking-tight mb-2 text-zinc-900 font-sans font-semibold">Latest Videos</h2>
-              <p className="text-zinc-500 font-sans">Classes, vlogs, and educational content.</p>
+              <Link
+                className="scribble-border px-8 py-4 font-headline font-bold uppercase tracking-widest hover:bg-surface-container-low transition-all"
+                href="#videos"
+              >
+                Watch Videos
+              </Link>
             </div>
-            <a href="https://www.youtube.com/@LuizEduardoVedoato" target="_blank" className="hidden md:flex items-center gap-1 text-sm font-medium transition-colors text-rose-600 hover:text-rose-700 font-sans">
-              View Channel <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="16" height="16" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5 12h14m-7-7l7 7l-7 7"></path></svg>
-            </a>
           </div>
+          <div className="w-full md:w-1/3 aspect-square relative">
+            <div className="absolute inset-0 scribble-border rotate-3 bg-white"></div>
+            <div className="absolute inset-0 scribble-border -rotate-2 bg-white flex items-center justify-center overflow-hidden">
+              {pageData.profilePicture?.url && (
+                <Image
+                  src={pageData.profilePicture.url}
+                  alt="Profile Picture"
+                  fill
+                  className="w-full h-full object-cover grayscale contrast-125 mix-blend-multiply opacity-90"
+                />
+              )}
+            </div>
+          </div>
+        </section>
 
-          {/* Video Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {videos.slice(0, 4).map((video, index) => {
-              const isLarge = index === 0 || index === 3;
-              // Reference strictly uses lg:col-span-2. MD is 1 col.
-              // Single col items (index 1, 2) should stretch (aspect-auto) on LG to match row height.
-              return (
-                <a
-                  key={video.id}
-                  href={video.url}
-                  target="_blank"
-                  className={`group relative rounded-3xl overflow-hidden cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 block 
-                  ${isLarge ? "col-span-1 lg:col-span-2 aspect-video" : "col-span-1 aspect-video lg:aspect-auto"}
-                `}
+        {/* Section 2: Featured Projects */}
+        <section className="bg-surface-container-low py-24" id="projects">
+          <div className="max-w-screen-2xl mx-auto px-6">
+            <h2 className="font-headline text-4xl font-black uppercase mb-12 flex items-center gap-4">
+              <span className="material-symbols-outlined text-4xl">
+                architecture
+              </span>
+              Featured Projects
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+              {highlightProjects.map((project) => (
+                <div
+                  key={project.slug}
+                  className="bg-white p-8 scribble-border-sm flex flex-col gap-6 hover:-translate-y-2 transition-transform"
                 >
-                  {/* Image */}
+                  <div className="aspect-video bg-surface-container overflow-hidden border border-black relative">
+                    {project.thumbnail?.url && (
+                      <Image
+                        src={project.thumbnail.url}
+                        alt={project.title}
+                        fill
+                        className="w-full h-full object-cover grayscale"
+                      />
+                    )}
+                  </div>
+                  <h3 className="font-headline text-2xl font-bold uppercase">
+                    {project.title}
+                  </h3>
+                  <p className="text-secondary text-sm leading-snug line-clamp-3">
+                    {(project.jornalcongresso?.raw as any)?.children?.[0]
+                      ?.children?.[0]?.text || project.shortDescription}
+                  </p>
+                  <div className="mt-auto flex justify-between items-center">
+                    <span className="font-mono text-xs uppercase bg-black text-white px-2 py-1">
+                      {project.technologies[0]?.name || "Project"}
+                    </span>
+                    <Link href={`/projects/${project.slug}`}>
+                      <span className="material-symbols-outlined hover:scale-110 transition-transform">
+                        arrow_outward
+                      </span>
+                    </Link>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Section 3: Latest Videos */}
+        <section className="py-24 max-w-screen-2xl mx-auto px-6" id="videos">
+          <h2 className="font-headline text-4xl font-black uppercase mb-12 flex items-center gap-4">
+            <span className="material-symbols-outlined text-4xl">videocam</span>
+            Technical Breakdown Videos
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {videos.slice(0, 4).map((video) => (
+              <a
+                key={video.id}
+                href={video.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group cursor-pointer block"
+              >
+                <div className="aspect-video scribble-border-sm mb-4 relative overflow-hidden">
+                  <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-all z-10"></div>
                   {video.thumbnail && (
                     <img
                       src={video.thumbnail}
                       alt={video.title}
-                      className="absolute inset-0 h-full w-full object-cover transform transition-transform duration-700 group-hover:scale-105"
+                      className="absolute inset-0 w-full h-full object-cover grayscale opacity-80 group-hover:opacity-100 transition-opacity"
                     />
                   )}
+                  <div className="absolute inset-0 flex items-center justify-center z-20">
+                    <span className="material-symbols-outlined text-5xl text-white drop-shadow-md">
+                      play_circle
+                    </span>
+                  </div>
+                </div>
+                <h4
+                  className="font-bold text-sm uppercase leading-tight px-1 line-clamp-2"
+                  title={video.title}
+                >
+                  {video.title}
+                </h4>
+              </a>
+            ))}
+          </div>
+        </section>
 
-                  {/* Clean Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent p-8 flex flex-col justify-end">
-
-                    {/* Label */}
-                    <div className="mb-2">
-                      <span className="inline-block px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-xs font-medium text-white border border-white/10 font-sans">
-                        {index === 0 ? "Latest Upload" : (video.tags?.[0] || 'Technical Analysis')}
+        {/* Section 4: Academic Research */}
+        <section className="py-24 bg-black text-white" id="research">
+          <div className="max-w-screen-2xl mx-auto px-6">
+            <h2 className="font-headline text-4xl font-black uppercase mb-12 flex items-center gap-4">
+              <span className="material-symbols-outlined text-4xl">
+                science
+              </span>
+              Research Areas & Expertise
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+              {pageData.knowTechs.slice(0, 4).map((tech) => (
+                <div
+                  key={tech.name}
+                  className="border-2 border-white p-10 flex gap-8"
+                >
+                  <div className="shrink-0">
+                    {tech.iconSvg ? (
+                      <div
+                        dangerouslySetInnerHTML={{ __html: tech.iconSvg }}
+                        className="w-12 h-12 [&>svg]:w-full [&>svg]:h-full fill-white"
+                      />
+                    ) : (
+                      <span className="material-symbols-outlined text-6xl">
+                        neurology
                       </span>
-                    </div>
-
-                    {/* Title */}
-                    <h3 className="text-xl md:text-2xl font-bold leading-tight text-white mb-2 font-sans line-clamp-2">
-                      {video.title}
+                    )}
+                  </div>
+                  <div className="space-y-4">
+                    <h3 className="font-headline text-3xl font-bold uppercase tracking-tight">
+                      {tech.name}
                     </h3>
+                    <p className="text-on-primary-fixed-variant leading-relaxed">
+                      Expertise since {new Date(tech.startDate).getFullYear()}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
-                    {/* Meta */}
-                    <div className="flex items-center gap-2 text-sm text-zinc-300 font-sans">
-                      <span>{video.viewCount ? `${video.viewCount} views` : 'Watch now'}</span>
-                      <span>•</span>
-                      <span>{getRelativeTime(video.publishedAt)}</span>
-                      {video.duration && (
-                        <>
-                          <span>•</span>
-                          <span>{video.duration}</span>
-                        </>
+        {/* Section 5: Journey */}
+        <section className="py-24 max-w-screen-4xl mx-auto px-6 overflow-hidden">
+          <h2 className="font-headline text-4xl font-black uppercase mb-20 text-center">
+            My Engineering Journey
+          </h2>
+          <div className="relative max-w-4xl mx-auto">
+            {/* Dashed Line */}
+            <div
+              className="absolute left-8 top-0 bottom-0 w-0.5 scribble-line origin-top rotate-180"
+              style={{
+                backgroundImage:
+                  "repeating-linear-gradient(0deg, black, black 10px, transparent 10px, transparent 20px)",
+              }}
+            ></div>
+
+            {allExperiences.map((exp, index) => {
+              const title =
+                "role" in exp && exp.role
+                  ? exp.role
+                  : "collegeName" in exp
+                    ? exp.collegeName
+                    : "";
+              const subtitle =
+                "companyName" in exp && exp.companyName
+                  ? exp.companyName
+                  : "role" in exp && exp.role
+                    ? exp.role
+                    : "";
+
+              return (
+                <div key={index} className="relative pl-24 pb-16">
+                  <div className="absolute left-[26px] top-0 w-4 h-4 sketch-node bg-white z-10"></div>
+                  <div className="scribble-border-sm p-6 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                    <span className="font-mono text-xs font-bold bg-black text-white px-2 py-0.5">
+                      {new Date(exp.startDate).getFullYear()} -{" "}
+                      {exp.endDate
+                        ? new Date(exp.endDate).getFullYear()
+                        : "PRESENT"}
+                    </span>
+                    <h4 className="font-headline text-xl font-black uppercase mt-2">
+                      {title}
+                    </h4>
+                    <p className="text-sm font-bold text-secondary mb-2">
+                      {subtitle}
+                    </p>
+                    {exp.description?.raw && (
+                      <div className="text-sm leading-relaxed text-zinc-600 line-clamp-3">
+                        <RichText content={exp.description.raw} />
+                      </div>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* Section 6: Let's Collaborate */}
+        <section className="py-24 border-t-4 border-black" id="contact">
+          <div className="max-w-screen-xl mx-auto px-6 text-center space-y-12">
+            <h2 className="font-headline text-5xl md:text-7xl font-black uppercase tracking-tighter">
+              Let's Collaborate
+            </h2>
+            <p className="text-xl max-w-2xl mx-auto italic text-secondary">
+              Looking for research partnerships or speaking engagements
+              regarding Engineering AI.
+            </p>
+
+            <div className="max-w-md mx-auto flex flex-col sm:flex-row gap-0">
+              <input
+                type="email"
+                placeholder="YOUR EMAIL ADDRESS"
+                className="flex-1 scribble-border border-r-0 rounded-none px-6 py-4 focus:outline-none font-bold placeholder:text-zinc-400 bg-white"
+              />
+              <button className="bg-primary text-white font-headline font-bold uppercase tracking-widest px-8 py-4 border-2 border-black active:translate-x-1 active:translate-y-1 transition-all">
+                SEND
+              </button>
+            </div>
+
+            <div className="flex justify-center gap-10 pt-10 flex-wrap">
+              {pageData.socials.map((social, index) => {
+                let iconName = "link";
+                const urlLower = social.url.toLowerCase();
+                if (urlLower.includes("linkedin")) iconName = "work";
+                if (urlLower.includes("github")) iconName = "code";
+                if (urlLower.includes("lattes")) iconName = "school";
+                if (urlLower.includes("researchgate")) iconName = "menu_book";
+                if (
+                  urlLower.includes("youtube") ||
+                  urlLower.includes("youtu.be")
+                )
+                  iconName = "smart_display";
+
+                const nameMatch = social.url.match(
+                  /github|linkedin|youtube|lattes|researchgate/i,
+                );
+                const name = nameMatch ? nameMatch[0] : `Link ${index + 1}`;
+
+                return (
+                  <a
+                    key={index}
+                    href={social.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex flex-col items-center gap-2 group"
+                  >
+                    <div className="w-12 h-12 scribble-border flex items-center justify-center group-hover:bg-black group-hover:text-white transition-all bg-white">
+                      {social.iconSvg ? (
+                        <div
+                          dangerouslySetInnerHTML={{ __html: social.iconSvg }}
+                          className="w-6 h-6 [&>svg]:w-full [&>svg]:h-full fill-current"
+                        />
+                      ) : (
+                        <span className="material-symbols-outlined">
+                          {iconName}
+                        </span>
                       )}
                     </div>
-                  </div>
+                    <span className="text-xs font-bold uppercase">{name}</span>
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer className="w-full border-t-4 border-black bg-zinc-50">
+        <div className="flex flex-col md:flex-row justify-between items-center px-10 py-12 w-full max-w-screen-2xl mx-auto gap-6 text-black font-body text-sm tracking-tight">
+          <div className="font-headline font-bold uppercase text-lg">
+            LUIZ.ENG
+          </div>
+          <div>
+            © {new Date().getFullYear()} Engineering Research Portfolio. Built
+            on Vellum.
+          </div>
+          <div className="flex gap-8 flex-wrap justify-center">
+            {pageData.socials.map((social, i) => {
+              const nameMatch = social.url.match(
+                /github|linkedin|youtube|lattes|researchgate/i,
+              );
+              const name = nameMatch ? nameMatch[0] : `Link ${i + 1}`;
+              return (
+                <a
+                  key={i}
+                  href={social.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-zinc-600 hover:italic transition-all uppercase text-xs font-bold"
+                >
+                  {name}
                 </a>
-              )
+              );
             })}
           </div>
         </div>
-      </section>
-
-      {/* Research Areas (Was Technologies) */}
-      <section id="research" className="scroll-mt-32 py-24 px-6 border-b border-zinc-100">
-        <div className="max-w-5xl mx-auto">
-          <div className="mb-12">
-            <h2 className="text-3xl font-bold tracking-tight mb-4 text-zinc-900">Research Areas</h2>
-            <p className="text-zinc-500 max-w-xl">Areas of Learning & Interest.</p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {pageData.knowTechs.map((tech, index) => (
-              <div key={index} className="group p-8 rounded-3xl border transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border-zinc-200 bg-white">
-                <div className="h-12 w-12 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform bg-zinc-50">
-                  {tech.iconSvg ? (
-                    <div dangerouslySetInnerHTML={{ __html: tech.iconSvg }} className="w-8 h-8 [&>svg]:w-full [&>svg]:h-full" />
-                  ) : (
-                    // Fallback icon if SVG is missing
-                    <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-zinc-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 12h14M12 5l7 7-7 7" /></svg>
-                  )}
-                </div>
-                <h3 className="text-lg font-bold mb-2 text-zinc-900">{tech.name}</h3>
-                <p className="text-sm text-zinc-500 leading-relaxed">
-                  Expertise since {new Date(tech.startDate).getFullYear()}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ME Section (Experience + Education) */}
-      {/* Me Section - New Design */}
-      <section id="me" className="py-24 md:py-32 px-6">
-        <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl font-bold tracking-tight mb-12 text-zinc-900">Me</h2>
-
-          <div className="grid md:grid-cols-2 gap-12">
-            {/* Experience */}
-            <div>
-              <h3 className="text-xl font-medium text-zinc-900 mb-6 flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-zinc-900"></span>
-                Experience
-              </h3>
-              <div className="space-y-8 pl-3 border-l border-zinc-200">
-                {sortExperiences(workExperiences).map((experience, index) => (
-                  <div key={index} className="relative pl-6 group">
-                    <span className="absolute -left-[17px] top-1.5 w-2 h-2 rounded-full bg-white border-2 border-zinc-300 group-hover:border-rose-500 transition-colors"></span>
-
-                    <h4 className="text-lg font-bold text-zinc-900 leading-tight">{experience.role}</h4>
-
-                    <a href={experience.companyUrl} target="_blank" className="text-base text-zinc-700 hover:text-rose-600 transition-colors font-medium block mt-1">
-                      {experience.companyName}
-                    </a>
-
-                    <div className="text-xs text-zinc-400 font-sans mt-1 mb-3 uppercase tracking-wider">
-                      {new Date(experience.startDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })} - {experience.endDate ? new Date(experience.endDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : "Present"}
-                    </div>
-
-                    <div className="text-sm text-zinc-600 leading-relaxed font-sans">
-                      {experience.description?.raw && <RichText content={experience.description.raw} />}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Education */}
-            <div>
-              <h3 className="text-xl font-medium text-zinc-900 mb-6 flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-zinc-900"></span>
-                Education
-              </h3>
-              <div className="space-y-8 pl-3 border-l border-zinc-200">
-                {sortExperiences(collegeExperiences).map((experience, index) => (
-                  <div key={index} className="relative pl-6 group">
-                    <span className="absolute -left-[17px] top-1.5 w-2 h-2 rounded-full bg-white border-2 border-zinc-300 group-hover:border-rose-500 transition-colors"></span>
-
-                    <h4 className="text-lg font-bold text-zinc-900 leading-tight">{experience.collegeName}</h4>
-
-                    <div className="text-base text-zinc-700 font-medium mt-1">
-                      {experience.role}
-                    </div>
-
-                    <div className="text-xs text-zinc-400 font-sans mt-1 mb-3 uppercase tracking-wider">
-                      {new Date(experience.startDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })} - {experience.endDate ? new Date(experience.endDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : "Present"}
-                    </div>
-
-                    <div className="text-sm text-zinc-600 leading-relaxed font-sans">
-                      {experience.description?.raw && <RichText content={experience.description.raw} />}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <NewFooter socials={pageData.socials} />
+      </footer>
     </>
-  )
+  );
 }
