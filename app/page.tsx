@@ -90,6 +90,29 @@ export default async function Home() {
   } = await getPageData();
   const videos = await getLatestVideos();
 
+  function sortExperiences<
+    T extends { startDate: string; endDate?: string | null },
+  >(experiences: T[]): T[] {
+    if (!experiences) return [];
+
+    return [...experiences].sort((a, b) => {
+      const endDateA = a.endDate ? new Date(a.endDate).getTime() : Infinity;
+      const endDateB = b.endDate ? new Date(b.endDate).getTime() : Infinity;
+
+      if (endDateA !== endDateB) {
+        return endDateB - endDateA;
+      }
+
+      const startDateA = new Date(a.startDate).getTime();
+      const startDateB = new Date(b.startDate).getTime();
+
+      return startDateB - startDateA;
+    });
+  }
+
+  const sortedWorkExperiences = sortExperiences(workExperiences);
+  const sortedCollegeExperiences = sortExperiences(collegeExperiences);
+
   return (
     <>
       <DynamicNav />
@@ -307,20 +330,11 @@ export default async function Home() {
                 Work Experience
               </h3>
 
-              {/* The vertical dashed line. Left is offset to center with the node dot */}
-              <div
-                className="absolute left-[7px] md:left-[21px] top-[80px] bottom-0 w-0.5"
-                style={{
-                  backgroundImage:
-                    "repeating-linear-gradient(0deg, black, black 10px, transparent 10px, transparent 20px)",
-                }}
-              ></div>
-
               <div className="space-y-12">
-                {workExperiences.map((exp, index) => (
+                {sortedWorkExperiences.map((exp, index) => (
                   <div key={index} className="relative pl-8 md:pl-16">
                     {/* The node dot */}
-                    <div className="absolute left-0 md:left-[14px] top-4 w-4 h-4 sketch-node bg-white z-10 flex items-center justify-center"></div>
+                    <div className="absolute left-0 md:left-[14px] top-[48px] w-4 h-4 sketch-node bg-white z-10 flex items-center justify-center"></div>
 
                     <div className="scribble-border-sm p-6 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
                       <span className="font-mono text-xs font-bold bg-black text-white px-2 py-0.5">
@@ -353,18 +367,10 @@ export default async function Home() {
                 Education
               </h3>
 
-              <div
-                className="absolute left-[7px] md:left-[21px] top-[80px] bottom-0 w-0.5"
-                style={{
-                  backgroundImage:
-                    "repeating-linear-gradient(0deg, black, black 10px, transparent 10px, transparent 20px)",
-                }}
-              ></div>
-
               <div className="space-y-12">
-                {collegeExperiences.map((exp, index) => (
+                {sortedCollegeExperiences.map((exp, index) => (
                   <div key={index} className="relative pl-8 md:pl-16">
-                    <div className="absolute left-0 md:left-[14px] top-4 w-4 h-4 sketch-node bg-white z-10"></div>
+                    <div className="absolute left-0 md:left-[14px] top-[48px] w-4 h-4 sketch-node bg-white z-10"></div>
                     <div className="scribble-border-sm p-6 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
                       <span className="font-mono text-xs font-bold bg-black text-white px-2 py-0.5">
                         {new Date(exp.startDate).getFullYear()} -{" "}
