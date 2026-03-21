@@ -309,7 +309,7 @@ export default async function Home() {
 
               {/* The vertical dashed line. Left is offset to center with the node dot */}
               <div
-                className="absolute left-[7px] md:left-[21px] top-[80px] bottom-0 w-0.5 scribble-line origin-top rotate-180"
+                className="absolute left-[7px] md:left-[21px] top-[80px] bottom-0 w-0.5"
                 style={{
                   backgroundImage:
                     "repeating-linear-gradient(0deg, black, black 10px, transparent 10px, transparent 20px)",
@@ -354,7 +354,7 @@ export default async function Home() {
               </h3>
 
               <div
-                className="absolute left-[7px] md:left-[21px] top-[80px] bottom-0 w-0.5 scribble-line origin-top rotate-180"
+                className="absolute left-[7px] md:left-[21px] top-[80px] bottom-0 w-0.5"
                 style={{
                   backgroundImage:
                     "repeating-linear-gradient(0deg, black, black 10px, transparent 10px, transparent 20px)",
